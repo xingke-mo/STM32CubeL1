@@ -39,7 +39,7 @@ extern SD_HandleTypeDef uSdHandle;
   * @param  None
   * @retval None
   */
-void NMI_Handler(void)
+void NMI_Handler( void )
 {
 }
 
@@ -48,12 +48,12 @@ void NMI_Handler(void)
   * @param  None
   * @retval None
   */
-void HardFault_Handler(void)
+void HardFault_Handler( void )
 {
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Hard Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -61,12 +61,12 @@ void HardFault_Handler(void)
   * @param  None
   * @retval None
   */
-void MemManage_Handler(void)
+void MemManage_Handler( void )
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Memory Manage exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -74,12 +74,12 @@ void MemManage_Handler(void)
   * @param  None
   * @retval None
   */
-void BusFault_Handler(void)
+void BusFault_Handler( void )
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Bus Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -87,12 +87,12 @@ void BusFault_Handler(void)
   * @param  None
   * @retval None
   */
-void UsageFault_Handler(void)
+void UsageFault_Handler( void )
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Usage Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -100,7 +100,7 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
-void SVC_Handler(void)
+void SVC_Handler( void )
 {
 }
 
@@ -109,7 +109,7 @@ void SVC_Handler(void)
   * @param  None
   * @retval None
   */
-void DebugMon_Handler(void)
+void DebugMon_Handler( void )
 {
 }
 
@@ -118,7 +118,7 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-void PendSV_Handler(void)
+void PendSV_Handler( void )
 {
 }
 
@@ -127,9 +127,9 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
+void SysTick_Handler( void )
 {
-  HAL_IncTick();
+    HAL_IncTick();
 }
 
 /******************************************************************************/
@@ -144,9 +144,9 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
-void USB_LP_IRQHandler(void)
+void USB_LP_IRQHandler( void )
 {
-  HAL_PCD_IRQHandler(&hpcd);
+    HAL_PCD_IRQHandler( &hpcd );
 }
 
 /**
@@ -154,9 +154,9 @@ void USB_LP_IRQHandler(void)
   * @param  None
   * @retval None
   */
-void SDIO_IRQHandler(void)
+void SDIO_IRQHandler( void )
 {
-  BSP_SD_IRQHandler();
+    BSP_SD_IRQHandler();
 }
 
 /**
@@ -164,24 +164,24 @@ void SDIO_IRQHandler(void)
 * @param  None
 * @retval None
 */
-void DMA2_Channel4_IRQHandler(void)
+void DMA2_Channel4_IRQHandler( void )
 {
-  if((uSdHandle.Context == (SD_CONTEXT_DMA | SD_CONTEXT_READ_SINGLE_BLOCK)) ||
-     (uSdHandle.Context == (SD_CONTEXT_DMA | SD_CONTEXT_READ_MULTIPLE_BLOCK)))
-  {
-    /* Reception case*/
-    HAL_DMA_IRQHandler(uSdHandle.hdmarx);
-  }
-  else if((uSdHandle.Context == (SD_CONTEXT_DMA | SD_CONTEXT_WRITE_SINGLE_BLOCK)) ||
-          (uSdHandle.Context == (SD_CONTEXT_DMA | SD_CONTEXT_WRITE_MULTIPLE_BLOCK)))
-  {
-    /* Transmit case*/
-    HAL_DMA_IRQHandler(uSdHandle.hdmatx);
-  }
-  else
-  {
+    if( ( uSdHandle.Context == ( SD_CONTEXT_DMA | SD_CONTEXT_READ_SINGLE_BLOCK ) ) ||
+            ( uSdHandle.Context == ( SD_CONTEXT_DMA | SD_CONTEXT_READ_MULTIPLE_BLOCK ) ) )
+    {
+        /* Reception case*/
+        HAL_DMA_IRQHandler( uSdHandle.hdmarx );
+    }
+    else if( ( uSdHandle.Context == ( SD_CONTEXT_DMA | SD_CONTEXT_WRITE_SINGLE_BLOCK ) ) ||
+             ( uSdHandle.Context == ( SD_CONTEXT_DMA | SD_CONTEXT_WRITE_MULTIPLE_BLOCK ) ) )
+    {
+        /* Transmit case*/
+        HAL_DMA_IRQHandler( uSdHandle.hdmatx );
+    }
+    else
+    {
 
-  }
+    }
 }
 /**
   * @brief  This function handles PPP interrupt request.

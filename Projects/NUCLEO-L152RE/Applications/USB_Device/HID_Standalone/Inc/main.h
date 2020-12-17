@@ -37,7 +37,7 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
-void Toggle_Leds(void);
+void Toggle_Leds( void );
 
 #ifdef __cplusplus
 }

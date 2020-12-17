@@ -63,9 +63,9 @@
   * @brief Return Voltage Scaling Range.
   * @retval VOS bit field (PWR_REGULATOR_VOLTAGE_SCALE1, PWR_REGULATOR_VOLTAGE_SCALE2 or PWR_REGULATOR_VOLTAGE_SCALE3)
   */
-uint32_t HAL_PWREx_GetVoltageRange(void)
+uint32_t HAL_PWREx_GetVoltageRange( void )
 {
-  return  (PWR->CR & PWR_CR_VOS);
+    return ( PWR->CR & PWR_CR_VOS );
 }
 
 
@@ -76,40 +76,40 @@ uint32_t HAL_PWREx_GetVoltageRange(void)
   *         exiting from low power mode.
   * @retval None
   */
-void HAL_PWREx_EnableFastWakeUp(void)
+void HAL_PWREx_EnableFastWakeUp( void )
 {
-  /* Enable the fast wake up */
-  *(__IO uint32_t *) CR_FWU_BB = (uint32_t)ENABLE;
+    /* Enable the fast wake up */
+    *( __IO uint32_t * ) CR_FWU_BB = ( uint32_t )ENABLE;
 }
 
 /**
   * @brief  Disables the Fast WakeUp from Ultra Low Power mode.
   * @retval None
   */
-void HAL_PWREx_DisableFastWakeUp(void)
+void HAL_PWREx_DisableFastWakeUp( void )
 {
-  /* Disable the fast wake up */
-  *(__IO uint32_t *) CR_FWU_BB = (uint32_t)DISABLE;
+    /* Disable the fast wake up */
+    *( __IO uint32_t * ) CR_FWU_BB = ( uint32_t )DISABLE;
 }
 
 /**
   * @brief  Enables the Ultra Low Power mode
   * @retval None
   */
-void HAL_PWREx_EnableUltraLowPower(void)
+void HAL_PWREx_EnableUltraLowPower( void )
 {
-  /* Enable the Ultra Low Power mode */
-  *(__IO uint32_t *) CR_ULP_BB = (uint32_t)ENABLE;
+    /* Enable the Ultra Low Power mode */
+    *( __IO uint32_t * ) CR_ULP_BB = ( uint32_t )ENABLE;
 }
 
 /**
   * @brief  Disables the Ultra Low Power mode
   * @retval None
   */
-void HAL_PWREx_DisableUltraLowPower(void)
+void HAL_PWREx_DisableUltraLowPower( void )
 {
-  /* Disable the Ultra Low Power mode */
-  *(__IO uint32_t *) CR_ULP_BB = (uint32_t)DISABLE;
+    /* Disable the Ultra Low Power mode */
+    *( __IO uint32_t * ) CR_ULP_BB = ( uint32_t )DISABLE;
 }
 
 /**
@@ -122,23 +122,23 @@ void HAL_PWREx_DisableUltraLowPower(void)
   * @note   In Low power run mode, all I/O pins keep the same state as in Run mode.
   * @retval None
   */
-void HAL_PWREx_EnableLowPowerRunMode(void)
+void HAL_PWREx_EnableLowPowerRunMode( void )
 {
-  /* Enters the Low Power Run mode */
-  *(__IO uint32_t *) CR_LPSDSR_BB = (uint32_t)ENABLE;
-  *(__IO uint32_t *) CR_LPRUN_BB  = (uint32_t)ENABLE;
+    /* Enters the Low Power Run mode */
+    *( __IO uint32_t * ) CR_LPSDSR_BB = ( uint32_t )ENABLE;
+    *( __IO uint32_t * ) CR_LPRUN_BB  = ( uint32_t )ENABLE;
 }
 
 /**
   * @brief  Exits the Low Power Run mode.
   * @retval None
   */
-HAL_StatusTypeDef HAL_PWREx_DisableLowPowerRunMode(void)
+HAL_StatusTypeDef HAL_PWREx_DisableLowPowerRunMode( void )
 {
-  /* Exits the Low Power Run mode */
-  *(__IO uint32_t *) CR_LPRUN_BB  = (uint32_t)DISABLE;
-  *(__IO uint32_t *) CR_LPSDSR_BB = (uint32_t)DISABLE;
-  return HAL_OK;
+    /* Exits the Low Power Run mode */
+    *( __IO uint32_t * ) CR_LPRUN_BB  = ( uint32_t )DISABLE;
+    *( __IO uint32_t * ) CR_LPSDSR_BB = ( uint32_t )DISABLE;
+    return HAL_OK;
 }
 
 /**

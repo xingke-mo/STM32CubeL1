@@ -33,17 +33,17 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 
-void NMI_Handler(void);
-void HardFault_Handler(void);
-void MemManage_Handler(void);
-void BusFault_Handler(void);
-void UsageFault_Handler(void);
-void SVC_Handler(void);
-void DebugMon_Handler(void);
-void PendSV_Handler(void);
-void SysTick_Handler(void);
+void NMI_Handler( void );
+void HardFault_Handler( void );
+void MemManage_Handler( void );
+void BusFault_Handler( void );
+void UsageFault_Handler( void );
+void SVC_Handler( void );
+void DebugMon_Handler( void );
+void PendSV_Handler( void );
+void SysTick_Handler( void );
 
-void EXTI15_10_IRQHandler(void);
+void EXTI15_10_IRQHandler( void );
 
 /* Note: Lines of code commented below correspond to the example using        */
 /*       HAL driver only.                                                     */
@@ -51,9 +51,9 @@ void EXTI15_10_IRQHandler(void);
 /*       these lines using LL driver.                                         */
 // void ADCx_IRQHandler(void);
 
-void ADC1_IRQHandler(void);
+void ADC1_IRQHandler( void );
 #if defined(WAVEFORM_GENERATION)
-void DAC_IRQHandler(void);
+void DAC_IRQHandler( void );
 
 #endif /* WAVEFORM_GENERATION */
 

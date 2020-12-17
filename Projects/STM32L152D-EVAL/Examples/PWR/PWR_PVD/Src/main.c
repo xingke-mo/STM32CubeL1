@@ -37,9 +37,9 @@ PWR_PVDTypeDef sConfigPVD;
 __IO uint32_t uwToggleOn = 1;
 
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
-static void Error_Handler(void);
-static void PVD_Config(void);
+void SystemClock_Config( void );
+static void Error_Handler( void );
+static void PVD_Config( void );
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -48,40 +48,40 @@ static void PVD_Config(void);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  /* STM32L1xx HAL library initialization:
-       - Configure the Flash prefetch
-       - Systick timer is configured by default as source of time base, but user 
-         can eventually implement his proper time base source (a general purpose 
-         timer for example or other time source), keeping in mind that Time base 
-         duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
-         handled in milliseconds basis.
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
-  HAL_Init();
+    /* STM32L1xx HAL library initialization:
+         - Configure the Flash prefetch
+         - Systick timer is configured by default as source of time base, but user
+           can eventually implement his proper time base source (a general purpose
+           timer for example or other time source), keeping in mind that Time base
+           duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and
+           handled in milliseconds basis.
+         - Set NVIC Group Priority to 4
+         - Low Level Initialization
+       */
+    HAL_Init();
 
-  /* Configure LEDs */
-  BSP_LED_Init(LED1); 
-  BSP_LED_Init(LED3);
+    /* Configure LEDs */
+    BSP_LED_Init( LED1 );
+    BSP_LED_Init( LED3 );
 
-  /* Configure the system clock to 32 MHz */
-  SystemClock_Config();
+    /* Configure the system clock to 32 MHz */
+    SystemClock_Config();
 
-  /* Configure the PVD */
-  PVD_Config();
+    /* Configure the PVD */
+    PVD_Config();
 
-  /* Infinite loop */ 
-  while (1)
-  {
-    /* LED1 toggles when the voltage is above the target threshold */
-    if (uwToggleOn)
+    /* Infinite loop */
+    while( 1 )
     {
-      BSP_LED_Toggle(LED1); 
-      HAL_Delay(200);
+        /* LED1 toggles when the voltage is above the target threshold */
+        if( uwToggleOn )
+        {
+            BSP_LED_Toggle( LED1 );
+            HAL_Delay( 200 );
+        }
     }
-  }
 }
 
 /**
@@ -89,24 +89,24 @@ int main(void)
   * @param  None
   * @retval None
   */
-static void PVD_Config(void)
+static void PVD_Config( void )
 {
-  /*##-1- Enable Power Clock #################################################*/
-  __HAL_RCC_PWR_CLK_ENABLE();
+    /*##-1- Enable Power Clock #################################################*/
+    __HAL_RCC_PWR_CLK_ENABLE();
 
-  /*##-2- Configure the NVIC for PVD #########################################*/
-  HAL_NVIC_SetPriority(PVD_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(PVD_IRQn);
+    /*##-2- Configure the NVIC for PVD #########################################*/
+    HAL_NVIC_SetPriority( PVD_IRQn, 0, 0 );
+    HAL_NVIC_EnableIRQ( PVD_IRQn );
 
-  /* Configure the PVD Level to 3 and generate an interrupt on rising and falling
-     edges(PVD detection level set to 2.5V, refer to the electrical characteristics
-     of you device datasheet for more details) */
-  sConfigPVD.PVDLevel = PWR_PVDLEVEL_3;
-  sConfigPVD.Mode = PWR_PVD_MODE_IT_RISING_FALLING;
-  HAL_PWR_ConfigPVD(&sConfigPVD);
+    /* Configure the PVD Level to 3 and generate an interrupt on rising and falling
+       edges(PVD detection level set to 2.5V, refer to the electrical characteristics
+       of you device datasheet for more details) */
+    sConfigPVD.PVDLevel = PWR_PVDLEVEL_3;
+    sConfigPVD.Mode = PWR_PVD_MODE_IT_RISING_FALLING;
+    HAL_PWR_ConfigPVD( &sConfigPVD );
 
-  /* Enable the PVD Output */
-  HAL_PWR_EnablePVD();
+    /* Enable the PVD Output */
+    HAL_PWR_EnablePVD();
 }
 
 /**
@@ -125,41 +125,47 @@ static void PVD_Config(void)
   *            Flash Latency(WS)              = 1
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 
-  /* Enable HSE Oscillator and Activate PLL with HSE as source */
-  RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState            = RCC_HSE_ON;
-  RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLL_MUL12;
-  RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLL_DIV3;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /* Enable HSE Oscillator and Activate PLL with HSE as source */
+    RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSE;
+    RCC_OscInitStruct.HSEState            = RCC_HSE_ON;
+    RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
+    RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSE;
+    RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLL_MUL12;
+    RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLL_DIV3;
 
-  /* Set Voltage scale1 as MCU will run at 32MHz */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-  
-  /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
-  while (__HAL_PWR_GET_FLAG(PWR_FLAG_VOS) != RESET) {};
+    if( HAL_RCC_OscConfig( &RCC_OscInitStruct ) != HAL_OK )
+    {
+        Error_Handler();
+    }
 
-  /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
-  clocks dividers */
-  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /* Set Voltage scale1 as MCU will run at 32MHz */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    __HAL_PWR_VOLTAGESCALING_CONFIG( PWR_REGULATOR_VOLTAGE_SCALE1 );
+
+    /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+    while( __HAL_PWR_GET_FLAG( PWR_FLAG_VOS ) != RESET ) {};
+
+    /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
+    clocks dividers */
+    RCC_ClkInitStruct.ClockType = ( RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 );
+
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+    if( HAL_RCC_ClockConfig( &RCC_ClkInitStruct, FLASH_LATENCY_1 ) != HAL_OK )
+    {
+        Error_Handler();
+    }
 }
 
 
@@ -168,13 +174,14 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-static void Error_Handler(void)
+static void Error_Handler( void )
 {
-  /* Error if LED3 is ON  */
-  BSP_LED_On(LED3);
-  while (1)
-  {
-  }
+    /* Error if LED3 is ON  */
+    BSP_LED_On( LED3 );
+
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -182,23 +189,23 @@ static void Error_Handler(void)
   * @param None
   * @retval None
   */
-void HAL_SYSTICK_Callback(void)
+void HAL_SYSTICK_Callback( void )
 {
-  HAL_IncTick();
+    HAL_IncTick();
 }
 
 /**
   * @brief  PWR PVD interrupt callback
-  * @param  none 
+  * @param  none
   * @retval none
   */
-void HAL_PWR_PVDCallback(void)
+void HAL_PWR_PVDCallback( void )
 {
-  /* Set LED1 on */  
-  BSP_LED_On(LED1); 
-  /* update uwToggleOn global variable so that LED1 blinks when the
-     voltage is above the target threshold */
-  uwToggleOn = (uwToggleOn+1) % 2;
+    /* Set LED1 on */
+    BSP_LED_On( LED1 );
+    /* update uwToggleOn global variable so that LED1 blinks when the
+       voltage is above the target threshold */
+    uwToggleOn = ( uwToggleOn + 1 ) % 2;
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -210,16 +217,16 @@ void HAL_PWR_PVDCallback(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  Error_Handler();
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+    Error_Handler();
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 

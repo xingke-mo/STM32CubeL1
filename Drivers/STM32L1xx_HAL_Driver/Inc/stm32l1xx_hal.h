@@ -23,7 +23,7 @@
 #define __STM32L1xx_HAL_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -129,7 +129,7 @@
 /** @defgroup RI_InputCaptureRouting Input Capture Routing
   * @{
   */
-                                                          /* TIMx_IC1 TIMx_IC2  TIMx_IC3  TIMx_IC4 */
+/* TIMx_IC1 TIMx_IC2  TIMx_IC3  TIMx_IC4 */
 #define RI_INPUTCAPTUREROUTING_0   (0x00000000U) /* PA0       PA1      PA2       PA3      */
 #define RI_INPUTCAPTUREROUTING_1   (0x00000001U) /* PA4       PA5      PA6       PA7      */
 #define RI_INPUTCAPTUREROUTING_2   (0x00000002U) /* PA8       PA9      PA10      PA11     */
@@ -925,11 +925,11 @@ extern uint32_t uwTickFreq;
   */
 
 /* Initialization and de-initialization functions  ******************************/
-HAL_StatusTypeDef HAL_Init(void);
-HAL_StatusTypeDef HAL_DeInit(void);
-void              HAL_MspInit(void);
-void              HAL_MspDeInit(void);
-HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority);
+HAL_StatusTypeDef HAL_Init( void );
+HAL_StatusTypeDef HAL_DeInit( void );
+void              HAL_MspInit( void );
+void              HAL_MspDeInit( void );
+HAL_StatusTypeDef HAL_InitTick( uint32_t TickPriority );
 
 /**
   * @}
@@ -940,20 +940,20 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority);
   */
 
 /* Peripheral Control functions  ************************************************/
-void               HAL_IncTick(void);
-void               HAL_Delay(uint32_t Delay);
-uint32_t           HAL_GetTick(void);
-uint32_t           HAL_GetTickPrio(void);
-HAL_StatusTypeDef  HAL_SetTickFreq(uint32_t Freq);
-uint32_t           HAL_GetTickFreq(void);
-void               HAL_SuspendTick(void);
-void               HAL_ResumeTick(void);
-uint32_t           HAL_GetHalVersion(void);
-uint32_t           HAL_GetREVID(void);
-uint32_t           HAL_GetDEVID(void);
-uint32_t           HAL_GetUIDw0(void);
-uint32_t           HAL_GetUIDw1(void);
-uint32_t           HAL_GetUIDw2(void);
+void               HAL_IncTick( void );
+void               HAL_Delay( uint32_t Delay );
+uint32_t           HAL_GetTick( void );
+uint32_t           HAL_GetTickPrio( void );
+HAL_StatusTypeDef  HAL_SetTickFreq( uint32_t Freq );
+uint32_t           HAL_GetTickFreq( void );
+void               HAL_SuspendTick( void );
+void               HAL_ResumeTick( void );
+uint32_t           HAL_GetHalVersion( void );
+uint32_t           HAL_GetREVID( void );
+uint32_t           HAL_GetDEVID( void );
+uint32_t           HAL_GetUIDw0( void );
+uint32_t           HAL_GetUIDw1( void );
+uint32_t           HAL_GetUIDw2( void );
 
 /**
   * @}
@@ -964,12 +964,12 @@ uint32_t           HAL_GetUIDw2(void);
   */
 
 /* DBGMCU Peripheral Control functions  *****************************************/
-void              HAL_DBGMCU_EnableDBGSleepMode(void);
-void              HAL_DBGMCU_DisableDBGSleepMode(void);
-void              HAL_DBGMCU_EnableDBGStopMode(void);
-void              HAL_DBGMCU_DisableDBGStopMode(void);
-void              HAL_DBGMCU_EnableDBGStandbyMode(void);
-void              HAL_DBGMCU_DisableDBGStandbyMode(void);
+void              HAL_DBGMCU_EnableDBGSleepMode( void );
+void              HAL_DBGMCU_DisableDBGSleepMode( void );
+void              HAL_DBGMCU_EnableDBGStopMode( void );
+void              HAL_DBGMCU_DisableDBGStopMode( void );
+void              HAL_DBGMCU_EnableDBGStandbyMode( void );
+void              HAL_DBGMCU_DisableDBGStandbyMode( void );
 
 /**
   * @}

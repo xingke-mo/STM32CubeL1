@@ -46,11 +46,11 @@ extern "C" {
   */
 typedef enum
 {
-  HAL_CRC_STATE_RESET     = 0x00U,  /*!< CRC not yet initialized or disabled */
-  HAL_CRC_STATE_READY     = 0x01U,  /*!< CRC initialized and ready for use   */
-  HAL_CRC_STATE_BUSY      = 0x02U,  /*!< CRC internal process is ongoing     */
-  HAL_CRC_STATE_TIMEOUT   = 0x03U,  /*!< CRC timeout state                   */
-  HAL_CRC_STATE_ERROR     = 0x04U   /*!< CRC error state                     */
+    HAL_CRC_STATE_RESET     = 0x00U,  /*!< CRC not yet initialized or disabled */
+    HAL_CRC_STATE_READY     = 0x01U,  /*!< CRC initialized and ready for use   */
+    HAL_CRC_STATE_BUSY      = 0x02U,  /*!< CRC internal process is ongoing     */
+    HAL_CRC_STATE_TIMEOUT   = 0x03U,  /*!< CRC timeout state                   */
+    HAL_CRC_STATE_ERROR     = 0x04U   /*!< CRC error state                     */
 } HAL_CRC_StateTypeDef;
 
 
@@ -59,11 +59,11 @@ typedef enum
   */
 typedef struct
 {
-  CRC_TypeDef                 *Instance;   /*!< Register base address        */
+    CRC_TypeDef                 *Instance;   /*!< Register base address        */
 
-  HAL_LockTypeDef             Lock;        /*!< CRC Locking object           */
+    HAL_LockTypeDef             Lock;        /*!< CRC Locking object           */
 
-  __IO HAL_CRC_StateTypeDef   State;       /*!< CRC communication state      */
+    __IO HAL_CRC_StateTypeDef   State;       /*!< CRC communication state      */
 
 } CRC_HandleTypeDef;
 /**
@@ -136,10 +136,10 @@ typedef struct
 /** @defgroup CRC_Exported_Functions_Group1 Initialization and de-initialization functions
   * @{
   */
-HAL_StatusTypeDef HAL_CRC_Init(CRC_HandleTypeDef *hcrc);
-HAL_StatusTypeDef HAL_CRC_DeInit(CRC_HandleTypeDef *hcrc);
-void HAL_CRC_MspInit(CRC_HandleTypeDef *hcrc);
-void HAL_CRC_MspDeInit(CRC_HandleTypeDef *hcrc);
+HAL_StatusTypeDef HAL_CRC_Init( CRC_HandleTypeDef *hcrc );
+HAL_StatusTypeDef HAL_CRC_DeInit( CRC_HandleTypeDef *hcrc );
+void HAL_CRC_MspInit( CRC_HandleTypeDef *hcrc );
+void HAL_CRC_MspDeInit( CRC_HandleTypeDef *hcrc );
 /**
   * @}
   */
@@ -148,8 +148,8 @@ void HAL_CRC_MspDeInit(CRC_HandleTypeDef *hcrc);
 /** @defgroup CRC_Exported_Functions_Group2 Peripheral Control functions
   * @{
   */
-uint32_t HAL_CRC_Accumulate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t BufferLength);
-uint32_t HAL_CRC_Calculate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t BufferLength);
+uint32_t HAL_CRC_Accumulate( CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t BufferLength );
+uint32_t HAL_CRC_Calculate( CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t BufferLength );
 /**
   * @}
   */
@@ -158,7 +158,7 @@ uint32_t HAL_CRC_Calculate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t
 /** @defgroup CRC_Exported_Functions_Group3 Peripheral State functions
   * @{
   */
-HAL_CRC_StateTypeDef HAL_CRC_GetState(CRC_HandleTypeDef *hcrc);
+HAL_CRC_StateTypeDef HAL_CRC_GetState( CRC_HandleTypeDef *hcrc );
 /**
   * @}
   */

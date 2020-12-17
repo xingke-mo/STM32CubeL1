@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    I2C/I2C_EEPROM/Src/stm32l1xx_it.c 
+  * @file    I2C/I2C_EEPROM/Src/stm32l1xx_it.c
   * @author  MCD Application Team
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and
@@ -50,7 +50,7 @@ extern I2C_HandleTypeDef I2cHandle;
   * @param  None
   * @retval None
   */
-void NMI_Handler(void)
+void NMI_Handler( void )
 {
 }
 
@@ -59,12 +59,12 @@ void NMI_Handler(void)
   * @param  None
   * @retval None
   */
-void HardFault_Handler(void)
+void HardFault_Handler( void )
 {
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Hard Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -72,12 +72,12 @@ void HardFault_Handler(void)
   * @param  None
   * @retval None
   */
-void MemManage_Handler(void)
+void MemManage_Handler( void )
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Memory Manage exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -85,12 +85,12 @@ void MemManage_Handler(void)
   * @param  None
   * @retval None
   */
-void BusFault_Handler(void)
+void BusFault_Handler( void )
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Bus Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -98,12 +98,12 @@ void BusFault_Handler(void)
   * @param  None
   * @retval None
   */
-void UsageFault_Handler(void)
+void UsageFault_Handler( void )
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Usage Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -111,7 +111,7 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
-void SVC_Handler(void)
+void SVC_Handler( void )
 {
 }
 
@@ -120,7 +120,7 @@ void SVC_Handler(void)
   * @param  None
   * @retval None
   */
-void DebugMon_Handler(void)
+void DebugMon_Handler( void )
 {
 }
 
@@ -129,7 +129,7 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-void PendSV_Handler(void)
+void PendSV_Handler( void )
 {
 }
 
@@ -138,9 +138,9 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
+void SysTick_Handler( void )
 {
-  HAL_IncTick();
+    HAL_IncTick();
 }
 
 /******************************************************************************/
@@ -155,9 +155,9 @@ void SysTick_Handler(void)
   * @retval None
   * @Note   This function is redefined in "main.h" and related to I2C data transmission
   */
-void I2Cx_EV_IRQHandler(void)
+void I2Cx_EV_IRQHandler( void )
 {
-  HAL_I2C_EV_IRQHandler(&I2cHandle);
+    HAL_I2C_EV_IRQHandler( &I2cHandle );
 }
 
 /**
@@ -166,9 +166,9 @@ void I2Cx_EV_IRQHandler(void)
   * @retval None
   * @Note   This function is redefined in "main.h" and related to I2C error
   */
-void I2Cx_ER_IRQHandler(void)
+void I2Cx_ER_IRQHandler( void )
 {
-  HAL_I2C_ER_IRQHandler(&I2cHandle);
+    HAL_I2C_ER_IRQHandler( &I2cHandle );
 }
 
 /**
@@ -178,9 +178,9 @@ void I2Cx_ER_IRQHandler(void)
   * @Note   This function is redefined in "main.h" and related to DMA handle
   *         used for I2C data transmission
   */
-void I2Cx_DMA_RX_IRQHandler(void)
+void I2Cx_DMA_RX_IRQHandler( void )
 {
-  HAL_DMA_IRQHandler(I2cHandle.hdmarx);
+    HAL_DMA_IRQHandler( I2cHandle.hdmarx );
 }
 
 /**
@@ -190,9 +190,9 @@ void I2Cx_DMA_RX_IRQHandler(void)
   * @Note   This function is redefined in "main.h" and related to DMA handle
   *         used for I2C data reception
   */
-void I2Cx_DMA_TX_IRQHandler(void)
+void I2Cx_DMA_TX_IRQHandler( void )
 {
-  HAL_DMA_IRQHandler(I2cHandle.hdmatx);
+    HAL_DMA_IRQHandler( I2cHandle.hdmatx );
 }
 /**
   * @}

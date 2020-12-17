@@ -22,7 +22,7 @@
 #define __STM32L1xx_HAL_RCC_EX_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -85,15 +85,15 @@
   */
 typedef struct
 {
-  uint32_t PeriphClockSelection;                /*!< The Extended Clock to be configured.
+    uint32_t PeriphClockSelection;                /*!< The Extended Clock to be configured.
                                       This parameter can be a value of @ref RCCEx_Periph_Clock_Selection */
 
-  uint32_t RTCClockSelection;         /*!< specifies the RTC clock source.
+    uint32_t RTCClockSelection;         /*!< specifies the RTC clock source.
                                        This parameter can be a value of @ref RCC_RTC_LCD_Clock_Source */
 
 #if defined(LCD)
 
-  uint32_t LCDClockSelection;         /*!< specifies the LCD clock source.
+    uint32_t LCDClockSelection;         /*!< specifies the LCD clock source.
                                        This parameter can be a value of @ref RCC_RTC_LCD_Clock_Source */
 
 #endif /* LCD */
@@ -990,17 +990,17 @@ typedef struct
   * @{
   */
 
-HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClkInit);
-void              HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClkInit);
-uint32_t          HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk);
+HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig( RCC_PeriphCLKInitTypeDef  *PeriphClkInit );
+void              HAL_RCCEx_GetPeriphCLKConfig( RCC_PeriphCLKInitTypeDef  *PeriphClkInit );
+uint32_t          HAL_RCCEx_GetPeriphCLKFreq( uint32_t PeriphClk );
 
 #if defined(RCC_LSECSS_SUPPORT)
 
-void              HAL_RCCEx_EnableLSECSS(void);
-void              HAL_RCCEx_DisableLSECSS(void);
-void              HAL_RCCEx_EnableLSECSS_IT(void);
-void              HAL_RCCEx_LSECSS_IRQHandler(void);
-void              HAL_RCCEx_LSECSS_Callback(void);
+void              HAL_RCCEx_EnableLSECSS( void );
+void              HAL_RCCEx_DisableLSECSS( void );
+void              HAL_RCCEx_EnableLSECSS_IT( void );
+void              HAL_RCCEx_LSECSS_IRQHandler( void );
+void              HAL_RCCEx_LSECSS_Callback( void );
 
 #endif /* RCC_LSECSS_SUPPORT */
 

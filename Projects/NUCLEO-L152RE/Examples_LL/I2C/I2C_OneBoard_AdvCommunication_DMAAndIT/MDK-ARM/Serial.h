@@ -17,8 +17,8 @@
 #define __SERIAL_H
 #include <stdio.h>
 
-extern void SER_Init      (void);
-extern int  SER_GetChar   (void);
-extern int SER_PutChar 		(int c);
+extern void SER_Init( void );
+extern int  SER_GetChar( void );
+extern int SER_PutChar( int c );
 
 #endif

@@ -47,19 +47,19 @@ extern "C" {
   */
 typedef struct
 {
-  uint32_t Pin;       /*!< Specifies the GPIO pins to be configured.
+    uint32_t Pin;       /*!< Specifies the GPIO pins to be configured.
                            This parameter can be any value of @ref GPIO_pins */
 
-  uint32_t Mode;      /*!< Specifies the operating mode for the selected pins.
+    uint32_t Mode;      /*!< Specifies the operating mode for the selected pins.
                            This parameter can be a value of @ref GPIO_mode */
 
-  uint32_t Pull;      /*!< Specifies the Pull-up or Pull-Down activation for the selected pins.
+    uint32_t Pull;      /*!< Specifies the Pull-up or Pull-Down activation for the selected pins.
                            This parameter can be a value of @ref GPIO_pull */
 
-  uint32_t Speed;     /*!< Specifies the speed for the selected pins.
+    uint32_t Speed;     /*!< Specifies the speed for the selected pins.
                            This parameter can be a value of @ref GPIO_speed */
 
-  uint32_t Alternate;  /*!< Peripheral to be connected to the selected pins
+    uint32_t Alternate;  /*!< Peripheral to be connected to the selected pins
                             This parameter can be a value of @ref GPIOEx_Alternate_function_selection */
 } GPIO_InitTypeDef;
 
@@ -68,8 +68,8 @@ typedef struct
   */
 typedef enum
 {
-  GPIO_PIN_RESET = 0,
-  GPIO_PIN_SET
+    GPIO_PIN_RESET = 0,
+    GPIO_PIN_SET
 } GPIO_PinState;
 /**
   * @}
@@ -274,8 +274,8 @@ typedef enum
  */
 
 /* Initialization and de-initialization functions *****************************/
-void              HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init);
-void              HAL_GPIO_DeInit(GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin);
+void              HAL_GPIO_Init( GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init );
+void              HAL_GPIO_DeInit( GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin );
 
 /**
   * @}
@@ -287,12 +287,12 @@ void              HAL_GPIO_DeInit(GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin);
   */
 
 /* IO operation functions *****************************************************/
-GPIO_PinState     HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
-void              HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState);
-void              HAL_GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
-HAL_StatusTypeDef HAL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
-void              HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin);
-void              HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
+GPIO_PinState     HAL_GPIO_ReadPin( GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin );
+void              HAL_GPIO_WritePin( GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState );
+void              HAL_GPIO_TogglePin( GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin );
+HAL_StatusTypeDef HAL_GPIO_LockPin( GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin );
+void              HAL_GPIO_EXTI_IRQHandler( uint16_t GPIO_Pin );
+void              HAL_GPIO_EXTI_Callback( uint16_t GPIO_Pin );
 
 /**
   * @}

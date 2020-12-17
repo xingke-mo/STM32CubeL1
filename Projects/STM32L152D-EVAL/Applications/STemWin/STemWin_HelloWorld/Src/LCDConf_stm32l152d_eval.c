@@ -40,7 +40,7 @@ Purpose     : Display controller configuration (single layer)
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright © 2017 STMicroelectronics International N.V. 
+  * <h2><center>&copy; Copyright © 2017 STMicroelectronics International N.V.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license SLA0044,
@@ -79,22 +79,22 @@ Purpose     : Display controller configuration (single layer)
 **********************************************************************
 */
 #ifndef   VXSIZE_PHYS
-#define VXSIZE_PHYS XSIZE_PHYS
+    #define VXSIZE_PHYS XSIZE_PHYS
 #endif
 #ifndef   VYSIZE_PHYS
-#define VYSIZE_PHYS YSIZE_PHYS
+    #define VYSIZE_PHYS YSIZE_PHYS
 #endif
 #ifndef   XSIZE_PHYS
-#error Physical X size of display is not defined!
+    #error Physical X size of display is not defined!
 #endif
 #ifndef   YSIZE_PHYS
-#error Physical Y size of display is not defined!
+    #error Physical Y size of display is not defined!
 #endif
 #ifndef   GUICC_565
-#error Color conversion not defined!
+    #error Color conversion not defined!
 #endif
 #ifndef   GUIDRV_FLEXCOLOR
-#error No display driver defined!
+    #error No display driver defined!
 #endif
 
 /*********************************************************************
@@ -109,8 +109,8 @@ Purpose     : Display controller configuration (single layer)
 
 typedef struct
 {
-  __IO uint16_t REG;
-  __IO uint16_t RAM;
+    __IO uint16_t REG;
+    __IO uint16_t RAM;
 
 } LCD_CONTROLLER_TypeDef;
 
@@ -120,7 +120,7 @@ typedef struct
 *
 **********************************************************************
 */
-static void LCD_LL_Init(void);
+static void LCD_LL_Init( void );
 
 
 /********************************************************************
@@ -130,9 +130,9 @@ static void LCD_LL_Init(void);
 * Function description:
 *   Sets display register
 */
-static void LcdWriteReg(U16 Data)
+static void LcdWriteReg( U16 Data )
 {
-  LCD_IO_WriteReg((uint8_t)Data);
+    LCD_IO_WriteReg( ( uint8_t )Data );
 }
 
 /********************************************************************
@@ -142,9 +142,9 @@ static void LcdWriteReg(U16 Data)
 * Function description:
 *   Writes a value to a display register
 */
-static void LcdWriteData(U16 Data)
+static void LcdWriteData( U16 Data )
 {
-  LCD_IO_WriteMultipleData((uint8_t*)&Data, 2);
+    LCD_IO_WriteMultipleData( ( uint8_t * )&Data, 2 );
 }
 
 /********************************************************************
@@ -154,9 +154,9 @@ static void LcdWriteData(U16 Data)
 * Function description:
 *   Writes multiple values to a display register.
 */
-static void LcdWriteDataMultiple(U16 *pData, int NumItems)
+static void LcdWriteDataMultiple( U16 *pData, int NumItems )
 {
-  LCD_IO_WriteMultipleData((uint8_t *) pData, 2 * NumItems);
+    LCD_IO_WriteMultipleData( ( uint8_t * ) pData, 2 * NumItems );
 }
 
 /********************************************************************
@@ -166,13 +166,13 @@ static void LcdWriteDataMultiple(U16 *pData, int NumItems)
 * Function description:
 *   Reads multiple values from a display register.
 */
-static void LcdReadDataMultiple(U16 *pData, int NumItems)
+static void LcdReadDataMultiple( U16 *pData, int NumItems )
 {
-  while (NumItems--)
-  {
-    //*pData++ = LCD_IO_ReadData();
-    while (1);
-  }
+    while( NumItems-- )
+    {
+        //*pData++ = LCD_IO_ReadData();
+        while( 1 );
+    }
 }
 
 /*********************************************************************
@@ -187,28 +187,28 @@ static void LcdReadDataMultiple(U16 *pData, int NumItems)
   * @param  None
   * @retval LCD state
   */
-static void LCD_LL_Init(void)
+static void LCD_LL_Init( void )
 {
-  if (hx8347d_drv.ReadID() == HX8347D_ID)
-  {
-    hx8347d_Init();
-  }
-  else if (spfd5408_drv.ReadID() == SPFD5408_ID)
-  {
-    spfd5408_Init();
-  }
-  else if (ili9320_drv.ReadID() == ILI9320_ID)
-  {
-    ili9320_Init();
-  }
-  else if (ili9325_drv.ReadID() == ILI9325_ID)
-  {
-    ili9325_Init();
-  }
-  else
-  {
-    hx8347d_Init();
-  }
+    if( hx8347d_drv.ReadID() == HX8347D_ID )
+    {
+        hx8347d_Init();
+    }
+    else if( spfd5408_drv.ReadID() == SPFD5408_ID )
+    {
+        spfd5408_Init();
+    }
+    else if( ili9320_drv.ReadID() == ILI9320_ID )
+    {
+        ili9320_Init();
+    }
+    else if( ili9325_drv.ReadID() == ILI9325_ID )
+    {
+        ili9325_Init();
+    }
+    else
+    {
+        hx8347d_Init();
+    }
 }
 
 /*********************************************************************
@@ -220,62 +220,63 @@ static void LCD_LL_Init(void)
 *   display driver configuration.
 *
 */
-void LCD_X_Config(void)
+void LCD_X_Config( void )
 {
-  GUI_DEVICE *pDevice;
-  CONFIG_FLEXCOLOR Config = {0};
-  GUI_PORT_API PortAPI = {0};
-  //
-  // Set display driver and color conversion
-  //
-  pDevice = GUI_DEVICE_CreateAndLink(GUIDRV_FLEXCOLOR, GUICC_565, 0, 0);
-  //
-  // Display driver configuration, required for Lin-driver
-  //
-  LCD_SetSizeEx(0, XSIZE_PHYS , YSIZE_PHYS);
-  LCD_SetVSizeEx(0, VXSIZE_PHYS, VYSIZE_PHYS);
-  //
-  // Orientation
-  //
-  if (hx8347d_drv.ReadID() == HX8347D_ID)
-  {
-    Config.Orientation = GUI_SWAP_XY | GUI_MIRROR_Y | GUI_MIRROR_X;
-  }
-  else if (spfd5408_drv.ReadID() == SPFD5408_ID)
-  {
-    Config.Orientation = GUI_SWAP_XY | GUI_MIRROR_Y;
-  }
-  else if (ili9320_drv.ReadID() == ILI9320_ID)
-  {
-    Config.Orientation = GUI_SWAP_XY | GUI_MIRROR_Y | GUI_MIRROR_X;
-  }
-  else if (ili9325_drv.ReadID() == ILI9325_ID)
-  {
-    Config.Orientation = GUI_SWAP_XY | GUI_MIRROR_Y | GUI_MIRROR_X;
-  }
-  else
-  {
-    Config.Orientation = GUI_SWAP_XY | GUI_MIRROR_Y | GUI_MIRROR_X;
-  }
+    GUI_DEVICE *pDevice;
+    CONFIG_FLEXCOLOR Config = {0};
+    GUI_PORT_API PortAPI = {0};
+    //
+    // Set display driver and color conversion
+    //
+    pDevice = GUI_DEVICE_CreateAndLink( GUIDRV_FLEXCOLOR, GUICC_565, 0, 0 );
+    //
+    // Display driver configuration, required for Lin-driver
+    //
+    LCD_SetSizeEx( 0, XSIZE_PHYS, YSIZE_PHYS );
+    LCD_SetVSizeEx( 0, VXSIZE_PHYS, VYSIZE_PHYS );
 
-  GUIDRV_FlexColor_Config(pDevice, &Config);
-  //
-  // Set controller and operation mode
-  //
-  PortAPI.pfWrite16_A0  = LcdWriteReg;
-  PortAPI.pfWrite16_A1  = LcdWriteData;
-  PortAPI.pfWriteM16_A1 = LcdWriteDataMultiple;
-  PortAPI.pfReadM16_A1  = LcdReadDataMultiple;
+    //
+    // Orientation
+    //
+    if( hx8347d_drv.ReadID() == HX8347D_ID )
+    {
+        Config.Orientation = GUI_SWAP_XY | GUI_MIRROR_Y | GUI_MIRROR_X;
+    }
+    else if( spfd5408_drv.ReadID() == SPFD5408_ID )
+    {
+        Config.Orientation = GUI_SWAP_XY | GUI_MIRROR_Y;
+    }
+    else if( ili9320_drv.ReadID() == ILI9320_ID )
+    {
+        Config.Orientation = GUI_SWAP_XY | GUI_MIRROR_Y | GUI_MIRROR_X;
+    }
+    else if( ili9325_drv.ReadID() == ILI9325_ID )
+    {
+        Config.Orientation = GUI_SWAP_XY | GUI_MIRROR_Y | GUI_MIRROR_X;
+    }
+    else
+    {
+        Config.Orientation = GUI_SWAP_XY | GUI_MIRROR_Y | GUI_MIRROR_X;
+    }
 
-  // Find the current LCD and initialize GUIDRV
-  if (spfd5408_drv.ReadID() == SPFD5408_ID)
-  {
-    GUIDRV_FlexColor_SetFunc(pDevice, &PortAPI, GUIDRV_FLEXCOLOR_F66708, GUIDRV_FLEXCOLOR_M16C0B16);
-  }
-  else
-  {
-    GUIDRV_FlexColor_SetFunc(pDevice, &PortAPI, GUIDRV_FLEXCOLOR_F66712, GUIDRV_FLEXCOLOR_M16C0B16);
-  }
+    GUIDRV_FlexColor_Config( pDevice, &Config );
+    //
+    // Set controller and operation mode
+    //
+    PortAPI.pfWrite16_A0  = LcdWriteReg;
+    PortAPI.pfWrite16_A1  = LcdWriteData;
+    PortAPI.pfWriteM16_A1 = LcdWriteDataMultiple;
+    PortAPI.pfReadM16_A1  = LcdReadDataMultiple;
+
+    // Find the current LCD and initialize GUIDRV
+    if( spfd5408_drv.ReadID() == SPFD5408_ID )
+    {
+        GUIDRV_FlexColor_SetFunc( pDevice, &PortAPI, GUIDRV_FLEXCOLOR_F66708, GUIDRV_FLEXCOLOR_M16C0B16 );
+    }
+    else
+    {
+        GUIDRV_FlexColor_SetFunc( pDevice, &PortAPI, GUIDRV_FLEXCOLOR_F66712, GUIDRV_FLEXCOLOR_M16C0B16 );
+    }
 }
 
 /*********************************************************************
@@ -299,25 +300,27 @@ void LCD_X_Config(void)
 *     -1 - Command not handled
 *      0 - Ok
 */
-int LCD_X_DisplayDriver(unsigned LayerIndex, unsigned Cmd, void *pData)
+int LCD_X_DisplayDriver( unsigned LayerIndex, unsigned Cmd, void *pData )
 {
-  int r;
-  (void) LayerIndex;
-  (void) pData;
+    int r;
+    ( void ) LayerIndex;
+    ( void ) pData;
 
-  switch (Cmd)
-  {
-    case LCD_X_INITCONTROLLER:
+    switch( Cmd )
     {
+    case LCD_X_INITCONTROLLER:
+        {
 
-      LCD_LL_Init();
+            LCD_LL_Init();
 
-      return 0;
-    }
+            return 0;
+        }
+
     default:
-      r = -1;
-  }
-  return r;
+        r = -1;
+    }
+
+    return r;
 }
 
 

@@ -41,11 +41,11 @@
 static uint32_t aCCValue[CC_VALUE_NB] = {0};
 
 /* Private function prototypes -----------------------------------------------*/
-__STATIC_INLINE void     SystemClock_Config(void);
-__STATIC_INLINE void     Configure_DMA(void);
-__STATIC_INLINE void     Configure_TIM(void);
-__STATIC_INLINE void     LED_Init(void);
-__STATIC_INLINE void     LED_Blinking(uint32_t Period);
+__STATIC_INLINE void     SystemClock_Config( void );
+__STATIC_INLINE void     Configure_DMA( void );
+__STATIC_INLINE void     Configure_TIM( void );
+__STATIC_INLINE void     LED_Init( void );
+__STATIC_INLINE void     LED_Blinking( uint32_t Period );
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -54,24 +54,24 @@ __STATIC_INLINE void     LED_Blinking(uint32_t Period);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  /* Configure the system clock to 80 MHz */
-  SystemClock_Config();
+    /* Configure the system clock to 80 MHz */
+    SystemClock_Config();
 
-  /* Initialize LED2 */
-  LED_Init();
+    /* Initialize LED2 */
+    LED_Init();
 
-  /* Configure DMA transfer */  
-  Configure_DMA();
-  
-  /* Configure timer instance */
-  Configure_TIM();
+    /* Configure DMA transfer */
+    Configure_DMA();
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Configure timer instance */
+    Configure_TIM();
+
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -81,141 +81,141 @@ int main(void)
   * @param  None
   * @retval None
   */
-__STATIC_INLINE void  Configure_DMA(void)
-{  
-  /******************************************************/
-  /* Configure NVIC for DMA transfer related interrupts */
-  /******************************************************/
-  NVIC_SetPriority(DMA1_Channel3_IRQn, 0);
-  NVIC_EnableIRQ(DMA1_Channel3_IRQn);
+__STATIC_INLINE void  Configure_DMA( void )
+{
+    /******************************************************/
+    /* Configure NVIC for DMA transfer related interrupts */
+    /******************************************************/
+    NVIC_SetPriority( DMA1_Channel3_IRQn, 0 );
+    NVIC_EnableIRQ( DMA1_Channel3_IRQn );
 
-  /*****************************/
-  /* Peripheral clock enabling */
-  /*****************************/
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
+    /*****************************/
+    /* Peripheral clock enabling */
+    /*****************************/
+    LL_AHB1_GRP1_EnableClock( LL_AHB1_GRP1_PERIPH_DMA1 );
 
-  /******************************/
-  /* DMA transfer Configuration */
-  /******************************/
-  LL_DMA_ConfigTransfer(DMA1, LL_DMA_CHANNEL_3, LL_DMA_DIRECTION_MEMORY_TO_PERIPH |
-                                                LL_DMA_PRIORITY_HIGH              |
-                                                LL_DMA_MODE_CIRCULAR              |
-                                                LL_DMA_PERIPH_NOINCREMENT         |
-                                                LL_DMA_MEMORY_INCREMENT           |
-                                                LL_DMA_PDATAALIGN_WORD            |
-                                                LL_DMA_MDATAALIGN_WORD);
-  
-  LL_DMA_ConfigAddresses(DMA1, LL_DMA_CHANNEL_3, (uint32_t)&aCCValue, (uint32_t)&TIM3->CCR3, LL_DMA_GetDataTransferDirection(DMA1, LL_DMA_CHANNEL_3));
-  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_3, CC_VALUE_NB);
-  LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_3);
-  LL_DMA_EnableIT_TE(DMA1, LL_DMA_CHANNEL_3);
-    
-  /***************************/
-  /* Enable the DMA transfer */
-  /***************************/
-  LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_3);
+    /******************************/
+    /* DMA transfer Configuration */
+    /******************************/
+    LL_DMA_ConfigTransfer( DMA1, LL_DMA_CHANNEL_3, LL_DMA_DIRECTION_MEMORY_TO_PERIPH |
+                           LL_DMA_PRIORITY_HIGH              |
+                           LL_DMA_MODE_CIRCULAR              |
+                           LL_DMA_PERIPH_NOINCREMENT         |
+                           LL_DMA_MEMORY_INCREMENT           |
+                           LL_DMA_PDATAALIGN_WORD            |
+                           LL_DMA_MDATAALIGN_WORD );
+
+    LL_DMA_ConfigAddresses( DMA1, LL_DMA_CHANNEL_3, ( uint32_t )&aCCValue, ( uint32_t )&TIM3->CCR3, LL_DMA_GetDataTransferDirection( DMA1, LL_DMA_CHANNEL_3 ) );
+    LL_DMA_SetDataLength( DMA1, LL_DMA_CHANNEL_3, CC_VALUE_NB );
+    LL_DMA_EnableIT_TC( DMA1, LL_DMA_CHANNEL_3 );
+    LL_DMA_EnableIT_TE( DMA1, LL_DMA_CHANNEL_3 );
+
+    /***************************/
+    /* Enable the DMA transfer */
+    /***************************/
+    LL_DMA_EnableChannel( DMA1, LL_DMA_CHANNEL_3 );
 }
 
 
 /**
   * @brief  This function configures TIM3 channel 3 to generate a PWM edge
   *         aligned signal with a frequency equal to 17.57 KHz and a variable
-  *         duty cycle that is changed by the DMA after each DMA requests. 
+  *         duty cycle that is changed by the DMA after each DMA requests.
   * @note   Peripheral configuration is minimal configuration from reset values.
   *         Thus, some useless LL unitary functions calls below are provided as
   *         commented examples - setting is default configuration from reset.
   * @retval None
   */
-__STATIC_INLINE void  Configure_TIM(void)
-{  
-  /*************************/
-  /* GPIO AF configuration */
-  /*************************/
-  /* Enable the peripheral clock of GPIOs */
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
+__STATIC_INLINE void  Configure_TIM( void )
+{
+    /*************************/
+    /* GPIO AF configuration */
+    /*************************/
+    /* Enable the peripheral clock of GPIOs */
+    LL_AHB1_GRP1_EnableClock( LL_AHB1_GRP1_PERIPH_GPIOB );
 
-  /* GPIO TIM3_CH3 configuration */
-  LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_0, LL_GPIO_MODE_ALTERNATE);
-  LL_GPIO_SetPinPull(GPIOB, LL_GPIO_PIN_0, LL_GPIO_PULL_DOWN);
-  LL_GPIO_SetPinSpeed(GPIOB, LL_GPIO_PIN_0, LL_GPIO_SPEED_FREQ_HIGH);
-  LL_GPIO_SetAFPin_0_7(GPIOB, LL_GPIO_PIN_0, LL_GPIO_AF_2);
+    /* GPIO TIM3_CH3 configuration */
+    LL_GPIO_SetPinMode( GPIOB, LL_GPIO_PIN_0, LL_GPIO_MODE_ALTERNATE );
+    LL_GPIO_SetPinPull( GPIOB, LL_GPIO_PIN_0, LL_GPIO_PULL_DOWN );
+    LL_GPIO_SetPinSpeed( GPIOB, LL_GPIO_PIN_0, LL_GPIO_SPEED_FREQ_HIGH );
+    LL_GPIO_SetAFPin_0_7( GPIOB, LL_GPIO_PIN_0, LL_GPIO_AF_2 );
 
-  /******************************************************/
-  /* Configure the NVIC to handle TIM3 update interrupt */
-  /******************************************************/
-  NVIC_SetPriority(TIM3_IRQn, 0);
-  NVIC_EnableIRQ(TIM3_IRQn);
-  
-  /******************************/
-  /* Peripheral clocks enabling */
-  /******************************/
-  /* Enable the peripheral clock of TIM3 */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM3);
-  
-  /***************************/
-  /* Time base configuration */
-  /***************************/
-  /* Set counter mode */
-  /* Reset value is LL_TIM_COUNTERMODE_UP */
-  //LL_TIM_SetCounterMode(TIM3, LL_TIM_COUNTERMODE_UP);
-  
-  /* Set the TIM3 auto-reload register to get a PWM frequency at 17.57 KHz */
-  /* Note that the timer pre-scaler isn't used, therefore the timer counter   */
-  /* clock frequency is equal to the timer frequency.                        */
+    /******************************************************/
+    /* Configure the NVIC to handle TIM3 update interrupt */
+    /******************************************************/
+    NVIC_SetPriority( TIM3_IRQn, 0 );
+    NVIC_EnableIRQ( TIM3_IRQn );
+
+    /******************************/
+    /* Peripheral clocks enabling */
+    /******************************/
+    /* Enable the peripheral clock of TIM3 */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_TIM3 );
+
+    /***************************/
+    /* Time base configuration */
+    /***************************/
+    /* Set counter mode */
+    /* Reset value is LL_TIM_COUNTERMODE_UP */
+    //LL_TIM_SetCounterMode(TIM3, LL_TIM_COUNTERMODE_UP);
+
+    /* Set the TIM3 auto-reload register to get a PWM frequency at 17.57 KHz */
+    /* Note that the timer pre-scaler isn't used, therefore the timer counter   */
+    /* clock frequency is equal to the timer frequency.                        */
     /* In this example TIM1 input clock (TIM1CLK) frequency is set to APB1 clock*/
-  /*  (PCLK1), since APB1 pre-scaler is equal to 1.                                     */
-  /*    TIM1CLK = PCLK1                                                       */
-  /*    PCLK1 = HCLK                                                          */
-  /*    => TIM1CLK = HCLK = SystemCoreClock (32 Mhz)                           */
-  LL_TIM_SetAutoReload(TIM3, __LL_TIM_CALC_ARR(SystemCoreClock, LL_TIM_COUNTERMODE_UP, 17570));
-  
-  
-  /*********************************/
-  /* Output waveform configuration */
-  /*********************************/
-  /* Set output channel 3 in PWM1 mode */
-  LL_TIM_OC_SetMode(TIM3,  LL_TIM_CHANNEL_CH3,  LL_TIM_OCMODE_PWM1);
+    /*  (PCLK1), since APB1 pre-scaler is equal to 1.                                     */
+    /*    TIM1CLK = PCLK1                                                       */
+    /*    PCLK1 = HCLK                                                          */
+    /*    => TIM1CLK = HCLK = SystemCoreClock (32 Mhz)                           */
+    LL_TIM_SetAutoReload( TIM3, __LL_TIM_CALC_ARR( SystemCoreClock, LL_TIM_COUNTERMODE_UP, 17570 ) );
 
-  /* TIM3 channel 3 configuration:    */
-  LL_TIM_OC_ConfigOutput(TIM3, LL_TIM_CHANNEL_CH3, LL_TIM_OCPOLARITY_HIGH);
 
-  /* Compute compare value to generate a duty cycle at 75% */
-  aCCValue[0] = (uint32_t)(((uint32_t) 75 * (LL_TIM_GetAutoReload(TIM3) - 1)) / 100);
-  /* Compute compare value to generate a duty cycle at 50% */
-  aCCValue[1] = (uint32_t)(((uint32_t) 50 * (LL_TIM_GetAutoReload(TIM3) - 1)) / 100);
-  /* Compute compare value to generate a duty cycle at 25% */
-  aCCValue[2] = (uint32_t)(((uint32_t) 25 * (LL_TIM_GetAutoReload(TIM3) - 1)) / 100);
+    /*********************************/
+    /* Output waveform configuration */
+    /*********************************/
+    /* Set output channel 3 in PWM1 mode */
+    LL_TIM_OC_SetMode( TIM3,  LL_TIM_CHANNEL_CH3,  LL_TIM_OCMODE_PWM1 );
 
-  /* Set PWM duty cycle  for TIM3 channel 3*/
-  LL_TIM_OC_SetCompareCH3(TIM3, aCCValue[0]);
-  
-  /* Enable register preload for TIM3 channel 3 */
-  LL_TIM_OC_EnablePreload(TIM3, LL_TIM_CHANNEL_CH3);
-  
-  /****************************/
-  /* TIM2 DMA requests set-up */
-  /****************************/
-  /* Enable DMA request on update event */
-  LL_TIM_EnableDMAReq_UPDATE(TIM3);
+    /* TIM3 channel 3 configuration:    */
+    LL_TIM_OC_ConfigOutput( TIM3, LL_TIM_CHANNEL_CH3, LL_TIM_OCPOLARITY_HIGH );
 
-  /**************************/
-  /* TIM2 interrupts set-up */
-  /**************************/
-  /* Enable the update interrupt */
-  LL_TIM_EnableIT_UPDATE(TIM3);
-  
-  /**********************************/
-  /* Start output signal generation */
-  /**********************************/
-  /* Enable TIM3 channel 3 */
-  LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH3);
-  
-  
-  /* Enable counter */
-  LL_TIM_EnableCounter(TIM3);
-  
-  /* Force update generation */
-  LL_TIM_GenerateEvent_UPDATE(TIM3);
+    /* Compute compare value to generate a duty cycle at 75% */
+    aCCValue[0] = ( uint32_t )( ( ( uint32_t ) 75 * ( LL_TIM_GetAutoReload( TIM3 ) - 1 ) ) / 100 );
+    /* Compute compare value to generate a duty cycle at 50% */
+    aCCValue[1] = ( uint32_t )( ( ( uint32_t ) 50 * ( LL_TIM_GetAutoReload( TIM3 ) - 1 ) ) / 100 );
+    /* Compute compare value to generate a duty cycle at 25% */
+    aCCValue[2] = ( uint32_t )( ( ( uint32_t ) 25 * ( LL_TIM_GetAutoReload( TIM3 ) - 1 ) ) / 100 );
+
+    /* Set PWM duty cycle  for TIM3 channel 3*/
+    LL_TIM_OC_SetCompareCH3( TIM3, aCCValue[0] );
+
+    /* Enable register preload for TIM3 channel 3 */
+    LL_TIM_OC_EnablePreload( TIM3, LL_TIM_CHANNEL_CH3 );
+
+    /****************************/
+    /* TIM2 DMA requests set-up */
+    /****************************/
+    /* Enable DMA request on update event */
+    LL_TIM_EnableDMAReq_UPDATE( TIM3 );
+
+    /**************************/
+    /* TIM2 interrupts set-up */
+    /**************************/
+    /* Enable the update interrupt */
+    LL_TIM_EnableIT_UPDATE( TIM3 );
+
+    /**********************************/
+    /* Start output signal generation */
+    /**********************************/
+    /* Enable TIM3 channel 3 */
+    LL_TIM_CC_EnableChannel( TIM3, LL_TIM_CHANNEL_CH3 );
+
+
+    /* Enable counter */
+    LL_TIM_EnableCounter( TIM3 );
+
+    /* Force update generation */
+    LL_TIM_GenerateEvent_UPDATE( TIM3 );
 }
 
 /**
@@ -223,16 +223,16 @@ __STATIC_INLINE void  Configure_TIM(void)
   * @param  None
   * @retval None
   */
-__STATIC_INLINE void LED_Init(void)
+__STATIC_INLINE void LED_Init( void )
 {
-  /* Enable the LED2 Clock */
-  LED2_GPIO_CLK_ENABLE();
+    /* Enable the LED2 Clock */
+    LED2_GPIO_CLK_ENABLE();
 
-  /* Configure IO in output push-pull mode to drive external LED2 */
-  LL_GPIO_SetPinMode(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT);
-  LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
-  LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
-  LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
+    /* Configure IO in output push-pull mode to drive external LED2 */
+    LL_GPIO_SetPinMode( LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT );
+    LL_GPIO_SetPinOutputType( LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL );
+    LL_GPIO_SetPinSpeed( LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW );
+    LL_GPIO_SetPinPull( LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO );
 }
 
 /**
@@ -244,14 +244,14 @@ __STATIC_INLINE void LED_Init(void)
   *     @arg LED_BLINK_ERROR : Error specific Blinking
   * @retval None
   */
-__STATIC_INLINE void LED_Blinking(uint32_t Period)
+__STATIC_INLINE void LED_Blinking( uint32_t Period )
 {
-  /* Toggle IO in an infinite loop */
-  while (1)
-  {
-    LL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);  
-    LL_mDelay(Period);
-  }
+    /* Toggle IO in an infinite loop */
+    while( 1 )
+    {
+        LL_GPIO_TogglePin( LED2_GPIO_PORT, LED2_PIN );
+        LL_mDelay( Period );
+    }
 }
 
 /**
@@ -269,57 +269,62 @@ __STATIC_INLINE void LED_Blinking(uint32_t Period)
   *            Flash Latency(WS)              = 1
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
-  /* Enable ACC64 access and set FLASH latency */ 
-  LL_FLASH_Enable64bitAccess();; 
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
+    /* Enable ACC64 access and set FLASH latency */
+    LL_FLASH_Enable64bitAccess();;
+    LL_FLASH_SetLatency( LL_FLASH_LATENCY_1 );
 
-  /* Set Voltage scale1 as MCU will run at 32MHz */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-  LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
-  
-  /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
-  while (LL_PWR_IsActiveFlag_VOSF() != 0)
-  {
-  };
-  
-  /* Enable HSI if not already activated*/
-  if (LL_RCC_HSI_IsReady() == 0)
-  {
-    /* HSI configuration and activation */
-    LL_RCC_HSI_Enable();
-    while(LL_RCC_HSI_IsReady() != 1)
+    /* Set Voltage scale1 as MCU will run at 32MHz */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_PWR );
+    LL_PWR_SetRegulVoltageScaling( LL_PWR_REGU_VOLTAGE_SCALE1 );
+
+    /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+    while( LL_PWR_IsActiveFlag_VOSF() != 0 )
     {
     };
-  }
-  
-  /* Main PLL configuration and activation */
-  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3);
 
-  LL_RCC_PLL_Enable();
-  while(LL_RCC_PLL_IsReady() != 1)
-  {
-  };
-  
-  /* Sysclk activation on the main PLL */
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
-  {
-  };
-  
-  /* Set APB1 & APB2 prescaler*/
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
+    /* Enable HSI if not already activated*/
+    if( LL_RCC_HSI_IsReady() == 0 )
+    {
+        /* HSI configuration and activation */
+        LL_RCC_HSI_Enable();
 
-  /* Set systick to 1ms in using frequency set to 32MHz                             */
-  /* This frequency can be calculated through LL RCC macro                          */
-  /* ex: __LL_RCC_CALC_PLLCLK_FREQ (HSI_VALUE, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3); */
-  LL_Init1msTick(32000000);
-  
-  /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
-  LL_SetSystemCoreClock(32000000);
+        while( LL_RCC_HSI_IsReady() != 1 )
+        {
+        };
+    }
+
+    /* Main PLL configuration and activation */
+    LL_RCC_PLL_ConfigDomain_SYS( LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3 );
+
+    LL_RCC_PLL_Enable();
+
+    while( LL_RCC_PLL_IsReady() != 1 )
+    {
+    };
+
+    /* Sysclk activation on the main PLL */
+    LL_RCC_SetAHBPrescaler( LL_RCC_SYSCLK_DIV_1 );
+
+    LL_RCC_SetSysClkSource( LL_RCC_SYS_CLKSOURCE_PLL );
+
+    while( LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL )
+    {
+    };
+
+    /* Set APB1 & APB2 prescaler*/
+    LL_RCC_SetAPB1Prescaler( LL_RCC_APB1_DIV_1 );
+
+    LL_RCC_SetAPB2Prescaler( LL_RCC_APB2_DIV_1 );
+
+    /* Set systick to 1ms in using frequency set to 32MHz                             */
+    /* This frequency can be calculated through LL RCC macro                          */
+    /* ex: __LL_RCC_CALC_PLLCLK_FREQ (HSI_VALUE, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3); */
+    LL_Init1msTick( 32000000 );
+
+    /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
+    LL_SetSystemCoreClock( 32000000 );
 }
 
 /******************************************************************************/
@@ -330,23 +335,23 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-void TimerUpdate_Callback(void)
+void TimerUpdate_Callback( void )
 {
-  static uint32_t UpdateEventCnt = 0;
+    static uint32_t UpdateEventCnt = 0;
 
-  /* At every update event the CCR3 register is updated with a new value */
-  /* which is DMA transferred from aCCValue[].                           */
-  /* Note that the update event (UEV) is generated after upcounting is   */
-  /* repeated for the number of times programmed in the repetition       */
-  /* counter register (TIM1_RCR) + 1                                     */
-  if (LL_TIM_OC_GetCompareCH3(TIM3) != aCCValue[UpdateEventCnt])
-  {
-    LED_Blinking(LED_BLINK_ERROR);
-  }
-  else
-  {
-    UpdateEventCnt = (UpdateEventCnt+1) % CC_VALUE_NB;
-  }
+    /* At every update event the CCR3 register is updated with a new value */
+    /* which is DMA transferred from aCCValue[].                           */
+    /* Note that the update event (UEV) is generated after upcounting is   */
+    /* repeated for the number of times programmed in the repetition       */
+    /* counter register (TIM1_RCR) + 1                                     */
+    if( LL_TIM_OC_GetCompareCH3( TIM3 ) != aCCValue[UpdateEventCnt] )
+    {
+        LED_Blinking( LED_BLINK_ERROR );
+    }
+    else
+    {
+        UpdateEventCnt = ( UpdateEventCnt + 1 ) % CC_VALUE_NB;
+    }
 }
 
 /**
@@ -357,12 +362,12 @@ void TimerUpdate_Callback(void)
   */
 void TransferComplete_Callback()
 {
-  /* Once the DMA transfer is completed the CCR3 value must match */
-  /* the value of the last element of aCCValue[].                 */
-  if (LL_TIM_OC_GetCompareCH3(TIM3) != aCCValue[CC_VALUE_NB-1])
-  {
-    LED_Blinking(LED_BLINK_ERROR);
-  }
+    /* Once the DMA transfer is completed the CCR3 value must match */
+    /* the value of the last element of aCCValue[].                 */
+    if( LL_TIM_OC_GetCompareCH3( TIM3 ) != aCCValue[CC_VALUE_NB - 1] )
+    {
+        LED_Blinking( LED_BLINK_ERROR );
+    }
 }
 
 /**
@@ -373,7 +378,7 @@ void TransferComplete_Callback()
   */
 void TransferError_Callback()
 {
-  LED_Blinking(LED_BLINK_ERROR);
+    LED_Blinking( LED_BLINK_ERROR );
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -385,15 +390,15 @@ void TransferError_Callback()
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d", file, line) */
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 

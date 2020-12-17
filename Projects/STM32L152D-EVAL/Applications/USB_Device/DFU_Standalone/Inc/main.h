@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    USB_Device/DFU_Standalone/Inc/main.h 
+  * @file    USB_Device/DFU_Standalone/Inc/main.h
   * @author  MCD Application Team
   * @brief   Header for main.c module
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright © 2017 STMicroelectronics International N.V. 
+  * <h2><center>&copy; Copyright © 2017 STMicroelectronics International N.V.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license SLA0044,
@@ -16,7 +16,7 @@
   *
   ******************************************************************************
   */
-  
+
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __MAIN_H
 #define __MAIN_H

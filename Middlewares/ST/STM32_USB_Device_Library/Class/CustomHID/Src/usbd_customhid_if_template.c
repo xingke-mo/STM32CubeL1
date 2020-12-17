@@ -3,7 +3,7 @@
   * @file    usbd_customhid_if_template.c
   * @author  MCD Application Team
   * @brief   USB Device Custom HID interface file.
-  *		     This template should be copied to the user folder, renamed and customized
+  *          This template should be copied to the user folder, renamed and customized
   *          following user needs.
   ******************************************************************************
   * @attention
@@ -19,10 +19,10 @@
   ******************************************************************************
   */
 
-  /* BSPDependencies
-  - "stm32xxxxx_{eval}{discovery}{nucleo_144}.c"
-  - "stm32xxxxx_{eval}{discovery}_io.c"
-  EndBSPDependencies */
+/* BSPDependencies
+- "stm32xxxxx_{eval}{discovery}{nucleo_144}.c"
+- "stm32xxxxx_{eval}{discovery}_io.c"
+EndBSPDependencies */
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_customhid_if_template.h"
@@ -31,16 +31,16 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 
-static int8_t TEMPLATE_CUSTOM_HID_Init     (void);
-static int8_t TEMPLATE_CUSTOM_HID_DeInit   (void);
-static int8_t TEMPLATE_CUSTOM_HID_OutEvent (uint8_t event_idx, uint8_t state);
+static int8_t TEMPLATE_CUSTOM_HID_Init( void );
+static int8_t TEMPLATE_CUSTOM_HID_DeInit( void );
+static int8_t TEMPLATE_CUSTOM_HID_OutEvent( uint8_t event_idx, uint8_t state );
 /* Private variables ---------------------------------------------------------*/
 USBD_CUSTOM_HID_ItfTypeDef USBD_CustomHID_template_fops =
 {
-  TEMPLATE_CUSTOM_HID_ReportDesc,
-  TEMPLATE_CUSTOM_HID_Init,
-  TEMPLATE_CUSTOM_HID_DeInit,
-  TEMPLATE_CUSTOM_HID_OutEvent,
+    TEMPLATE_CUSTOM_HID_ReportDesc,
+    TEMPLATE_CUSTOM_HID_Init,
+    TEMPLATE_CUSTOM_HID_DeInit,
+    TEMPLATE_CUSTOM_HID_OutEvent,
 };
 
 /* Private functions ---------------------------------------------------------*/
@@ -51,10 +51,10 @@ USBD_CUSTOM_HID_ItfTypeDef USBD_CustomHID_template_fops =
   * @param  None
   * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
   */
-static int8_t TEMPLATE_CUSTOM_HID_Init(void)
+static int8_t TEMPLATE_CUSTOM_HID_Init( void )
 {
 
-  return (0);
+    return ( 0 );
 }
 
 /**
@@ -63,12 +63,12 @@ static int8_t TEMPLATE_CUSTOM_HID_Init(void)
   * @param  None
   * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
   */
-static int8_t TEMPLATE_CUSTOM_HID_DeInit(void)
+static int8_t TEMPLATE_CUSTOM_HID_DeInit( void )
 {
-  /*
-     Add your deinitialization code here
-  */
-  return (0);
+    /*
+       Add your deinitialization code here
+    */
+    return ( 0 );
 }
 
 
@@ -79,9 +79,9 @@ static int8_t TEMPLATE_CUSTOM_HID_DeInit(void)
   * @param  state: event state
   * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
   */
-static int8_t TEMPLATE_CUSTOM_HID_OutEvent  (uint8_t event_idx, uint8_t state)
+static int8_t TEMPLATE_CUSTOM_HID_OutEvent( uint8_t event_idx, uint8_t state )
 {
 
-  return (0);
+    return ( 0 );
 }
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

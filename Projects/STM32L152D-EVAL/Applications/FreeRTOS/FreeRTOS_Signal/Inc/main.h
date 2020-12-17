@@ -2,12 +2,12 @@
   ******************************************************************************
   * @file    FreeRTOS/FreeRTOS_Signal/Inc/main.h
   * @author  MCD Application Team
-  * @brief   This file contains all the functions prototypes for the main.c 
+  * @brief   This file contains all the functions prototypes for the main.c
   *          file.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license SLA0044,
@@ -23,7 +23,7 @@
 #define __MAIN_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -31,7 +31,7 @@
 #include "stm32l152d_eval.h"
 
 /* Exported types ------------------------------------------------------------*/
-/* Exported constants --------------------------------------------------------*/ 
+/* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 

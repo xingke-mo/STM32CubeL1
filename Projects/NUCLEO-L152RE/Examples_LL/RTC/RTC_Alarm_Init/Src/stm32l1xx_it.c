@@ -1,4 +1,4 @@
-/** 
+/**
   ******************************************************************************
   * @file    Examples_LL/RTC/RTC_Alarm_Init/Src/stm32l1xx_it.c
   * @author  MCD Application Team
@@ -47,7 +47,7 @@
   * @param  None
   * @retval None
   */
-void NMI_Handler(void)
+void NMI_Handler( void )
 {
 }
 
@@ -56,12 +56,12 @@ void NMI_Handler(void)
   * @param  None
   * @retval None
   */
-void HardFault_Handler(void)
+void HardFault_Handler( void )
 {
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Hard Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -69,12 +69,12 @@ void HardFault_Handler(void)
   * @param  None
   * @retval None
   */
-void MemManage_Handler(void)
+void MemManage_Handler( void )
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Memory Manage exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -82,12 +82,12 @@ void MemManage_Handler(void)
   * @param  None
   * @retval None
   */
-void BusFault_Handler(void)
+void BusFault_Handler( void )
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Bus Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -95,12 +95,12 @@ void BusFault_Handler(void)
   * @param  None
   * @retval None
   */
-void UsageFault_Handler(void)
+void UsageFault_Handler( void )
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Usage Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -108,7 +108,7 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
-void SVC_Handler(void)
+void SVC_Handler( void )
 {
 }
 
@@ -117,7 +117,7 @@ void SVC_Handler(void)
   * @param  None
   * @retval None
   */
-void DebugMon_Handler(void)
+void DebugMon_Handler( void )
 {
 }
 
@@ -126,7 +126,7 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-void PendSV_Handler(void)
+void PendSV_Handler( void )
 {
 }
 
@@ -135,7 +135,7 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
+void SysTick_Handler( void )
 {
 }
 
@@ -151,23 +151,24 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
-void RTC_Alarm_IRQHandler(void)
+void RTC_Alarm_IRQHandler( void )
 {
-  /* Get the Alarm interrupt source enable status */
-  if(LL_RTC_IsEnabledIT_ALRA(RTC) != 0)
-  {
-    /* Get the pending status of the Alarm Interrupt */
-    if(LL_RTC_IsActiveFlag_ALRA(RTC) != 0)
+    /* Get the Alarm interrupt source enable status */
+    if( LL_RTC_IsEnabledIT_ALRA( RTC ) != 0 )
     {
-      /* Alarm callback */ 
-      Alarm_Callback();
-      
-      /* Clear the Alarm interrupt pending bit */
-      LL_RTC_ClearFlag_ALRA(RTC);
+        /* Get the pending status of the Alarm Interrupt */
+        if( LL_RTC_IsActiveFlag_ALRA( RTC ) != 0 )
+        {
+            /* Alarm callback */
+            Alarm_Callback();
+
+            /* Clear the Alarm interrupt pending bit */
+            LL_RTC_ClearFlag_ALRA( RTC );
+        }
     }
-  }
-  /* Clear the EXTI's Flag for RTC Alarm */
-  LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_17);
+
+    /* Clear the EXTI's Flag for RTC Alarm */
+    LL_EXTI_ClearFlag_0_31( LL_EXTI_LINE_17 );
 }
 
 /**

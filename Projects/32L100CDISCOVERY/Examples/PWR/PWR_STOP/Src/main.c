@@ -30,11 +30,11 @@
   */
 
 /* Private typedef -----------------------------------------------------------*/
-typedef enum 
+typedef enum
 {
-  WAKE_UP_NONE = 0,
-  WAKE_UP_BUTTON,
-  WAKE_UP_RTC
+    WAKE_UP_NONE = 0,
+    WAKE_UP_BUTTON,
+    WAKE_UP_RTC
 } WakeUpSource_TypeDef;
 
 /* Private define ------------------------------------------------------------*/
@@ -48,8 +48,8 @@ static __IO uint32_t TimingDelay;
 __IO WakeUpSource_TypeDef WakeUpSource = WAKE_UP_NONE;
 
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
-static void SYSCLKConfig_STOP(void);
+void SystemClock_Config( void );
+static void SYSCLKConfig_STOP( void );
 /* Private functions ---------------------------------------------------------*/
 
 /**
@@ -57,90 +57,91 @@ static void SYSCLKConfig_STOP(void);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  /* STM32L1xx HAL library initialization:
-       - Configure the Flash prefetch
-       - Systick timer is configured by default as source of time base, but user 
-         can eventually implement his proper time base source (a general purpose 
-         timer for example or other time source), keeping in mind that Time base 
-         duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
-         handled in milliseconds basis.
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
-  HAL_Init();
+    /* STM32L1xx HAL library initialization:
+         - Configure the Flash prefetch
+         - Systick timer is configured by default as source of time base, but user
+           can eventually implement his proper time base source (a general purpose
+           timer for example or other time source), keeping in mind that Time base
+           duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and
+           handled in milliseconds basis.
+         - Set NVIC Group Priority to 4
+         - Low Level Initialization
+       */
+    HAL_Init();
 
-  /* Configure LED3, and LED4 */
-  BSP_LED_Init(LED3);
-  BSP_LED_Init(LED4);
+    /* Configure LED3, and LED4 */
+    BSP_LED_Init( LED3 );
+    BSP_LED_Init( LED4 );
 
-  /* Configure the system clock to 32 MHz */
-  SystemClock_Config();
+    /* Configure the system clock to 32 MHz */
+    SystemClock_Config();
 
-  /* User push-button (EXTI_Line0) will be used to wakeup the system from STOP mode */
-  BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI);
+    /* User push-button (EXTI_Line0) will be used to wakeup the system from STOP mode */
+    BSP_PB_Init( BUTTON_USER, BUTTON_MODE_EXTI );
 
-  /*## Configure the RTC peripheral #######################################*/
-  /* Enable Power Clock */
-  __HAL_RCC_PWR_CLK_ENABLE();
+    /*## Configure the RTC peripheral #######################################*/
+    /* Enable Power Clock */
+    __HAL_RCC_PWR_CLK_ENABLE();
 
-  /* Allow Access to RTC Backup domaine */
-  HAL_PWR_EnableBkUpAccess();
+    /* Allow Access to RTC Backup domaine */
+    HAL_PWR_EnableBkUpAccess();
 
-  RTCHandle.Instance = RTC;
-  /* Configure RTC prescaler and RTC data registers as follows:
-  - Hour Format = Format 24
-  - Asynch Prediv = Value according to source clock
-  - Synch Prediv = Value according to source clock
-  - OutPut = Output Disable
-  - OutPutPolarity = High Polarity
-  - OutPutType = Open Drain */
-  RTCHandle.Init.HourFormat = RTC_HOURFORMAT_24;
-  RTCHandle.Init.AsynchPrediv = RTC_ASYNCH_PREDIV;
-  RTCHandle.Init.SynchPrediv = RTC_SYNCH_PREDIV;
-  RTCHandle.Init.OutPut = RTC_OUTPUT_DISABLE;
-  RTCHandle.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
-  RTCHandle.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
-  if (HAL_RTC_Init(&RTCHandle) != HAL_OK)
-  {
-    /* Initialization Error */
-    Error_Handler();
-  }
+    RTCHandle.Instance = RTC;
+    /* Configure RTC prescaler and RTC data registers as follows:
+    - Hour Format = Format 24
+    - Asynch Prediv = Value according to source clock
+    - Synch Prediv = Value according to source clock
+    - OutPut = Output Disable
+    - OutPutPolarity = High Polarity
+    - OutPutType = Open Drain */
+    RTCHandle.Init.HourFormat = RTC_HOURFORMAT_24;
+    RTCHandle.Init.AsynchPrediv = RTC_ASYNCH_PREDIV;
+    RTCHandle.Init.SynchPrediv = RTC_SYNCH_PREDIV;
+    RTCHandle.Init.OutPut = RTC_OUTPUT_DISABLE;
+    RTCHandle.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+    RTCHandle.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
 
-  while (1)
-  {
-    /* Insert 5 second delay */
-    HAL_Delay(5000);
+    if( HAL_RTC_Init( &RTCHandle ) != HAL_OK )
+    {
+        /* Initialization Error */
+        Error_Handler();
+    }
 
-    /*## Configure the Wake up timer ###########################################*/
-    /*  RTC Wakeup Interrupt Generation:
-        Wakeup Time Base = (RTC_WAKEUPCLOCK_RTCCLK_DIV /(LSI))
-        Wakeup Time = Wakeup Time Base * WakeUpCounter 
-                    = (RTC_WAKEUPCLOCK_RTCCLK_DIV /(LSI)) * WakeUpCounter
-        ==> WakeUpCounter = Wakeup Time / Wakeup Time Base
-  
-        To configure the wake up timer to 4s the WakeUpCounter is set to 0x242B:
-          RTC_WAKEUPCLOCK_RTCCLK_DIV = RTCCLK_Div16 = 16 
-          Wakeup Time Base = 16 /(~37KHz) = ~0,432 ms
-          Wakeup Time = ~4s = 0,432ms  * WakeUpCounter
-          ==> WakeUpCounter = ~4s/0,432ms = 9259 = 0x242B */
-    HAL_RTCEx_SetWakeUpTimer_IT(&RTCHandle, 0x242B, RTC_WAKEUPCLOCK_RTCCLK_DIV16);
+    while( 1 )
+    {
+        /* Insert 5 second delay */
+        HAL_Delay( 5000 );
 
-    /* Turn OFF LED's */
-    BSP_LED_Off(LED3);
-    BSP_LED_Off(LED4);
+        /*## Configure the Wake up timer ###########################################*/
+        /*  RTC Wakeup Interrupt Generation:
+            Wakeup Time Base = (RTC_WAKEUPCLOCK_RTCCLK_DIV /(LSI))
+            Wakeup Time = Wakeup Time Base * WakeUpCounter
+                        = (RTC_WAKEUPCLOCK_RTCCLK_DIV /(LSI)) * WakeUpCounter
+            ==> WakeUpCounter = Wakeup Time / Wakeup Time Base
 
-    /* Enter Stop Mode */
-    HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+            To configure the wake up timer to 4s the WakeUpCounter is set to 0x242B:
+              RTC_WAKEUPCLOCK_RTCCLK_DIV = RTCCLK_Div16 = 16
+              Wakeup Time Base = 16 /(~37KHz) = ~0,432 ms
+              Wakeup Time = ~4s = 0,432ms  * WakeUpCounter
+              ==> WakeUpCounter = ~4s/0,432ms = 9259 = 0x242B */
+        HAL_RTCEx_SetWakeUpTimer_IT( &RTCHandle, 0x242B, RTC_WAKEUPCLOCK_RTCCLK_DIV16 );
 
-    /* Disable Wakeup Counter */
-    HAL_RTCEx_DeactivateWakeUpTimer(&RTCHandle);
+        /* Turn OFF LED's */
+        BSP_LED_Off( LED3 );
+        BSP_LED_Off( LED4 );
 
-    /* Configures system clock after wake-up from STOP: enable HSE, PLL and select
-    PLL as system clock source (HSE and PLL are disabled in STOP mode) */
-    SYSCLKConfig_STOP();
-  }
+        /* Enter Stop Mode */
+        HAL_PWR_EnterSTOPMode( PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI );
+
+        /* Disable Wakeup Counter */
+        HAL_RTCEx_DeactivateWakeUpTimer( &RTCHandle );
+
+        /* Configures system clock after wake-up from STOP: enable HSE, PLL and select
+        PLL as system clock source (HSE and PLL are disabled in STOP mode) */
+        SYSCLKConfig_STOP();
+    }
 }
 
 /**
@@ -158,42 +159,48 @@ int main(void)
   *            Flash Latency(WS)              = 1
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 
-  /* Enable HSE Oscillator and Activate PLL with HSE as source */
-  RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState            = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLL_MUL6;
-  RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLL_DIV3;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /* Enable HSE Oscillator and Activate PLL with HSE as source */
+    RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSI;
+    RCC_OscInitStruct.HSIState            = RCC_HSI_ON;
+    RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+    RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
+    RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSI;
+    RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLL_MUL6;
+    RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLL_DIV3;
 
-  /* Set Voltage scale1 as MCU will run at 32MHz */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-  
-  /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
-  while (__HAL_PWR_GET_FLAG(PWR_FLAG_VOS) != RESET) {};
+    if( HAL_RCC_OscConfig( &RCC_OscInitStruct ) != HAL_OK )
+    {
+        Error_Handler();
+    }
 
-  /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
-  clocks dividers */
-  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /* Set Voltage scale1 as MCU will run at 32MHz */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    __HAL_PWR_VOLTAGESCALING_CONFIG( PWR_REGULATOR_VOLTAGE_SCALE1 );
+
+    /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+    while( __HAL_PWR_GET_FLAG( PWR_FLAG_VOS ) != RESET ) {};
+
+    /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
+    clocks dividers */
+    RCC_ClkInitStruct.ClockType = ( RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 );
+
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+    if( HAL_RCC_ClockConfig( &RCC_ClkInitStruct, FLASH_LATENCY_1 ) != HAL_OK )
+    {
+        Error_Handler();
+    }
 }
 /**
   * @brief  Configures system clock after wake-up from STOP: enable HSI, PLL
@@ -201,39 +208,41 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-static void SYSCLKConfig_STOP(void)
+static void SYSCLKConfig_STOP( void )
 {
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  uint32_t pFLatency = 0;
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    uint32_t pFLatency = 0;
 
-  /* Enable Power Control clock */
-  __HAL_RCC_PWR_CLK_ENABLE();
+    /* Enable Power Control clock */
+    __HAL_RCC_PWR_CLK_ENABLE();
 
-  /* Get the Oscillators configuration according to the internal RCC registers */
-  HAL_RCC_GetOscConfig(&RCC_OscInitStruct);
+    /* Get the Oscillators configuration according to the internal RCC registers */
+    HAL_RCC_GetOscConfig( &RCC_OscInitStruct );
 
-  /* After wake-up from STOP reconfigure the system clock: Enable HSI and PLL */
-  RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState            = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /* After wake-up from STOP reconfigure the system clock: Enable HSI and PLL */
+    RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSI;
+    RCC_OscInitStruct.HSIState            = RCC_HSI_ON;
+    RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+    RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
 
-  /* Get the Clocks configuration according to the internal RCC registers */
-  HAL_RCC_GetClockConfig(&RCC_ClkInitStruct, &pFLatency);
+    if( HAL_RCC_OscConfig( &RCC_OscInitStruct ) != HAL_OK )
+    {
+        Error_Handler();
+    }
 
-  /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
-     clocks dividers */
-  RCC_ClkInitStruct.ClockType     = RCC_CLOCKTYPE_SYSCLK;
-  RCC_ClkInitStruct.SYSCLKSource  = RCC_SYSCLKSOURCE_PLLCLK;
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, pFLatency) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /* Get the Clocks configuration according to the internal RCC registers */
+    HAL_RCC_GetClockConfig( &RCC_ClkInitStruct, &pFLatency );
+
+    /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
+       clocks dividers */
+    RCC_ClkInitStruct.ClockType     = RCC_CLOCKTYPE_SYSCLK;
+    RCC_ClkInitStruct.SYSCLKSource  = RCC_SYSCLKSOURCE_PLLCLK;
+
+    if( HAL_RCC_ClockConfig( &RCC_ClkInitStruct, pFLatency ) != HAL_OK )
+    {
+        Error_Handler();
+    }
 }
 
 /**
@@ -241,17 +250,18 @@ static void SYSCLKConfig_STOP(void)
   * @param  None
   * @retval None
   */
-void Error_Handler(void)
+void Error_Handler( void )
 {
-  /* Suspend tick */
-  HAL_SuspendTick();
-  
-  /* Turn LED3 & LED4 */
-  BSP_LED_On(LED3);
-  BSP_LED_On(LED4);
-  while (1)
-  {
-  }
+    /* Suspend tick */
+    HAL_SuspendTick();
+
+    /* Turn LED3 & LED4 */
+    BSP_LED_On( LED3 );
+    BSP_LED_On( LED4 );
+
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -259,33 +269,34 @@ void Error_Handler(void)
   * @param None
   * @retval None
   */
-void HAL_SYSTICK_Callback(void)
+void HAL_SYSTICK_Callback( void )
 {
-  HAL_IncTick();
+    HAL_IncTick();
 
-  if (TimingDelay != 0)
-  {
-    TimingDelay--;
-  }
-  else
-  {
-    if (WakeUpSource == WAKE_UP_RTC)
+    if( TimingDelay != 0 )
     {
-      /* Wake source was RTC, Toggle LED4 */
-      BSP_LED_Toggle(LED4);
-    }
-    else if (WakeUpSource == WAKE_UP_BUTTON)
-    {
-      /* Wake source was BUTTON, Toggle LED3 */
-      BSP_LED_Toggle(LED3);
+        TimingDelay--;
     }
     else
     {
-      /* No Wake source yet, Toggle LED3 */
-      BSP_LED_Toggle(LED3);
+        if( WakeUpSource == WAKE_UP_RTC )
+        {
+            /* Wake source was RTC, Toggle LED4 */
+            BSP_LED_Toggle( LED4 );
+        }
+        else if( WakeUpSource == WAKE_UP_BUTTON )
+        {
+            /* Wake source was BUTTON, Toggle LED3 */
+            BSP_LED_Toggle( LED3 );
+        }
+        else
+        {
+            /* No Wake source yet, Toggle LED3 */
+            BSP_LED_Toggle( LED3 );
+        }
+
+        TimingDelay = LED_TOGGLE_DELAY;
     }
-    TimingDelay = LED_TOGGLE_DELAY;
-  }
 }
 
 /**
@@ -293,11 +304,11 @@ void HAL_SYSTICK_Callback(void)
   * @param  hrtc : hrtc handle
   * @retval None
   */
-void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
+void HAL_RTCEx_WakeUpTimerEventCallback( RTC_HandleTypeDef *hrtc )
 {
-  WakeUpSource = WAKE_UP_RTC;
-  /* Switch on LED3 */
-  BSP_LED_On(LED3);
+    WakeUpSource = WAKE_UP_RTC;
+    /* Switch on LED3 */
+    BSP_LED_On( LED3 );
 }
 
 /**
@@ -305,14 +316,14 @@ void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
   * @param GPIO_Pin: Specifies the pins connected EXTI line
   * @retval None
   */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+void HAL_GPIO_EXTI_Callback( uint16_t GPIO_Pin )
 {
-  if (GPIO_Pin == USER_BUTTON_PIN)
-  {
-    WakeUpSource = WAKE_UP_BUTTON;
-    /* Switch on LED4 */
-    BSP_LED_On(LED4);
-  }
+    if( GPIO_Pin == USER_BUTTON_PIN )
+    {
+        WakeUpSource = WAKE_UP_BUTTON;
+        /* Switch on LED4 */
+        BSP_LED_On( LED4 );
+    }
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -324,15 +335,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 

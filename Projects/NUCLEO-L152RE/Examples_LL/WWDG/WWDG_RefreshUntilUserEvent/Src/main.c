@@ -36,12 +36,12 @@
 /* Private variables ---------------------------------------------------------*/
 static __IO uint8_t KeyPressed = 0;
 /* Private function prototypes -----------------------------------------------*/
-void     SystemClock_Config(void);
-void     Check_WWDG_Reset(void);
-void     Configure_WWDG(void);
-void     LED_Init(void);
-void     LED_On(void);
-void     UserButton_Init(void);
+void     SystemClock_Config( void );
+void     Check_WWDG_Reset( void );
+void     Configure_WWDG( void );
+void     LED_Init( void );
+void     LED_On( void );
+void     UserButton_Init( void );
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -50,39 +50,39 @@ void     UserButton_Init(void);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  /* Configure the system clock to 2MHz */
-  SystemClock_Config();
-	
-  /* Initialize LED2 */
-  LED_Init();
+    /* Configure the system clock to 2MHz */
+    SystemClock_Config();
 
-  /* Initialize button in EXTI mode */
-  UserButton_Init();
-  
-  /* Check if the system has resumed from WWDG reset*/
-  Check_WWDG_Reset();
-  
-  /* Configure the WWDG                    */
-  /*   - Configure the Window to ~2s       */
-  /*   - Configure the Prescaler           */
-  /*   - Configure the Downcounter to ~2s  */
-  /*   - Enable the WWDG                   */
-  Configure_WWDG();
+    /* Initialize LED2 */
+    LED_Init();
 
-  /* Infinite loop */
-  while (1)
-  {
-    if (1 != KeyPressed)
+    /* Initialize button in EXTI mode */
+    UserButton_Init();
+
+    /* Check if the system has resumed from WWDG reset*/
+    Check_WWDG_Reset();
+
+    /* Configure the WWDG                    */
+    /*   - Configure the Window to ~2s       */
+    /*   - Configure the Prescaler           */
+    /*   - Configure the Downcounter to ~2s  */
+    /*   - Enable the WWDG                   */
+    Configure_WWDG();
+
+    /* Infinite loop */
+    while( 1 )
     {
-      /* Refresh WWDG Downcounter to initial value ~2s*/
-      LL_WWDG_SetCounter(WWDG, 0X7E);
-      
-      LL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
-      LL_mDelay(LED_BLINK_FAST);
+        if( 1 != KeyPressed )
+        {
+            /* Refresh WWDG Downcounter to initial value ~2s*/
+            LL_WWDG_SetCounter( WWDG, 0X7E );
+
+            LL_GPIO_TogglePin( LED2_GPIO_PORT, LED2_PIN );
+            LL_mDelay( LED_BLINK_FAST );
+        }
     }
-  }
 }
 
 /**
@@ -90,23 +90,23 @@ int main(void)
   * @param  None
   * @retval None
   */
-void Configure_WWDG(void)
+void Configure_WWDG( void )
 {
-  /* Enable the peripheral clock of DBG register (uncomment for debug purpose) */
-  /*LL_DBGMCU_APB1_GRP1_FreezePeriph(LL_DBGMCU_APB1_GRP1_WWDG_STOP); */
-  
-  /* Enable the peripheral clock WWDG */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_WWDG);
+    /* Enable the peripheral clock of DBG register (uncomment for debug purpose) */
+    /*LL_DBGMCU_APB1_GRP1_FreezePeriph(LL_DBGMCU_APB1_GRP1_WWDG_STOP); */
 
-  /* Configure WWDG */
-  /* (1) set prescaler to have a rollover each about ~2s */
-  /* (2) set window value to same value (~2s) as downcounter in order to ba able to refresh the WWDG almost immediately */
-  /* (3) Refresh WWDG before activate it */
-  /* (4) Activate WWDG */
-  LL_WWDG_SetPrescaler(WWDG, LL_WWDG_PRESCALER_8); /* (1) */
-  LL_WWDG_SetWindow(WWDG,0x7E);                    /* (2) */
-  LL_WWDG_SetCounter(WWDG, 0X7E);                  /* (3) */
-  LL_WWDG_Enable(WWDG);                            /* (4) */
+    /* Enable the peripheral clock WWDG */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_WWDG );
+
+    /* Configure WWDG */
+    /* (1) set prescaler to have a rollover each about ~2s */
+    /* (2) set window value to same value (~2s) as downcounter in order to ba able to refresh the WWDG almost immediately */
+    /* (3) Refresh WWDG before activate it */
+    /* (4) Activate WWDG */
+    LL_WWDG_SetPrescaler( WWDG, LL_WWDG_PRESCALER_8 ); /* (1) */
+    LL_WWDG_SetWindow( WWDG, 0x7E );                 /* (2) */
+    LL_WWDG_SetCounter( WWDG, 0X7E );                /* (3) */
+    LL_WWDG_Enable( WWDG );                          /* (4) */
 }
 
 /**
@@ -114,23 +114,23 @@ void Configure_WWDG(void)
   * @param  None
   * @retval None
   */
-void Check_WWDG_Reset(void)
+void Check_WWDG_Reset( void )
 {
-  if (LL_RCC_IsActiveFlag_WWDGRST())
-  {
-    /* clear WWDG reset flag */
-    LL_RCC_ClearResetFlags();
-
-    /* turn Led on and wait for user event to perform example again */
-    LED_On();
-    
-    while(KeyPressed != 1)
+    if( LL_RCC_IsActiveFlag_WWDGRST() )
     {
-    }
+        /* clear WWDG reset flag */
+        LL_RCC_ClearResetFlags();
 
-    /* Reset KeyPressed value */
-    KeyPressed = 0;
-  }
+        /* turn Led on and wait for user event to perform example again */
+        LED_On();
+
+        while( KeyPressed != 1 )
+        {
+        }
+
+        /* Reset KeyPressed value */
+        KeyPressed = 0;
+    }
 }
 
 /**
@@ -138,19 +138,19 @@ void Check_WWDG_Reset(void)
   * @param  None
   * @retval None
   */
-void LED_Init(void)
+void LED_Init( void )
 {
-  /* Enable the LED2 Clock */
-  LED2_GPIO_CLK_ENABLE();
+    /* Enable the LED2 Clock */
+    LED2_GPIO_CLK_ENABLE();
 
-  /* Configure IO in output push-pull mode to drive external LED2 */
-  LL_GPIO_SetPinMode(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT);
-  /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
-  //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
-  /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
-  //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
-  /* Reset value is LL_GPIO_PULL_NO */
-  //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
+    /* Configure IO in output push-pull mode to drive external LED2 */
+    LL_GPIO_SetPinMode( LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT );
+    /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
+    //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
+    /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
+    //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
+    /* Reset value is LL_GPIO_PULL_NO */
+    //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
 }
 
 /**
@@ -158,10 +158,10 @@ void LED_Init(void)
   * @param  None
   * @retval None
   */
-void LED_On(void)
+void LED_On( void )
 {
-  /* Turn LED2 on */
-  LL_GPIO_SetOutputPin(LED2_GPIO_PORT, LED2_PIN);
+    /* Turn LED2 on */
+    LL_GPIO_SetOutputPin( LED2_GPIO_PORT, LED2_PIN );
 }
 
 /**
@@ -169,24 +169,24 @@ void LED_On(void)
   * @param  None
   * @retval None
   */
-void UserButton_Init(void)
+void UserButton_Init( void )
 {
-  /* Enable the BUTTON Clock */
-  USER_BUTTON_GPIO_CLK_ENABLE();
-  
-  /* Configure GPIO for BUTTON */
-  LL_GPIO_SetPinMode(USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_MODE_INPUT);
-  LL_GPIO_SetPinPull(USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_PULL_NO);
-  /* Connect External Line to the GPIO*/
-  USER_BUTTON_SYSCFG_SET_EXTI();
-  
-  /* Enable a rising trigger EXTI line 13 Interrupt */
-  USER_BUTTON_EXTI_LINE_ENABLE();
-  USER_BUTTON_EXTI_FALLING_TRIG_ENABLE();
-  
-  /* Configure NVIC for USER_BUTTON_EXTI_IRQn */ 
-  NVIC_SetPriority(USER_BUTTON_EXTI_IRQn,0x03);
-  NVIC_EnableIRQ(USER_BUTTON_EXTI_IRQn);
+    /* Enable the BUTTON Clock */
+    USER_BUTTON_GPIO_CLK_ENABLE();
+
+    /* Configure GPIO for BUTTON */
+    LL_GPIO_SetPinMode( USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_MODE_INPUT );
+    LL_GPIO_SetPinPull( USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_PULL_NO );
+    /* Connect External Line to the GPIO*/
+    USER_BUTTON_SYSCFG_SET_EXTI();
+
+    /* Enable a rising trigger EXTI line 13 Interrupt */
+    USER_BUTTON_EXTI_LINE_ENABLE();
+    USER_BUTTON_EXTI_FALLING_TRIG_ENABLE();
+
+    /* Configure NVIC for USER_BUTTON_EXTI_IRQn */
+    NVIC_SetPriority( USER_BUTTON_EXTI_IRQn, 0x03 );
+    NVIC_EnableIRQ( USER_BUTTON_EXTI_IRQn );
 }
 
 /**
@@ -200,34 +200,36 @@ void UserButton_Init(void)
   *            APB2 Prescaler                 = 1
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
     /* Enable HSI if not already activated*/
-  if (LL_RCC_HSI_IsReady() == 0)
-  {
-    /* HSI configuration and activation */
-    LL_RCC_HSI_Enable();
-    while(LL_RCC_HSI_IsReady() != 1)
+    if( LL_RCC_HSI_IsReady() == 0 )
+    {
+        /* HSI configuration and activation */
+        LL_RCC_HSI_Enable();
+
+        while( LL_RCC_HSI_IsReady() != 1 )
+        {
+        };
+    }
+
+    LL_RCC_SetSysClkSource( LL_RCC_SYS_CLKSOURCE_HSI );
+
+    while( LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI )
     {
     };
-  }
-  
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI)
-  {
-  };
-  
-  /* Set AHB prescaler */
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_8);
-  
-  /* Set APB1 prescaler */
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  
-  /* Set systick to 1ms in using frequency set to 2MHz */
-  LL_Init1msTick(2000000);
-  
-  /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
-  LL_SetSystemCoreClock(2000000);
+
+    /* Set AHB prescaler */
+    LL_RCC_SetAHBPrescaler( LL_RCC_SYSCLK_DIV_8 );
+
+    /* Set APB1 prescaler */
+    LL_RCC_SetAPB1Prescaler( LL_RCC_APB1_DIV_1 );
+
+    /* Set systick to 1ms in using frequency set to 2MHz */
+    LL_Init1msTick( 2000000 );
+
+    /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
+    LL_SetSystemCoreClock( 2000000 );
 }
 
 
@@ -239,9 +241,9 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-void UserButton_Callback(void)
+void UserButton_Callback( void )
 {
-  KeyPressed = 1;
+    KeyPressed = 1;
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -253,15 +255,15 @@ void UserButton_Callback(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d", file, line) */
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 

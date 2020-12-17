@@ -41,8 +41,8 @@
 #define __SPFD5408_H
 
 #ifdef __cplusplus
- extern "C" {
-#endif 
+extern "C" {
+#endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "../Common/lcd.h"
@@ -62,28 +62,28 @@
 /** @defgroup SPFD5408_Exported_Types
   * @{
   */
-   
+
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup SPFD5408_Exported_Constants
   * @{
   */
-/** 
-  * @brief  SPFD5408 ID  
-  */  
+/**
+  * @brief  SPFD5408 ID
+  */
 #define  SPFD5408_ID    0x5408
-   
-/** 
-  * @brief  SPFD5408 Size  
-  */  
+
+/**
+  * @brief  SPFD5408 Size
+  */
 #define  SPFD5408_LCD_PIXEL_WIDTH    ((uint16_t)320)
 #define  SPFD5408_LCD_PIXEL_HEIGHT   ((uint16_t)240)
-   
-/** 
-  * @brief  SPFD5408 Registers  
-  */ 
+
+/**
+  * @brief  SPFD5408 Registers
+  */
 #define LCD_REG_0             0x00
 #define LCD_REG_1             0x01
 #define LCD_REG_2             0x02
@@ -219,44 +219,44 @@
 /**
   * @}
   */
-  
+
 /** @defgroup SPFD5408_Exported_Functions
   * @{
-  */ 
-void     spfd5408_Init(void);
-uint16_t spfd5408_ReadID(void);
-void     spfd5408_WriteReg(uint8_t LCDReg, uint16_t LCDRegValue);
-uint16_t spfd5408_ReadReg(uint8_t LCDReg);
+  */
+void     spfd5408_Init( void );
+uint16_t spfd5408_ReadID( void );
+void     spfd5408_WriteReg( uint8_t LCDReg, uint16_t LCDRegValue );
+uint16_t spfd5408_ReadReg( uint8_t LCDReg );
 
-void     spfd5408_DisplayOn(void);
-void     spfd5408_DisplayOff(void);
-void     spfd5408_SetCursor(uint16_t Xpos, uint16_t Ypos);
-void     spfd5408_WritePixel(uint16_t Xpos, uint16_t Ypos, uint16_t RGBCode);
-uint16_t spfd5408_ReadPixel(uint16_t Xpos, uint16_t Ypos);
+void     spfd5408_DisplayOn( void );
+void     spfd5408_DisplayOff( void );
+void     spfd5408_SetCursor( uint16_t Xpos, uint16_t Ypos );
+void     spfd5408_WritePixel( uint16_t Xpos, uint16_t Ypos, uint16_t RGBCode );
+uint16_t spfd5408_ReadPixel( uint16_t Xpos, uint16_t Ypos );
 
-void     spfd5408_DrawHLine(uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t Length);
-void     spfd5408_DrawVLine(uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t Length);
-void     spfd5408_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp);
+void     spfd5408_DrawHLine( uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t Length );
+void     spfd5408_DrawVLine( uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t Length );
+void     spfd5408_DrawBitmap( uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp );
 
-void     spfd5408_SetDisplayWindow(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
+void     spfd5408_SetDisplayWindow( uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height );
 
 
-uint16_t spfd5408_GetLcdPixelWidth(void);
-uint16_t spfd5408_GetLcdPixelHeight(void);
+uint16_t spfd5408_GetLcdPixelWidth( void );
+uint16_t spfd5408_GetLcdPixelHeight( void );
 
 /* LCD driver structure */
 extern LCD_DrvTypeDef   spfd5408_drv;
 
 /* LCD IO functions */
-void     LCD_IO_Init(void);
-void     LCD_IO_WriteMultipleData(uint8_t *pData, uint32_t Size);
-void     LCD_IO_WriteReg(uint8_t Reg);
-uint16_t LCD_IO_ReadData(uint16_t Reg);
-void     LCD_Delay (uint32_t delay);
+void     LCD_IO_Init( void );
+void     LCD_IO_WriteMultipleData( uint8_t *pData, uint32_t Size );
+void     LCD_IO_WriteReg( uint8_t Reg );
+uint16_t LCD_IO_ReadData( uint16_t Reg );
+void     LCD_Delay( uint32_t delay );
 /**
   * @}
-  */ 
-      
+  */
+
 #ifdef __cplusplus
 }
 #endif
@@ -273,6 +273,6 @@ void     LCD_Delay (uint32_t delay);
 
 /**
   * @}
-  */ 
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

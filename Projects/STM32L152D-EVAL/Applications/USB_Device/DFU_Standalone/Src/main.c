@@ -27,8 +27,8 @@
 USBD_HandleTypeDef USBD_Device;
 
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
-static void Error_Handler(void);
+void SystemClock_Config( void );
+static void Error_Handler( void );
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -37,64 +37,65 @@ static void Error_Handler(void);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  pFunction JumpToApplication;
-  uint32_t JumpAddress;
+    pFunction JumpToApplication;
+    uint32_t JumpAddress;
 
-  /* STM32L1xx HAL library initialization:
-       - Configure the Flash prefetch
-       - Systick timer is configured by default as source of time base, but user
-         can eventually implement his proper time base source (a general purpose
-         timer for example or other time source), keeping in mind that Time base
-         duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and
-         handled in milliseconds basis.
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
-  HAL_Init();
+    /* STM32L1xx HAL library initialization:
+         - Configure the Flash prefetch
+         - Systick timer is configured by default as source of time base, but user
+           can eventually implement his proper time base source (a general purpose
+           timer for example or other time source), keeping in mind that Time base
+           duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and
+           handled in milliseconds basis.
+         - Set NVIC Group Priority to 4
+         - Low Level Initialization
+       */
+    HAL_Init();
 
-  /* Initialize LEDs */
-  BSP_LED_Init(LED3);
+    /* Initialize LEDs */
+    BSP_LED_Init( LED3 );
 
-  /* Configure the system clock to 32 MHz */
-  SystemClock_Config();
+    /* Configure the system clock to 32 MHz */
+    SystemClock_Config();
 
-  /* Configure Key push-button */
-  BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_GPIO);
+    /* Configure Key push-button */
+    BSP_PB_Init( BUTTON_KEY, BUTTON_MODE_GPIO );
 
-  /* Check if the Key push-button is pressed */
-  if (BSP_PB_GetState(BUTTON_KEY) != GPIO_PIN_SET)
-  {
-    /* Test if user code is programmed starting from address 0x08007000 */
-    if (((*(__IO uint32_t*)USBD_DFU_APP_DEFAULT_ADD) & 0x2FFE0000 ) == 0x20000000)
+    /* Check if the Key push-button is pressed */
+    if( BSP_PB_GetState( BUTTON_KEY ) != GPIO_PIN_SET )
     {
-      /* Jump to user application */
-      JumpAddress = *(__IO uint32_t*) (USBD_DFU_APP_DEFAULT_ADD + 4);
-      JumpToApplication = (pFunction) JumpAddress;
+        /* Test if user code is programmed starting from address 0x08007000 */
+        if( ( ( *( __IO uint32_t * )USBD_DFU_APP_DEFAULT_ADD ) & 0x2FFE0000 ) == 0x20000000 )
+        {
+            /* Jump to user application */
+            JumpAddress = *( __IO uint32_t * )( USBD_DFU_APP_DEFAULT_ADD + 4 );
+            JumpToApplication = ( pFunction ) JumpAddress;
 
-      /* Initialize user application's Stack Pointer */
-      __set_MSP(*(__IO uint32_t*) USBD_DFU_APP_DEFAULT_ADD);
-      JumpToApplication();
+            /* Initialize user application's Stack Pointer */
+            __set_MSP( *( __IO uint32_t * ) USBD_DFU_APP_DEFAULT_ADD );
+            JumpToApplication();
+        }
     }
-  }
 
-  /* Otherwise enters DFU mode to allow user to program his application */
-  /* Init Device Library */
-  USBD_Init(&USBD_Device, &DFU_Desc, 0);
+    /* Otherwise enters DFU mode to allow user to program his application */
+    /* Init Device Library */
+    USBD_Init( &USBD_Device, &DFU_Desc, 0 );
 
-  /* Register the DFU class */
-  USBD_RegisterClass(&USBD_Device, &USBD_DFU);
+    /* Register the DFU class */
+    USBD_RegisterClass( &USBD_Device, &USBD_DFU );
 
-  /* Add DFU Media interface */
-  USBD_DFU_RegisterMedia(&USBD_Device, &USBD_DFU_Flash_fops);
+    /* Add DFU Media interface */
+    USBD_DFU_RegisterMedia( &USBD_Device, &USBD_DFU_Flash_fops );
 
-  /* Start Device Process */
-  USBD_Start(&USBD_Device);
-  /* In an infinite loop */
-  while (1)
-  {
-  }
+    /* Start Device Process */
+    USBD_Start( &USBD_Device );
+
+    /* In an infinite loop */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -115,54 +116,61 @@ int main(void)
   * @param  None
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 
-  /* Enable HSE Oscillator and Activate PLL with HSE as source */
-  RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState            = RCC_HSE_ON;
-  RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLL_MUL12;
-  RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLL_DIV3;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /* Enable HSE Oscillator and Activate PLL with HSE as source */
+    RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSE;
+    RCC_OscInitStruct.HSEState            = RCC_HSE_ON;
+    RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
+    RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSE;
+    RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLL_MUL12;
+    RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLL_DIV3;
 
-  /* Set Voltage scale1 as MCU will run at 32MHz */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+    if( HAL_RCC_OscConfig( &RCC_OscInitStruct ) != HAL_OK )
+    {
+        Error_Handler();
+    }
 
-  /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
-  while (__HAL_PWR_GET_FLAG(PWR_FLAG_VOS) != RESET) {};
+    /* Set Voltage scale1 as MCU will run at 32MHz */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    __HAL_PWR_VOLTAGESCALING_CONFIG( PWR_REGULATOR_VOLTAGE_SCALE1 );
 
-  /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
-  clocks dividers */
-  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+    while( __HAL_PWR_GET_FLAG( PWR_FLAG_VOS ) != RESET ) {};
+
+    /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
+    clocks dividers */
+    RCC_ClkInitStruct.ClockType = ( RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 );
+
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+    if( HAL_RCC_ClockConfig( &RCC_ClkInitStruct, FLASH_LATENCY_1 ) != HAL_OK )
+    {
+        Error_Handler();
+    }
 }
 /**
   * @brief  This function is executed in case of error occurrence.
   * @param  None
   * @retval None
   */
-static void Error_Handler(void)
+static void Error_Handler( void )
 {
-  /* Turn LED3 on */
-  BSP_LED_On(LED3);
-  while(1)
-  {
-  }
+    /* Turn LED3 on */
+    BSP_LED_On( LED3 );
+
+    while( 1 )
+    {
+    }
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -173,15 +181,15 @@ static void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t* file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 

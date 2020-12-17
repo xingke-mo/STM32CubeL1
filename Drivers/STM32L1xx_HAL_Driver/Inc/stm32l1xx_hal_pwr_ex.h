@@ -22,7 +22,7 @@
 #define __STM32L1xx_HAL_PWR_EX_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -84,13 +84,13 @@
   */
 
 /* Peripheral Control methods  ************************************************/
-uint32_t HAL_PWREx_GetVoltageRange(void);
-void HAL_PWREx_EnableFastWakeUp(void);
-void HAL_PWREx_DisableFastWakeUp(void);
-void HAL_PWREx_EnableUltraLowPower(void);
-void HAL_PWREx_DisableUltraLowPower(void);
-void HAL_PWREx_EnableLowPowerRunMode(void);
-HAL_StatusTypeDef HAL_PWREx_DisableLowPowerRunMode(void);
+uint32_t HAL_PWREx_GetVoltageRange( void );
+void HAL_PWREx_EnableFastWakeUp( void );
+void HAL_PWREx_DisableFastWakeUp( void );
+void HAL_PWREx_EnableUltraLowPower( void );
+void HAL_PWREx_DisableUltraLowPower( void );
+void HAL_PWREx_EnableLowPowerRunMode( void );
+HAL_StatusTypeDef HAL_PWREx_DisableLowPowerRunMode( void );
 
 /**
   * @}

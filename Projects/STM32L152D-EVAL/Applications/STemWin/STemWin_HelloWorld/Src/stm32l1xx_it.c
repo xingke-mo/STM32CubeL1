@@ -28,7 +28,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 extern volatile GUI_TIMER_TIME OS_TimeMS;
-extern void BSP_Background(void);
+extern void BSP_Background( void );
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -42,7 +42,7 @@ extern void BSP_Background(void);
   * @param  None
   * @retval None
   */
-void NMI_Handler(void)
+void NMI_Handler( void )
 {
 }
 
@@ -51,12 +51,12 @@ void NMI_Handler(void)
   * @param  None
   * @retval None
   */
-void HardFault_Handler(void)
+void HardFault_Handler( void )
 {
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Hard Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -64,12 +64,12 @@ void HardFault_Handler(void)
   * @param  None
   * @retval None
   */
-void MemManage_Handler(void)
+void MemManage_Handler( void )
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Memory Manage exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -77,12 +77,12 @@ void MemManage_Handler(void)
   * @param  None
   * @retval None
   */
-void BusFault_Handler(void)
+void BusFault_Handler( void )
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Bus Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -90,12 +90,12 @@ void BusFault_Handler(void)
   * @param  None
   * @retval None
   */
-void UsageFault_Handler(void)
+void UsageFault_Handler( void )
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Usage Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -103,7 +103,7 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
-void SVC_Handler(void)
+void SVC_Handler( void )
 {
 }
 
@@ -112,7 +112,7 @@ void SVC_Handler(void)
   * @param  None
   * @retval None
   */
-void DebugMon_Handler(void)
+void DebugMon_Handler( void )
 {
 }
 
@@ -121,7 +121,7 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-void PendSV_Handler(void)
+void PendSV_Handler( void )
 {
 }
 
@@ -130,14 +130,14 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
+void SysTick_Handler( void )
 {
-  /* Update the LocalTime by adding 1 ms each SysTick interrupt */
-  HAL_IncTick();
-  
-  OS_TimeMS++;
-  
-  BSP_Background();
+    /* Update the LocalTime by adding 1 ms each SysTick interrupt */
+    HAL_IncTick();
+
+    OS_TimeMS++;
+
+    BSP_Background();
 }
 
 /******************************************************************************/

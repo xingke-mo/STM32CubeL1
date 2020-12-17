@@ -73,36 +73,36 @@ extern "C" {
   */
 typedef struct
 {
-  uint32_t BaudRate;                  /*!< This field defines expected Usart communication baud rate.
+    uint32_t BaudRate;                  /*!< This field defines expected Usart communication baud rate.
 
                                            This feature can be modified afterwards using unitary function @ref LL_USART_SetBaudRate().*/
 
-  uint32_t DataWidth;                 /*!< Specifies the number of data bits transmitted or received in a frame.
+    uint32_t DataWidth;                 /*!< Specifies the number of data bits transmitted or received in a frame.
                                            This parameter can be a value of @ref USART_LL_EC_DATAWIDTH.
 
                                            This feature can be modified afterwards using unitary function @ref LL_USART_SetDataWidth().*/
 
-  uint32_t StopBits;                  /*!< Specifies the number of stop bits transmitted.
+    uint32_t StopBits;                  /*!< Specifies the number of stop bits transmitted.
                                            This parameter can be a value of @ref USART_LL_EC_STOPBITS.
 
                                            This feature can be modified afterwards using unitary function @ref LL_USART_SetStopBitsLength().*/
 
-  uint32_t Parity;                    /*!< Specifies the parity mode.
+    uint32_t Parity;                    /*!< Specifies the parity mode.
                                            This parameter can be a value of @ref USART_LL_EC_PARITY.
 
                                            This feature can be modified afterwards using unitary function @ref LL_USART_SetParity().*/
 
-  uint32_t TransferDirection;         /*!< Specifies whether the Receive and/or Transmit mode is enabled or disabled.
+    uint32_t TransferDirection;         /*!< Specifies whether the Receive and/or Transmit mode is enabled or disabled.
                                            This parameter can be a value of @ref USART_LL_EC_DIRECTION.
 
                                            This feature can be modified afterwards using unitary function @ref LL_USART_SetTransferDirection().*/
 
-  uint32_t HardwareFlowControl;       /*!< Specifies whether the hardware flow control mode is enabled or disabled.
+    uint32_t HardwareFlowControl;       /*!< Specifies whether the hardware flow control mode is enabled or disabled.
                                            This parameter can be a value of @ref USART_LL_EC_HWCONTROL.
 
                                            This feature can be modified afterwards using unitary function @ref LL_USART_SetHWFlowCtrl().*/
 
-  uint32_t OverSampling;              /*!< Specifies whether USART oversampling mode is 16 or 8.
+    uint32_t OverSampling;              /*!< Specifies whether USART oversampling mode is 16 or 8.
                                            This parameter can be a value of @ref USART_LL_EC_OVERSAMPLING.
 
                                            This feature can be modified afterwards using unitary function @ref LL_USART_SetOverSampling().*/
@@ -114,26 +114,26 @@ typedef struct
   */
 typedef struct
 {
-  uint32_t ClockOutput;               /*!< Specifies whether the USART clock is enabled or disabled.
+    uint32_t ClockOutput;               /*!< Specifies whether the USART clock is enabled or disabled.
                                            This parameter can be a value of @ref USART_LL_EC_CLOCK.
 
                                            USART HW configuration can be modified afterwards using unitary functions
                                            @ref LL_USART_EnableSCLKOutput() or @ref LL_USART_DisableSCLKOutput().
                                            For more details, refer to description of this function. */
 
-  uint32_t ClockPolarity;             /*!< Specifies the steady state of the serial clock.
+    uint32_t ClockPolarity;             /*!< Specifies the steady state of the serial clock.
                                            This parameter can be a value of @ref USART_LL_EC_POLARITY.
 
                                            USART HW configuration can be modified afterwards using unitary functions @ref LL_USART_SetClockPolarity().
                                            For more details, refer to description of this function. */
 
-  uint32_t ClockPhase;                /*!< Specifies the clock transition on which the bit capture is made.
+    uint32_t ClockPhase;                /*!< Specifies the clock transition on which the bit capture is made.
                                            This parameter can be a value of @ref USART_LL_EC_PHASE.
 
                                            USART HW configuration can be modified afterwards using unitary functions @ref LL_USART_SetClockPhase().
                                            For more details, refer to description of this function. */
 
-  uint32_t LastBitClockPulse;         /*!< Specifies whether the clock pulse corresponding to the last transmitted
+    uint32_t LastBitClockPulse;         /*!< Specifies whether the clock pulse corresponding to the last transmitted
                                            data bit (MSB) has to be output on the SCLK pin in synchronous mode.
                                            This parameter can be a value of @ref USART_LL_EC_LASTCLKPULSE.
 
@@ -406,9 +406,9 @@ typedef struct
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_Enable(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_Enable( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR1, USART_CR1_UE);
+    SET_BIT( USARTx->CR1, USART_CR1_UE );
 }
 
 /**
@@ -420,9 +420,9 @@ __STATIC_INLINE void LL_USART_Enable(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_Disable(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_Disable( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR1, USART_CR1_UE);
+    CLEAR_BIT( USARTx->CR1, USART_CR1_UE );
 }
 
 /**
@@ -431,9 +431,9 @@ __STATIC_INLINE void LL_USART_Disable(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabled(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabled( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR1, USART_CR1_UE) == (USART_CR1_UE));
+    return ( READ_BIT( USARTx->CR1, USART_CR1_UE ) == ( USART_CR1_UE ) );
 }
 
 /**
@@ -442,9 +442,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabled(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableDirectionRx(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableDirectionRx( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR1, USART_CR1_RE);
+    SET_BIT( USARTx->CR1, USART_CR1_RE );
 }
 
 /**
@@ -453,9 +453,9 @@ __STATIC_INLINE void LL_USART_EnableDirectionRx(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableDirectionRx(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableDirectionRx( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR1, USART_CR1_RE);
+    CLEAR_BIT( USARTx->CR1, USART_CR1_RE );
 }
 
 /**
@@ -464,9 +464,9 @@ __STATIC_INLINE void LL_USART_DisableDirectionRx(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableDirectionTx(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableDirectionTx( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR1, USART_CR1_TE);
+    SET_BIT( USARTx->CR1, USART_CR1_TE );
 }
 
 /**
@@ -475,9 +475,9 @@ __STATIC_INLINE void LL_USART_EnableDirectionTx(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableDirectionTx(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableDirectionTx( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR1, USART_CR1_TE);
+    CLEAR_BIT( USARTx->CR1, USART_CR1_TE );
 }
 
 /**
@@ -493,9 +493,9 @@ __STATIC_INLINE void LL_USART_DisableDirectionTx(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_DIRECTION_TX_RX
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetTransferDirection(USART_TypeDef *USARTx, uint32_t TransferDirection)
+__STATIC_INLINE void LL_USART_SetTransferDirection( USART_TypeDef *USARTx, uint32_t TransferDirection )
 {
-  MODIFY_REG(USARTx->CR1, USART_CR1_RE | USART_CR1_TE, TransferDirection);
+    MODIFY_REG( USARTx->CR1, USART_CR1_RE | USART_CR1_TE, TransferDirection );
 }
 
 /**
@@ -509,9 +509,9 @@ __STATIC_INLINE void LL_USART_SetTransferDirection(USART_TypeDef *USARTx, uint32
   *         @arg @ref LL_USART_DIRECTION_TX
   *         @arg @ref LL_USART_DIRECTION_TX_RX
   */
-__STATIC_INLINE uint32_t LL_USART_GetTransferDirection(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetTransferDirection( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR1, USART_CR1_RE | USART_CR1_TE));
+    return ( uint32_t )( READ_BIT( USARTx->CR1, USART_CR1_RE | USART_CR1_TE ) );
 }
 
 /**
@@ -528,9 +528,9 @@ __STATIC_INLINE uint32_t LL_USART_GetTransferDirection(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_PARITY_ODD
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetParity(USART_TypeDef *USARTx, uint32_t Parity)
+__STATIC_INLINE void LL_USART_SetParity( USART_TypeDef *USARTx, uint32_t Parity )
 {
-  MODIFY_REG(USARTx->CR1, USART_CR1_PS | USART_CR1_PCE, Parity);
+    MODIFY_REG( USARTx->CR1, USART_CR1_PS | USART_CR1_PCE, Parity );
 }
 
 /**
@@ -543,9 +543,9 @@ __STATIC_INLINE void LL_USART_SetParity(USART_TypeDef *USARTx, uint32_t Parity)
   *         @arg @ref LL_USART_PARITY_EVEN
   *         @arg @ref LL_USART_PARITY_ODD
   */
-__STATIC_INLINE uint32_t LL_USART_GetParity(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetParity( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR1, USART_CR1_PS | USART_CR1_PCE));
+    return ( uint32_t )( READ_BIT( USARTx->CR1, USART_CR1_PS | USART_CR1_PCE ) );
 }
 
 /**
@@ -557,9 +557,9 @@ __STATIC_INLINE uint32_t LL_USART_GetParity(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_WAKEUP_ADDRESSMARK
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetWakeUpMethod(USART_TypeDef *USARTx, uint32_t Method)
+__STATIC_INLINE void LL_USART_SetWakeUpMethod( USART_TypeDef *USARTx, uint32_t Method )
 {
-  MODIFY_REG(USARTx->CR1, USART_CR1_WAKE, Method);
+    MODIFY_REG( USARTx->CR1, USART_CR1_WAKE, Method );
 }
 
 /**
@@ -570,9 +570,9 @@ __STATIC_INLINE void LL_USART_SetWakeUpMethod(USART_TypeDef *USARTx, uint32_t Me
   *         @arg @ref LL_USART_WAKEUP_IDLELINE
   *         @arg @ref LL_USART_WAKEUP_ADDRESSMARK
   */
-__STATIC_INLINE uint32_t LL_USART_GetWakeUpMethod(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetWakeUpMethod( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR1, USART_CR1_WAKE));
+    return ( uint32_t )( READ_BIT( USARTx->CR1, USART_CR1_WAKE ) );
 }
 
 /**
@@ -584,9 +584,9 @@ __STATIC_INLINE uint32_t LL_USART_GetWakeUpMethod(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_DATAWIDTH_9B
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetDataWidth(USART_TypeDef *USARTx, uint32_t DataWidth)
+__STATIC_INLINE void LL_USART_SetDataWidth( USART_TypeDef *USARTx, uint32_t DataWidth )
 {
-  MODIFY_REG(USARTx->CR1, USART_CR1_M, DataWidth);
+    MODIFY_REG( USARTx->CR1, USART_CR1_M, DataWidth );
 }
 
 /**
@@ -597,9 +597,9 @@ __STATIC_INLINE void LL_USART_SetDataWidth(USART_TypeDef *USARTx, uint32_t DataW
   *         @arg @ref LL_USART_DATAWIDTH_8B
   *         @arg @ref LL_USART_DATAWIDTH_9B
   */
-__STATIC_INLINE uint32_t LL_USART_GetDataWidth(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetDataWidth( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR1, USART_CR1_M));
+    return ( uint32_t )( READ_BIT( USARTx->CR1, USART_CR1_M ) );
 }
 
 /**
@@ -611,9 +611,9 @@ __STATIC_INLINE uint32_t LL_USART_GetDataWidth(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_OVERSAMPLING_8
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetOverSampling(USART_TypeDef *USARTx, uint32_t OverSampling)
+__STATIC_INLINE void LL_USART_SetOverSampling( USART_TypeDef *USARTx, uint32_t OverSampling )
 {
-  MODIFY_REG(USARTx->CR1, USART_CR1_OVER8, OverSampling);
+    MODIFY_REG( USARTx->CR1, USART_CR1_OVER8, OverSampling );
 }
 
 /**
@@ -624,9 +624,9 @@ __STATIC_INLINE void LL_USART_SetOverSampling(USART_TypeDef *USARTx, uint32_t Ov
   *         @arg @ref LL_USART_OVERSAMPLING_16
   *         @arg @ref LL_USART_OVERSAMPLING_8
   */
-__STATIC_INLINE uint32_t LL_USART_GetOverSampling(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetOverSampling( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR1, USART_CR1_OVER8));
+    return ( uint32_t )( READ_BIT( USARTx->CR1, USART_CR1_OVER8 ) );
 }
 
 /**
@@ -640,9 +640,9 @@ __STATIC_INLINE uint32_t LL_USART_GetOverSampling(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_LASTCLKPULSE_OUTPUT
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetLastClkPulseOutput(USART_TypeDef *USARTx, uint32_t LastBitClockPulse)
+__STATIC_INLINE void LL_USART_SetLastClkPulseOutput( USART_TypeDef *USARTx, uint32_t LastBitClockPulse )
 {
-  MODIFY_REG(USARTx->CR2, USART_CR2_LBCL, LastBitClockPulse);
+    MODIFY_REG( USARTx->CR2, USART_CR2_LBCL, LastBitClockPulse );
 }
 
 /**
@@ -656,9 +656,9 @@ __STATIC_INLINE void LL_USART_SetLastClkPulseOutput(USART_TypeDef *USARTx, uint3
   *         @arg @ref LL_USART_LASTCLKPULSE_NO_OUTPUT
   *         @arg @ref LL_USART_LASTCLKPULSE_OUTPUT
   */
-__STATIC_INLINE uint32_t LL_USART_GetLastClkPulseOutput(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetLastClkPulseOutput( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR2, USART_CR2_LBCL));
+    return ( uint32_t )( READ_BIT( USARTx->CR2, USART_CR2_LBCL ) );
 }
 
 /**
@@ -672,9 +672,9 @@ __STATIC_INLINE uint32_t LL_USART_GetLastClkPulseOutput(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_PHASE_2EDGE
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetClockPhase(USART_TypeDef *USARTx, uint32_t ClockPhase)
+__STATIC_INLINE void LL_USART_SetClockPhase( USART_TypeDef *USARTx, uint32_t ClockPhase )
 {
-  MODIFY_REG(USARTx->CR2, USART_CR2_CPHA, ClockPhase);
+    MODIFY_REG( USARTx->CR2, USART_CR2_CPHA, ClockPhase );
 }
 
 /**
@@ -687,9 +687,9 @@ __STATIC_INLINE void LL_USART_SetClockPhase(USART_TypeDef *USARTx, uint32_t Cloc
   *         @arg @ref LL_USART_PHASE_1EDGE
   *         @arg @ref LL_USART_PHASE_2EDGE
   */
-__STATIC_INLINE uint32_t LL_USART_GetClockPhase(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetClockPhase( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR2, USART_CR2_CPHA));
+    return ( uint32_t )( READ_BIT( USARTx->CR2, USART_CR2_CPHA ) );
 }
 
 /**
@@ -703,9 +703,9 @@ __STATIC_INLINE uint32_t LL_USART_GetClockPhase(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_POLARITY_HIGH
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetClockPolarity(USART_TypeDef *USARTx, uint32_t ClockPolarity)
+__STATIC_INLINE void LL_USART_SetClockPolarity( USART_TypeDef *USARTx, uint32_t ClockPolarity )
 {
-  MODIFY_REG(USARTx->CR2, USART_CR2_CPOL, ClockPolarity);
+    MODIFY_REG( USARTx->CR2, USART_CR2_CPOL, ClockPolarity );
 }
 
 /**
@@ -718,9 +718,9 @@ __STATIC_INLINE void LL_USART_SetClockPolarity(USART_TypeDef *USARTx, uint32_t C
   *         @arg @ref LL_USART_POLARITY_LOW
   *         @arg @ref LL_USART_POLARITY_HIGH
   */
-__STATIC_INLINE uint32_t LL_USART_GetClockPolarity(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetClockPolarity( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR2, USART_CR2_CPOL));
+    return ( uint32_t )( READ_BIT( USARTx->CR2, USART_CR2_CPOL ) );
 }
 
 /**
@@ -746,9 +746,9 @@ __STATIC_INLINE uint32_t LL_USART_GetClockPolarity(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_LASTCLKPULSE_OUTPUT
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ConfigClock(USART_TypeDef *USARTx, uint32_t Phase, uint32_t Polarity, uint32_t LBCPOutput)
+__STATIC_INLINE void LL_USART_ConfigClock( USART_TypeDef *USARTx, uint32_t Phase, uint32_t Polarity, uint32_t LBCPOutput )
 {
-  MODIFY_REG(USARTx->CR2, USART_CR2_CPHA | USART_CR2_CPOL | USART_CR2_LBCL, Phase | Polarity | LBCPOutput);
+    MODIFY_REG( USARTx->CR2, USART_CR2_CPHA | USART_CR2_CPOL | USART_CR2_LBCL, Phase | Polarity | LBCPOutput );
 }
 
 /**
@@ -759,9 +759,9 @@ __STATIC_INLINE void LL_USART_ConfigClock(USART_TypeDef *USARTx, uint32_t Phase,
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableSCLKOutput(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableSCLKOutput( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR2, USART_CR2_CLKEN);
+    SET_BIT( USARTx->CR2, USART_CR2_CLKEN );
 }
 
 /**
@@ -772,9 +772,9 @@ __STATIC_INLINE void LL_USART_EnableSCLKOutput(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableSCLKOutput(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableSCLKOutput( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR2, USART_CR2_CLKEN);
+    CLEAR_BIT( USARTx->CR2, USART_CR2_CLKEN );
 }
 
 /**
@@ -785,9 +785,9 @@ __STATIC_INLINE void LL_USART_DisableSCLKOutput(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledSCLKOutput(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledSCLKOutput( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR2, USART_CR2_CLKEN) == (USART_CR2_CLKEN));
+    return ( READ_BIT( USARTx->CR2, USART_CR2_CLKEN ) == ( USART_CR2_CLKEN ) );
 }
 
 /**
@@ -801,9 +801,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledSCLKOutput(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_STOPBITS_2
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetStopBitsLength(USART_TypeDef *USARTx, uint32_t StopBits)
+__STATIC_INLINE void LL_USART_SetStopBitsLength( USART_TypeDef *USARTx, uint32_t StopBits )
 {
-  MODIFY_REG(USARTx->CR2, USART_CR2_STOP, StopBits);
+    MODIFY_REG( USARTx->CR2, USART_CR2_STOP, StopBits );
 }
 
 /**
@@ -816,9 +816,9 @@ __STATIC_INLINE void LL_USART_SetStopBitsLength(USART_TypeDef *USARTx, uint32_t 
   *         @arg @ref LL_USART_STOPBITS_1_5
   *         @arg @ref LL_USART_STOPBITS_2
   */
-__STATIC_INLINE uint32_t LL_USART_GetStopBitsLength(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetStopBitsLength( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR2, USART_CR2_STOP));
+    return ( uint32_t )( READ_BIT( USARTx->CR2, USART_CR2_STOP ) );
 }
 
 /**
@@ -846,11 +846,11 @@ __STATIC_INLINE uint32_t LL_USART_GetStopBitsLength(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_STOPBITS_2
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ConfigCharacter(USART_TypeDef *USARTx, uint32_t DataWidth, uint32_t Parity,
-                                              uint32_t StopBits)
+__STATIC_INLINE void LL_USART_ConfigCharacter( USART_TypeDef *USARTx, uint32_t DataWidth, uint32_t Parity,
+        uint32_t StopBits )
 {
-  MODIFY_REG(USARTx->CR1, USART_CR1_PS | USART_CR1_PCE | USART_CR1_M, Parity | DataWidth);
-  MODIFY_REG(USARTx->CR2, USART_CR2_STOP, StopBits);
+    MODIFY_REG( USARTx->CR1, USART_CR1_PS | USART_CR1_PCE | USART_CR1_M, Parity | DataWidth );
+    MODIFY_REG( USARTx->CR2, USART_CR2_STOP, StopBits );
 }
 
 /**
@@ -862,9 +862,9 @@ __STATIC_INLINE void LL_USART_ConfigCharacter(USART_TypeDef *USARTx, uint32_t Da
   * @param  NodeAddress 4 bit Address of the USART node.
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetNodeAddress(USART_TypeDef *USARTx, uint32_t NodeAddress)
+__STATIC_INLINE void LL_USART_SetNodeAddress( USART_TypeDef *USARTx, uint32_t NodeAddress )
 {
-  MODIFY_REG(USARTx->CR2, USART_CR2_ADD, (NodeAddress & USART_CR2_ADD));
+    MODIFY_REG( USARTx->CR2, USART_CR2_ADD, ( NodeAddress & USART_CR2_ADD ) );
 }
 
 /**
@@ -874,9 +874,9 @@ __STATIC_INLINE void LL_USART_SetNodeAddress(USART_TypeDef *USARTx, uint32_t Nod
   * @param  USARTx USART Instance
   * @retval Address of the USART node (Value between Min_Data=0 and Max_Data=255)
   */
-__STATIC_INLINE uint32_t LL_USART_GetNodeAddress(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetNodeAddress( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR2, USART_CR2_ADD));
+    return ( uint32_t )( READ_BIT( USARTx->CR2, USART_CR2_ADD ) );
 }
 
 /**
@@ -887,9 +887,9 @@ __STATIC_INLINE uint32_t LL_USART_GetNodeAddress(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableRTSHWFlowCtrl(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableRTSHWFlowCtrl( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR3, USART_CR3_RTSE);
+    SET_BIT( USARTx->CR3, USART_CR3_RTSE );
 }
 
 /**
@@ -900,9 +900,9 @@ __STATIC_INLINE void LL_USART_EnableRTSHWFlowCtrl(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableRTSHWFlowCtrl(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableRTSHWFlowCtrl( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR3, USART_CR3_RTSE);
+    CLEAR_BIT( USARTx->CR3, USART_CR3_RTSE );
 }
 
 /**
@@ -913,9 +913,9 @@ __STATIC_INLINE void LL_USART_DisableRTSHWFlowCtrl(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableCTSHWFlowCtrl(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableCTSHWFlowCtrl( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR3, USART_CR3_CTSE);
+    SET_BIT( USARTx->CR3, USART_CR3_CTSE );
 }
 
 /**
@@ -926,9 +926,9 @@ __STATIC_INLINE void LL_USART_EnableCTSHWFlowCtrl(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableCTSHWFlowCtrl(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableCTSHWFlowCtrl( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR3, USART_CR3_CTSE);
+    CLEAR_BIT( USARTx->CR3, USART_CR3_CTSE );
 }
 
 /**
@@ -945,9 +945,9 @@ __STATIC_INLINE void LL_USART_DisableCTSHWFlowCtrl(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_HWCONTROL_RTS_CTS
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetHWFlowCtrl(USART_TypeDef *USARTx, uint32_t HardwareFlowControl)
+__STATIC_INLINE void LL_USART_SetHWFlowCtrl( USART_TypeDef *USARTx, uint32_t HardwareFlowControl )
 {
-  MODIFY_REG(USARTx->CR3, USART_CR3_RTSE | USART_CR3_CTSE, HardwareFlowControl);
+    MODIFY_REG( USARTx->CR3, USART_CR3_RTSE | USART_CR3_CTSE, HardwareFlowControl );
 }
 
 /**
@@ -963,9 +963,9 @@ __STATIC_INLINE void LL_USART_SetHWFlowCtrl(USART_TypeDef *USARTx, uint32_t Hard
   *         @arg @ref LL_USART_HWCONTROL_CTS
   *         @arg @ref LL_USART_HWCONTROL_RTS_CTS
   */
-__STATIC_INLINE uint32_t LL_USART_GetHWFlowCtrl(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetHWFlowCtrl( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR3, USART_CR3_RTSE | USART_CR3_CTSE));
+    return ( uint32_t )( READ_BIT( USARTx->CR3, USART_CR3_RTSE | USART_CR3_CTSE ) );
 }
 
 /**
@@ -974,9 +974,9 @@ __STATIC_INLINE uint32_t LL_USART_GetHWFlowCtrl(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableOneBitSamp(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableOneBitSamp( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR3, USART_CR3_ONEBIT);
+    SET_BIT( USARTx->CR3, USART_CR3_ONEBIT );
 }
 
 /**
@@ -985,9 +985,9 @@ __STATIC_INLINE void LL_USART_EnableOneBitSamp(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableOneBitSamp(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableOneBitSamp( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR3, USART_CR3_ONEBIT);
+    CLEAR_BIT( USARTx->CR3, USART_CR3_ONEBIT );
 }
 
 /**
@@ -996,9 +996,9 @@ __STATIC_INLINE void LL_USART_DisableOneBitSamp(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledOneBitSamp(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledOneBitSamp( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR3, USART_CR3_ONEBIT) == (USART_CR3_ONEBIT));
+    return ( READ_BIT( USARTx->CR3, USART_CR3_ONEBIT ) == ( USART_CR3_ONEBIT ) );
 }
 
 /**
@@ -1016,17 +1016,17 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledOneBitSamp(USART_TypeDef *USARTx)
   * @param  BaudRate Baud Rate
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetBaudRate(USART_TypeDef *USARTx, uint32_t PeriphClk, uint32_t OverSampling,
-                                          uint32_t BaudRate)
+__STATIC_INLINE void LL_USART_SetBaudRate( USART_TypeDef *USARTx, uint32_t PeriphClk, uint32_t OverSampling,
+        uint32_t BaudRate )
 {
-  if (OverSampling == LL_USART_OVERSAMPLING_8)
-  {
-    USARTx->BRR = (uint16_t)(__LL_USART_DIV_SAMPLING8(PeriphClk, BaudRate));
-  }
-  else
-  {
-    USARTx->BRR = (uint16_t)(__LL_USART_DIV_SAMPLING16(PeriphClk, BaudRate));
-  }
+    if( OverSampling == LL_USART_OVERSAMPLING_8 )
+    {
+        USARTx->BRR = ( uint16_t )( __LL_USART_DIV_SAMPLING8( PeriphClk, BaudRate ) );
+    }
+    else
+    {
+        USARTx->BRR = ( uint16_t )( __LL_USART_DIV_SAMPLING16( PeriphClk, BaudRate ) );
+    }
 }
 
 /**
@@ -1041,29 +1041,30 @@ __STATIC_INLINE void LL_USART_SetBaudRate(USART_TypeDef *USARTx, uint32_t Periph
   *         @arg @ref LL_USART_OVERSAMPLING_8
   * @retval Baud Rate
   */
-__STATIC_INLINE uint32_t LL_USART_GetBaudRate(USART_TypeDef *USARTx, uint32_t PeriphClk, uint32_t OverSampling)
+__STATIC_INLINE uint32_t LL_USART_GetBaudRate( USART_TypeDef *USARTx, uint32_t PeriphClk, uint32_t OverSampling )
 {
-  uint32_t usartdiv = 0x0U;
-  uint32_t brrresult = 0x0U;
+    uint32_t usartdiv = 0x0U;
+    uint32_t brrresult = 0x0U;
 
-  usartdiv = USARTx->BRR;
+    usartdiv = USARTx->BRR;
 
-  if (OverSampling == LL_USART_OVERSAMPLING_8)
-  {
-    if ((usartdiv & 0xFFF7U) != 0U)
+    if( OverSampling == LL_USART_OVERSAMPLING_8 )
     {
-      usartdiv = (uint16_t)((usartdiv & 0xFFF0U) | ((usartdiv & 0x0007U) << 1U)) ;
-      brrresult = (PeriphClk * 2U) / usartdiv;
+        if( ( usartdiv & 0xFFF7U ) != 0U )
+        {
+            usartdiv = ( uint16_t )( ( usartdiv & 0xFFF0U ) | ( ( usartdiv & 0x0007U ) << 1U ) ) ;
+            brrresult = ( PeriphClk * 2U ) / usartdiv;
+        }
     }
-  }
-  else
-  {
-    if ((usartdiv & 0xFFFFU) != 0U)
+    else
     {
-      brrresult = PeriphClk / usartdiv;
+        if( ( usartdiv & 0xFFFFU ) != 0U )
+        {
+            brrresult = PeriphClk / usartdiv;
+        }
     }
-  }
-  return (brrresult);
+
+    return ( brrresult );
 }
 
 /**
@@ -1082,9 +1083,9 @@ __STATIC_INLINE uint32_t LL_USART_GetBaudRate(USART_TypeDef *USARTx, uint32_t Pe
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableIrda(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableIrda( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR3, USART_CR3_IREN);
+    SET_BIT( USARTx->CR3, USART_CR3_IREN );
 }
 
 /**
@@ -1095,9 +1096,9 @@ __STATIC_INLINE void LL_USART_EnableIrda(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableIrda(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableIrda( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR3, USART_CR3_IREN);
+    CLEAR_BIT( USARTx->CR3, USART_CR3_IREN );
 }
 
 /**
@@ -1108,9 +1109,9 @@ __STATIC_INLINE void LL_USART_DisableIrda(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledIrda(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledIrda( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR3, USART_CR3_IREN) == (USART_CR3_IREN));
+    return ( READ_BIT( USARTx->CR3, USART_CR3_IREN ) == ( USART_CR3_IREN ) );
 }
 
 /**
@@ -1124,9 +1125,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIrda(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_IRDA_POWER_LOW
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetIrdaPowerMode(USART_TypeDef *USARTx, uint32_t PowerMode)
+__STATIC_INLINE void LL_USART_SetIrdaPowerMode( USART_TypeDef *USARTx, uint32_t PowerMode )
 {
-  MODIFY_REG(USARTx->CR3, USART_CR3_IRLP, PowerMode);
+    MODIFY_REG( USARTx->CR3, USART_CR3_IRLP, PowerMode );
 }
 
 /**
@@ -1139,9 +1140,9 @@ __STATIC_INLINE void LL_USART_SetIrdaPowerMode(USART_TypeDef *USARTx, uint32_t P
   *         @arg @ref LL_USART_IRDA_POWER_NORMAL
   *         @arg @ref LL_USART_PHASE_2EDGE
   */
-__STATIC_INLINE uint32_t LL_USART_GetIrdaPowerMode(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetIrdaPowerMode( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR3, USART_CR3_IRLP));
+    return ( uint32_t )( READ_BIT( USARTx->CR3, USART_CR3_IRLP ) );
 }
 
 /**
@@ -1154,9 +1155,9 @@ __STATIC_INLINE uint32_t LL_USART_GetIrdaPowerMode(USART_TypeDef *USARTx)
   * @param  PrescalerValue Value between Min_Data=0x00 and Max_Data=0xFF
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetIrdaPrescaler(USART_TypeDef *USARTx, uint32_t PrescalerValue)
+__STATIC_INLINE void LL_USART_SetIrdaPrescaler( USART_TypeDef *USARTx, uint32_t PrescalerValue )
 {
-  MODIFY_REG(USARTx->GTPR, USART_GTPR_PSC, PrescalerValue);
+    MODIFY_REG( USARTx->GTPR, USART_GTPR_PSC, PrescalerValue );
 }
 
 /**
@@ -1168,9 +1169,9 @@ __STATIC_INLINE void LL_USART_SetIrdaPrescaler(USART_TypeDef *USARTx, uint32_t P
   * @param  USARTx USART Instance
   * @retval Irda prescaler value (Value between Min_Data=0x00 and Max_Data=0xFF)
   */
-__STATIC_INLINE uint32_t LL_USART_GetIrdaPrescaler(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetIrdaPrescaler( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->GTPR, USART_GTPR_PSC));
+    return ( uint32_t )( READ_BIT( USARTx->GTPR, USART_GTPR_PSC ) );
 }
 
 /**
@@ -1189,9 +1190,9 @@ __STATIC_INLINE uint32_t LL_USART_GetIrdaPrescaler(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableSmartcardNACK(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableSmartcardNACK( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR3, USART_CR3_NACK);
+    SET_BIT( USARTx->CR3, USART_CR3_NACK );
 }
 
 /**
@@ -1202,9 +1203,9 @@ __STATIC_INLINE void LL_USART_EnableSmartcardNACK(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableSmartcardNACK(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableSmartcardNACK( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR3, USART_CR3_NACK);
+    CLEAR_BIT( USARTx->CR3, USART_CR3_NACK );
 }
 
 /**
@@ -1215,9 +1216,9 @@ __STATIC_INLINE void LL_USART_DisableSmartcardNACK(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledSmartcardNACK(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledSmartcardNACK( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR3, USART_CR3_NACK) == (USART_CR3_NACK));
+    return ( READ_BIT( USARTx->CR3, USART_CR3_NACK ) == ( USART_CR3_NACK ) );
 }
 
 /**
@@ -1228,9 +1229,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledSmartcardNACK(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableSmartcard(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableSmartcard( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR3, USART_CR3_SCEN);
+    SET_BIT( USARTx->CR3, USART_CR3_SCEN );
 }
 
 /**
@@ -1241,9 +1242,9 @@ __STATIC_INLINE void LL_USART_EnableSmartcard(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableSmartcard(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableSmartcard( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR3, USART_CR3_SCEN);
+    CLEAR_BIT( USARTx->CR3, USART_CR3_SCEN );
 }
 
 /**
@@ -1254,9 +1255,9 @@ __STATIC_INLINE void LL_USART_DisableSmartcard(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledSmartcard(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledSmartcard( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR3, USART_CR3_SCEN) == (USART_CR3_SCEN));
+    return ( READ_BIT( USARTx->CR3, USART_CR3_SCEN ) == ( USART_CR3_SCEN ) );
 }
 
 /**
@@ -1269,9 +1270,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledSmartcard(USART_TypeDef *USARTx)
   * @param  PrescalerValue Value between Min_Data=0 and Max_Data=31
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetSmartcardPrescaler(USART_TypeDef *USARTx, uint32_t PrescalerValue)
+__STATIC_INLINE void LL_USART_SetSmartcardPrescaler( USART_TypeDef *USARTx, uint32_t PrescalerValue )
 {
-  MODIFY_REG(USARTx->GTPR, USART_GTPR_PSC, PrescalerValue);
+    MODIFY_REG( USARTx->GTPR, USART_GTPR_PSC, PrescalerValue );
 }
 
 /**
@@ -1283,9 +1284,9 @@ __STATIC_INLINE void LL_USART_SetSmartcardPrescaler(USART_TypeDef *USARTx, uint3
   * @param  USARTx USART Instance
   * @retval Smartcard prescaler value (Value between Min_Data=0 and Max_Data=31)
   */
-__STATIC_INLINE uint32_t LL_USART_GetSmartcardPrescaler(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetSmartcardPrescaler( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->GTPR, USART_GTPR_PSC));
+    return ( uint32_t )( READ_BIT( USARTx->GTPR, USART_GTPR_PSC ) );
 }
 
 /**
@@ -1298,9 +1299,9 @@ __STATIC_INLINE uint32_t LL_USART_GetSmartcardPrescaler(USART_TypeDef *USARTx)
   * @param  GuardTime Value between Min_Data=0x00 and Max_Data=0xFF
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetSmartcardGuardTime(USART_TypeDef *USARTx, uint32_t GuardTime)
+__STATIC_INLINE void LL_USART_SetSmartcardGuardTime( USART_TypeDef *USARTx, uint32_t GuardTime )
 {
-  MODIFY_REG(USARTx->GTPR, USART_GTPR_GT, GuardTime << USART_POSITION_GTPR_GT);
+    MODIFY_REG( USARTx->GTPR, USART_GTPR_GT, GuardTime << USART_POSITION_GTPR_GT );
 }
 
 /**
@@ -1312,9 +1313,9 @@ __STATIC_INLINE void LL_USART_SetSmartcardGuardTime(USART_TypeDef *USARTx, uint3
   * @param  USARTx USART Instance
   * @retval Smartcard Guard time value (Value between Min_Data=0x00 and Max_Data=0xFF)
   */
-__STATIC_INLINE uint32_t LL_USART_GetSmartcardGuardTime(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetSmartcardGuardTime( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->GTPR, USART_GTPR_GT) >> USART_POSITION_GTPR_GT);
+    return ( uint32_t )( READ_BIT( USARTx->GTPR, USART_GTPR_GT ) >> USART_POSITION_GTPR_GT );
 }
 
 /**
@@ -1333,9 +1334,9 @@ __STATIC_INLINE uint32_t LL_USART_GetSmartcardGuardTime(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableHalfDuplex(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableHalfDuplex( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR3, USART_CR3_HDSEL);
+    SET_BIT( USARTx->CR3, USART_CR3_HDSEL );
 }
 
 /**
@@ -1346,9 +1347,9 @@ __STATIC_INLINE void LL_USART_EnableHalfDuplex(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableHalfDuplex(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableHalfDuplex( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR3, USART_CR3_HDSEL);
+    CLEAR_BIT( USARTx->CR3, USART_CR3_HDSEL );
 }
 
 /**
@@ -1359,9 +1360,9 @@ __STATIC_INLINE void LL_USART_DisableHalfDuplex(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledHalfDuplex(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledHalfDuplex( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR3, USART_CR3_HDSEL) == (USART_CR3_HDSEL));
+    return ( READ_BIT( USARTx->CR3, USART_CR3_HDSEL ) == ( USART_CR3_HDSEL ) );
 }
 
 /**
@@ -1383,9 +1384,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledHalfDuplex(USART_TypeDef *USARTx)
   *         @arg @ref LL_USART_LINBREAK_DETECT_11B
   * @retval None
   */
-__STATIC_INLINE void LL_USART_SetLINBrkDetectionLen(USART_TypeDef *USARTx, uint32_t LINBDLength)
+__STATIC_INLINE void LL_USART_SetLINBrkDetectionLen( USART_TypeDef *USARTx, uint32_t LINBDLength )
 {
-  MODIFY_REG(USARTx->CR2, USART_CR2_LBDL, LINBDLength);
+    MODIFY_REG( USARTx->CR2, USART_CR2_LBDL, LINBDLength );
 }
 
 /**
@@ -1398,9 +1399,9 @@ __STATIC_INLINE void LL_USART_SetLINBrkDetectionLen(USART_TypeDef *USARTx, uint3
   *         @arg @ref LL_USART_LINBREAK_DETECT_10B
   *         @arg @ref LL_USART_LINBREAK_DETECT_11B
   */
-__STATIC_INLINE uint32_t LL_USART_GetLINBrkDetectionLen(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_GetLINBrkDetectionLen( USART_TypeDef *USARTx )
 {
-  return (uint32_t)(READ_BIT(USARTx->CR2, USART_CR2_LBDL));
+    return ( uint32_t )( READ_BIT( USARTx->CR2, USART_CR2_LBDL ) );
 }
 
 /**
@@ -1411,9 +1412,9 @@ __STATIC_INLINE uint32_t LL_USART_GetLINBrkDetectionLen(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableLIN(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableLIN( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR2, USART_CR2_LINEN);
+    SET_BIT( USARTx->CR2, USART_CR2_LINEN );
 }
 
 /**
@@ -1424,9 +1425,9 @@ __STATIC_INLINE void LL_USART_EnableLIN(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableLIN(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableLIN( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR2, USART_CR2_LINEN);
+    CLEAR_BIT( USARTx->CR2, USART_CR2_LINEN );
 }
 
 /**
@@ -1437,9 +1438,9 @@ __STATIC_INLINE void LL_USART_DisableLIN(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledLIN(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledLIN( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR2, USART_CR2_LINEN) == (USART_CR2_LINEN));
+    return ( READ_BIT( USARTx->CR2, USART_CR2_LINEN ) == ( USART_CR2_LINEN ) );
 }
 
 /**
@@ -1475,13 +1476,13 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledLIN(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ConfigAsyncMode(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ConfigAsyncMode( USART_TypeDef *USARTx )
 {
-  /* In Asynchronous mode, the following bits must be kept cleared:
-  - LINEN, CLKEN bits in the USART_CR2 register,
-  - SCEN, IREN and HDSEL bits in the USART_CR3 register.*/
-  CLEAR_BIT(USARTx->CR2, (USART_CR2_LINEN | USART_CR2_CLKEN));
-  CLEAR_BIT(USARTx->CR3, (USART_CR3_SCEN | USART_CR3_IREN | USART_CR3_HDSEL));
+    /* In Asynchronous mode, the following bits must be kept cleared:
+    - LINEN, CLKEN bits in the USART_CR2 register,
+    - SCEN, IREN and HDSEL bits in the USART_CR3 register.*/
+    CLEAR_BIT( USARTx->CR2, ( USART_CR2_LINEN | USART_CR2_CLKEN ) );
+    CLEAR_BIT( USARTx->CR3, ( USART_CR3_SCEN | USART_CR3_IREN | USART_CR3_HDSEL ) );
 }
 
 /**
@@ -1511,15 +1512,15 @@ __STATIC_INLINE void LL_USART_ConfigAsyncMode(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ConfigSyncMode(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ConfigSyncMode( USART_TypeDef *USARTx )
 {
-  /* In Synchronous mode, the following bits must be kept cleared:
-  - LINEN bit in the USART_CR2 register,
-  - SCEN, IREN and HDSEL bits in the USART_CR3 register.*/
-  CLEAR_BIT(USARTx->CR2, (USART_CR2_LINEN));
-  CLEAR_BIT(USARTx->CR3, (USART_CR3_SCEN | USART_CR3_IREN | USART_CR3_HDSEL));
-  /* set the UART/USART in Synchronous mode */
-  SET_BIT(USARTx->CR2, USART_CR2_CLKEN);
+    /* In Synchronous mode, the following bits must be kept cleared:
+    - LINEN bit in the USART_CR2 register,
+    - SCEN, IREN and HDSEL bits in the USART_CR3 register.*/
+    CLEAR_BIT( USARTx->CR2, ( USART_CR2_LINEN ) );
+    CLEAR_BIT( USARTx->CR3, ( USART_CR3_SCEN | USART_CR3_IREN | USART_CR3_HDSEL ) );
+    /* set the UART/USART in Synchronous mode */
+    SET_BIT( USARTx->CR2, USART_CR2_CLKEN );
 }
 
 /**
@@ -1551,15 +1552,15 @@ __STATIC_INLINE void LL_USART_ConfigSyncMode(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ConfigLINMode(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ConfigLINMode( USART_TypeDef *USARTx )
 {
-  /* In LIN mode, the following bits must be kept cleared:
-  - STOP and CLKEN bits in the USART_CR2 register,
-  - IREN, SCEN and HDSEL bits in the USART_CR3 register.*/
-  CLEAR_BIT(USARTx->CR2, (USART_CR2_CLKEN | USART_CR2_STOP));
-  CLEAR_BIT(USARTx->CR3, (USART_CR3_IREN | USART_CR3_SCEN | USART_CR3_HDSEL));
-  /* Set the UART/USART in LIN mode */
-  SET_BIT(USARTx->CR2, USART_CR2_LINEN);
+    /* In LIN mode, the following bits must be kept cleared:
+    - STOP and CLKEN bits in the USART_CR2 register,
+    - IREN, SCEN and HDSEL bits in the USART_CR3 register.*/
+    CLEAR_BIT( USARTx->CR2, ( USART_CR2_CLKEN | USART_CR2_STOP ) );
+    CLEAR_BIT( USARTx->CR3, ( USART_CR3_IREN | USART_CR3_SCEN | USART_CR3_HDSEL ) );
+    /* Set the UART/USART in LIN mode */
+    SET_BIT( USARTx->CR2, USART_CR2_LINEN );
 }
 
 /**
@@ -1589,15 +1590,15 @@ __STATIC_INLINE void LL_USART_ConfigLINMode(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ConfigHalfDuplexMode(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ConfigHalfDuplexMode( USART_TypeDef *USARTx )
 {
-  /* In Half Duplex mode, the following bits must be kept cleared:
-  - LINEN and CLKEN bits in the USART_CR2 register,
-  - SCEN and IREN bits in the USART_CR3 register.*/
-  CLEAR_BIT(USARTx->CR2, (USART_CR2_LINEN | USART_CR2_CLKEN));
-  CLEAR_BIT(USARTx->CR3, (USART_CR3_SCEN | USART_CR3_IREN));
-  /* set the UART/USART in Half Duplex mode */
-  SET_BIT(USARTx->CR3, USART_CR3_HDSEL);
+    /* In Half Duplex mode, the following bits must be kept cleared:
+    - LINEN and CLKEN bits in the USART_CR2 register,
+    - SCEN and IREN bits in the USART_CR3 register.*/
+    CLEAR_BIT( USARTx->CR2, ( USART_CR2_LINEN | USART_CR2_CLKEN ) );
+    CLEAR_BIT( USARTx->CR3, ( USART_CR3_SCEN | USART_CR3_IREN ) );
+    /* set the UART/USART in Half Duplex mode */
+    SET_BIT( USARTx->CR3, USART_CR3_HDSEL );
 }
 
 /**
@@ -1629,18 +1630,18 @@ __STATIC_INLINE void LL_USART_ConfigHalfDuplexMode(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ConfigSmartcardMode(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ConfigSmartcardMode( USART_TypeDef *USARTx )
 {
-  /* In Smartcard mode, the following bits must be kept cleared:
-  - LINEN bit in the USART_CR2 register,
-  - IREN and HDSEL bits in the USART_CR3 register.*/
-  CLEAR_BIT(USARTx->CR2, (USART_CR2_LINEN));
-  CLEAR_BIT(USARTx->CR3, (USART_CR3_IREN | USART_CR3_HDSEL));
-  /* Configure Stop bits to 1.5 bits */
-  /* Synchronous mode is activated by default */
-  SET_BIT(USARTx->CR2, (USART_CR2_STOP_0 | USART_CR2_STOP_1 | USART_CR2_CLKEN));
-  /* set the UART/USART in Smartcard mode */
-  SET_BIT(USARTx->CR3, USART_CR3_SCEN);
+    /* In Smartcard mode, the following bits must be kept cleared:
+    - LINEN bit in the USART_CR2 register,
+    - IREN and HDSEL bits in the USART_CR3 register.*/
+    CLEAR_BIT( USARTx->CR2, ( USART_CR2_LINEN ) );
+    CLEAR_BIT( USARTx->CR3, ( USART_CR3_IREN | USART_CR3_HDSEL ) );
+    /* Configure Stop bits to 1.5 bits */
+    /* Synchronous mode is activated by default */
+    SET_BIT( USARTx->CR2, ( USART_CR2_STOP_0 | USART_CR2_STOP_1 | USART_CR2_CLKEN ) );
+    /* set the UART/USART in Smartcard mode */
+    SET_BIT( USARTx->CR3, USART_CR3_SCEN );
 }
 
 /**
@@ -1672,15 +1673,15 @@ __STATIC_INLINE void LL_USART_ConfigSmartcardMode(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ConfigIrdaMode(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ConfigIrdaMode( USART_TypeDef *USARTx )
 {
-  /* In IRDA mode, the following bits must be kept cleared:
-  - LINEN, STOP and CLKEN bits in the USART_CR2 register,
-  - SCEN and HDSEL bits in the USART_CR3 register.*/
-  CLEAR_BIT(USARTx->CR2, (USART_CR2_LINEN | USART_CR2_CLKEN | USART_CR2_STOP));
-  CLEAR_BIT(USARTx->CR3, (USART_CR3_SCEN | USART_CR3_HDSEL));
-  /* set the UART/USART in IRDA mode */
-  SET_BIT(USARTx->CR3, USART_CR3_IREN);
+    /* In IRDA mode, the following bits must be kept cleared:
+    - LINEN, STOP and CLKEN bits in the USART_CR2 register,
+    - SCEN and HDSEL bits in the USART_CR3 register.*/
+    CLEAR_BIT( USARTx->CR2, ( USART_CR2_LINEN | USART_CR2_CLKEN | USART_CR2_STOP ) );
+    CLEAR_BIT( USARTx->CR3, ( USART_CR3_SCEN | USART_CR3_HDSEL ) );
+    /* set the UART/USART in IRDA mode */
+    SET_BIT( USARTx->CR3, USART_CR3_IREN );
 }
 
 /**
@@ -1710,13 +1711,13 @@ __STATIC_INLINE void LL_USART_ConfigIrdaMode(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ConfigMultiProcessMode(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ConfigMultiProcessMode( USART_TypeDef *USARTx )
 {
-  /* In Multi Processor mode, the following bits must be kept cleared:
-  - LINEN and CLKEN bits in the USART_CR2 register,
-  - IREN, SCEN and HDSEL bits in the USART_CR3 register.*/
-  CLEAR_BIT(USARTx->CR2, (USART_CR2_LINEN | USART_CR2_CLKEN));
-  CLEAR_BIT(USARTx->CR3, (USART_CR3_SCEN | USART_CR3_HDSEL | USART_CR3_IREN));
+    /* In Multi Processor mode, the following bits must be kept cleared:
+    - LINEN and CLKEN bits in the USART_CR2 register,
+    - IREN, SCEN and HDSEL bits in the USART_CR3 register.*/
+    CLEAR_BIT( USARTx->CR2, ( USART_CR2_LINEN | USART_CR2_CLKEN ) );
+    CLEAR_BIT( USARTx->CR3, ( USART_CR3_SCEN | USART_CR3_HDSEL | USART_CR3_IREN ) );
 }
 
 /**
@@ -1733,9 +1734,9 @@ __STATIC_INLINE void LL_USART_ConfigMultiProcessMode(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_PE(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_PE( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->SR, USART_SR_PE) == (USART_SR_PE));
+    return ( READ_BIT( USARTx->SR, USART_SR_PE ) == ( USART_SR_PE ) );
 }
 
 /**
@@ -1744,9 +1745,9 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_PE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_FE(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_FE( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->SR, USART_SR_FE) == (USART_SR_FE));
+    return ( READ_BIT( USARTx->SR, USART_SR_FE ) == ( USART_SR_FE ) );
 }
 
 /**
@@ -1755,9 +1756,9 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_FE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_NE(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_NE( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->SR, USART_SR_NE) == (USART_SR_NE));
+    return ( READ_BIT( USARTx->SR, USART_SR_NE ) == ( USART_SR_NE ) );
 }
 
 /**
@@ -1766,9 +1767,9 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_NE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_ORE(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_ORE( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->SR, USART_SR_ORE) == (USART_SR_ORE));
+    return ( READ_BIT( USARTx->SR, USART_SR_ORE ) == ( USART_SR_ORE ) );
 }
 
 /**
@@ -1777,9 +1778,9 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_ORE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_IDLE(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_IDLE( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->SR, USART_SR_IDLE) == (USART_SR_IDLE));
+    return ( READ_BIT( USARTx->SR, USART_SR_IDLE ) == ( USART_SR_IDLE ) );
 }
 
 /**
@@ -1788,9 +1789,9 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_IDLE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_RXNE(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_RXNE( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->SR, USART_SR_RXNE) == (USART_SR_RXNE));
+    return ( READ_BIT( USARTx->SR, USART_SR_RXNE ) == ( USART_SR_RXNE ) );
 }
 
 /**
@@ -1799,9 +1800,9 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_RXNE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_TC(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_TC( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->SR, USART_SR_TC) == (USART_SR_TC));
+    return ( READ_BIT( USARTx->SR, USART_SR_TC ) == ( USART_SR_TC ) );
 }
 
 /**
@@ -1810,9 +1811,9 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_TC(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_TXE(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_TXE( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->SR, USART_SR_TXE) == (USART_SR_TXE));
+    return ( READ_BIT( USARTx->SR, USART_SR_TXE ) == ( USART_SR_TXE ) );
 }
 
 /**
@@ -1823,9 +1824,9 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_TXE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_LBD(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_LBD( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->SR, USART_SR_LBD) == (USART_SR_LBD));
+    return ( READ_BIT( USARTx->SR, USART_SR_LBD ) == ( USART_SR_LBD ) );
 }
 
 /**
@@ -1836,9 +1837,9 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_LBD(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_nCTS(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_nCTS( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->SR, USART_SR_CTS) == (USART_SR_CTS));
+    return ( READ_BIT( USARTx->SR, USART_SR_CTS ) == ( USART_SR_CTS ) );
 }
 
 /**
@@ -1847,9 +1848,9 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_nCTS(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_SBK(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_SBK( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR1, USART_CR1_SBK) == (USART_CR1_SBK));
+    return ( READ_BIT( USARTx->CR1, USART_CR1_SBK ) == ( USART_CR1_SBK ) );
 }
 
 /**
@@ -1858,9 +1859,9 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_SBK(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_RWU(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsActiveFlag_RWU( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR1, USART_CR1_RWU) == (USART_CR1_RWU));
+    return ( READ_BIT( USARTx->CR1, USART_CR1_RWU ) == ( USART_CR1_RWU ) );
 }
 
 /**
@@ -1873,13 +1874,13 @@ __STATIC_INLINE uint32_t LL_USART_IsActiveFlag_RWU(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ClearFlag_PE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ClearFlag_PE( USART_TypeDef *USARTx )
 {
-  __IO uint32_t tmpreg;
-  tmpreg = USARTx->SR;
-  (void) tmpreg;
-  tmpreg = USARTx->DR;
-  (void) tmpreg;
+    __IO uint32_t tmpreg;
+    tmpreg = USARTx->SR;
+    ( void ) tmpreg;
+    tmpreg = USARTx->DR;
+    ( void ) tmpreg;
 }
 
 /**
@@ -1892,13 +1893,13 @@ __STATIC_INLINE void LL_USART_ClearFlag_PE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ClearFlag_FE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ClearFlag_FE( USART_TypeDef *USARTx )
 {
-  __IO uint32_t tmpreg;
-  tmpreg = USARTx->SR;
-  (void) tmpreg;
-  tmpreg = USARTx->DR;
-  (void) tmpreg;
+    __IO uint32_t tmpreg;
+    tmpreg = USARTx->SR;
+    ( void ) tmpreg;
+    tmpreg = USARTx->DR;
+    ( void ) tmpreg;
 }
 
 /**
@@ -1911,13 +1912,13 @@ __STATIC_INLINE void LL_USART_ClearFlag_FE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ClearFlag_NE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ClearFlag_NE( USART_TypeDef *USARTx )
 {
-  __IO uint32_t tmpreg;
-  tmpreg = USARTx->SR;
-  (void) tmpreg;
-  tmpreg = USARTx->DR;
-  (void) tmpreg;
+    __IO uint32_t tmpreg;
+    tmpreg = USARTx->SR;
+    ( void ) tmpreg;
+    tmpreg = USARTx->DR;
+    ( void ) tmpreg;
 }
 
 /**
@@ -1930,13 +1931,13 @@ __STATIC_INLINE void LL_USART_ClearFlag_NE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ClearFlag_ORE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ClearFlag_ORE( USART_TypeDef *USARTx )
 {
-  __IO uint32_t tmpreg;
-  tmpreg = USARTx->SR;
-  (void) tmpreg;
-  tmpreg = USARTx->DR;
-  (void) tmpreg;
+    __IO uint32_t tmpreg;
+    tmpreg = USARTx->SR;
+    ( void ) tmpreg;
+    tmpreg = USARTx->DR;
+    ( void ) tmpreg;
 }
 
 /**
@@ -1949,13 +1950,13 @@ __STATIC_INLINE void LL_USART_ClearFlag_ORE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ClearFlag_IDLE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ClearFlag_IDLE( USART_TypeDef *USARTx )
 {
-  __IO uint32_t tmpreg;
-  tmpreg = USARTx->SR;
-  (void) tmpreg;
-  tmpreg = USARTx->DR;
-  (void) tmpreg;
+    __IO uint32_t tmpreg;
+    tmpreg = USARTx->SR;
+    ( void ) tmpreg;
+    tmpreg = USARTx->DR;
+    ( void ) tmpreg;
 }
 
 /**
@@ -1964,9 +1965,9 @@ __STATIC_INLINE void LL_USART_ClearFlag_IDLE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ClearFlag_TC(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ClearFlag_TC( USART_TypeDef *USARTx )
 {
-  WRITE_REG(USARTx->SR, ~(USART_SR_TC));
+    WRITE_REG( USARTx->SR, ~( USART_SR_TC ) );
 }
 
 /**
@@ -1975,9 +1976,9 @@ __STATIC_INLINE void LL_USART_ClearFlag_TC(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ClearFlag_RXNE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ClearFlag_RXNE( USART_TypeDef *USARTx )
 {
-  WRITE_REG(USARTx->SR, ~(USART_SR_RXNE));
+    WRITE_REG( USARTx->SR, ~( USART_SR_RXNE ) );
 }
 
 /**
@@ -1988,9 +1989,9 @@ __STATIC_INLINE void LL_USART_ClearFlag_RXNE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ClearFlag_LBD(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ClearFlag_LBD( USART_TypeDef *USARTx )
 {
-  WRITE_REG(USARTx->SR, ~(USART_SR_LBD));
+    WRITE_REG( USARTx->SR, ~( USART_SR_LBD ) );
 }
 
 /**
@@ -2001,9 +2002,9 @@ __STATIC_INLINE void LL_USART_ClearFlag_LBD(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_ClearFlag_nCTS(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_ClearFlag_nCTS( USART_TypeDef *USARTx )
 {
-  WRITE_REG(USARTx->SR, ~(USART_SR_CTS));
+    WRITE_REG( USARTx->SR, ~( USART_SR_CTS ) );
 }
 
 /**
@@ -2020,9 +2021,9 @@ __STATIC_INLINE void LL_USART_ClearFlag_nCTS(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableIT_IDLE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableIT_IDLE( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR1, USART_CR1_IDLEIE);
+    SET_BIT( USARTx->CR1, USART_CR1_IDLEIE );
 }
 
 /**
@@ -2031,9 +2032,9 @@ __STATIC_INLINE void LL_USART_EnableIT_IDLE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableIT_RXNE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableIT_RXNE( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR1, USART_CR1_RXNEIE);
+    SET_BIT( USARTx->CR1, USART_CR1_RXNEIE );
 }
 
 /**
@@ -2042,9 +2043,9 @@ __STATIC_INLINE void LL_USART_EnableIT_RXNE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableIT_TC(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableIT_TC( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR1, USART_CR1_TCIE);
+    SET_BIT( USARTx->CR1, USART_CR1_TCIE );
 }
 
 /**
@@ -2053,9 +2054,9 @@ __STATIC_INLINE void LL_USART_EnableIT_TC(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableIT_TXE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableIT_TXE( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR1, USART_CR1_TXEIE);
+    SET_BIT( USARTx->CR1, USART_CR1_TXEIE );
 }
 
 /**
@@ -2064,9 +2065,9 @@ __STATIC_INLINE void LL_USART_EnableIT_TXE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableIT_PE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableIT_PE( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR1, USART_CR1_PEIE);
+    SET_BIT( USARTx->CR1, USART_CR1_PEIE );
 }
 
 /**
@@ -2077,9 +2078,9 @@ __STATIC_INLINE void LL_USART_EnableIT_PE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableIT_LBD(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableIT_LBD( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR2, USART_CR2_LBDIE);
+    SET_BIT( USARTx->CR2, USART_CR2_LBDIE );
 }
 
 /**
@@ -2092,9 +2093,9 @@ __STATIC_INLINE void LL_USART_EnableIT_LBD(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableIT_ERROR(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableIT_ERROR( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR3, USART_CR3_EIE);
+    SET_BIT( USARTx->CR3, USART_CR3_EIE );
 }
 
 /**
@@ -2105,9 +2106,9 @@ __STATIC_INLINE void LL_USART_EnableIT_ERROR(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableIT_CTS(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableIT_CTS( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR3, USART_CR3_CTSIE);
+    SET_BIT( USARTx->CR3, USART_CR3_CTSIE );
 }
 
 /**
@@ -2116,9 +2117,9 @@ __STATIC_INLINE void LL_USART_EnableIT_CTS(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableIT_IDLE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableIT_IDLE( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR1, USART_CR1_IDLEIE);
+    CLEAR_BIT( USARTx->CR1, USART_CR1_IDLEIE );
 }
 
 /**
@@ -2127,9 +2128,9 @@ __STATIC_INLINE void LL_USART_DisableIT_IDLE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableIT_RXNE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableIT_RXNE( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR1, USART_CR1_RXNEIE);
+    CLEAR_BIT( USARTx->CR1, USART_CR1_RXNEIE );
 }
 
 /**
@@ -2138,9 +2139,9 @@ __STATIC_INLINE void LL_USART_DisableIT_RXNE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableIT_TC(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableIT_TC( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR1, USART_CR1_TCIE);
+    CLEAR_BIT( USARTx->CR1, USART_CR1_TCIE );
 }
 
 /**
@@ -2149,9 +2150,9 @@ __STATIC_INLINE void LL_USART_DisableIT_TC(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableIT_TXE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableIT_TXE( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR1, USART_CR1_TXEIE);
+    CLEAR_BIT( USARTx->CR1, USART_CR1_TXEIE );
 }
 
 /**
@@ -2160,9 +2161,9 @@ __STATIC_INLINE void LL_USART_DisableIT_TXE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableIT_PE(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableIT_PE( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR1, USART_CR1_PEIE);
+    CLEAR_BIT( USARTx->CR1, USART_CR1_PEIE );
 }
 
 /**
@@ -2173,9 +2174,9 @@ __STATIC_INLINE void LL_USART_DisableIT_PE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableIT_LBD(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableIT_LBD( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR2, USART_CR2_LBDIE);
+    CLEAR_BIT( USARTx->CR2, USART_CR2_LBDIE );
 }
 
 /**
@@ -2188,9 +2189,9 @@ __STATIC_INLINE void LL_USART_DisableIT_LBD(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableIT_ERROR(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableIT_ERROR( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR3, USART_CR3_EIE);
+    CLEAR_BIT( USARTx->CR3, USART_CR3_EIE );
 }
 
 /**
@@ -2201,9 +2202,9 @@ __STATIC_INLINE void LL_USART_DisableIT_ERROR(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableIT_CTS(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableIT_CTS( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR3, USART_CR3_CTSIE);
+    CLEAR_BIT( USARTx->CR3, USART_CR3_CTSIE );
 }
 
 /**
@@ -2212,9 +2213,9 @@ __STATIC_INLINE void LL_USART_DisableIT_CTS(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_IDLE(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_IDLE( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR1, USART_CR1_IDLEIE) == (USART_CR1_IDLEIE));
+    return ( READ_BIT( USARTx->CR1, USART_CR1_IDLEIE ) == ( USART_CR1_IDLEIE ) );
 }
 
 /**
@@ -2223,9 +2224,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_IDLE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_RXNE(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_RXNE( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR1, USART_CR1_RXNEIE) == (USART_CR1_RXNEIE));
+    return ( READ_BIT( USARTx->CR1, USART_CR1_RXNEIE ) == ( USART_CR1_RXNEIE ) );
 }
 
 /**
@@ -2234,9 +2235,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_RXNE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_TC(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_TC( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR1, USART_CR1_TCIE) == (USART_CR1_TCIE));
+    return ( READ_BIT( USARTx->CR1, USART_CR1_TCIE ) == ( USART_CR1_TCIE ) );
 }
 
 /**
@@ -2245,9 +2246,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_TC(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_TXE(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_TXE( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR1, USART_CR1_TXEIE) == (USART_CR1_TXEIE));
+    return ( READ_BIT( USARTx->CR1, USART_CR1_TXEIE ) == ( USART_CR1_TXEIE ) );
 }
 
 /**
@@ -2256,9 +2257,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_TXE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_PE(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_PE( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR1, USART_CR1_PEIE) == (USART_CR1_PEIE));
+    return ( READ_BIT( USARTx->CR1, USART_CR1_PEIE ) == ( USART_CR1_PEIE ) );
 }
 
 /**
@@ -2269,9 +2270,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_PE(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_LBD(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_LBD( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR2, USART_CR2_LBDIE) == (USART_CR2_LBDIE));
+    return ( READ_BIT( USARTx->CR2, USART_CR2_LBDIE ) == ( USART_CR2_LBDIE ) );
 }
 
 /**
@@ -2280,9 +2281,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_LBD(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_ERROR(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_ERROR( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR3, USART_CR3_EIE) == (USART_CR3_EIE));
+    return ( READ_BIT( USARTx->CR3, USART_CR3_EIE ) == ( USART_CR3_EIE ) );
 }
 
 /**
@@ -2293,9 +2294,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_ERROR(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_CTS(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledIT_CTS( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR3, USART_CR3_CTSIE) == (USART_CR3_CTSIE));
+    return ( READ_BIT( USARTx->CR3, USART_CR3_CTSIE ) == ( USART_CR3_CTSIE ) );
 }
 
 /**
@@ -2312,9 +2313,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledIT_CTS(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableDMAReq_RX(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableDMAReq_RX( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR3, USART_CR3_DMAR);
+    SET_BIT( USARTx->CR3, USART_CR3_DMAR );
 }
 
 /**
@@ -2323,9 +2324,9 @@ __STATIC_INLINE void LL_USART_EnableDMAReq_RX(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableDMAReq_RX(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableDMAReq_RX( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR3, USART_CR3_DMAR);
+    CLEAR_BIT( USARTx->CR3, USART_CR3_DMAR );
 }
 
 /**
@@ -2334,9 +2335,9 @@ __STATIC_INLINE void LL_USART_DisableDMAReq_RX(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledDMAReq_RX(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledDMAReq_RX( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR3, USART_CR3_DMAR) == (USART_CR3_DMAR));
+    return ( READ_BIT( USARTx->CR3, USART_CR3_DMAR ) == ( USART_CR3_DMAR ) );
 }
 
 /**
@@ -2345,9 +2346,9 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledDMAReq_RX(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_EnableDMAReq_TX(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_EnableDMAReq_TX( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR3, USART_CR3_DMAT);
+    SET_BIT( USARTx->CR3, USART_CR3_DMAT );
 }
 
 /**
@@ -2356,9 +2357,9 @@ __STATIC_INLINE void LL_USART_EnableDMAReq_TX(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_DisableDMAReq_TX(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_DisableDMAReq_TX( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR3, USART_CR3_DMAT);
+    CLEAR_BIT( USARTx->CR3, USART_CR3_DMAT );
 }
 
 /**
@@ -2367,9 +2368,9 @@ __STATIC_INLINE void LL_USART_DisableDMAReq_TX(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_USART_IsEnabledDMAReq_TX(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_IsEnabledDMAReq_TX( USART_TypeDef *USARTx )
 {
-  return (READ_BIT(USARTx->CR3, USART_CR3_DMAT) == (USART_CR3_DMAT));
+    return ( READ_BIT( USARTx->CR3, USART_CR3_DMAT ) == ( USART_CR3_DMAT ) );
 }
 
 /**
@@ -2379,10 +2380,10 @@ __STATIC_INLINE uint32_t LL_USART_IsEnabledDMAReq_TX(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval Address of data register
   */
-__STATIC_INLINE uint32_t LL_USART_DMA_GetRegAddr(USART_TypeDef *USARTx)
+__STATIC_INLINE uint32_t LL_USART_DMA_GetRegAddr( USART_TypeDef *USARTx )
 {
-  /* return address of DR register */
-  return ((uint32_t) & (USARTx->DR));
+    /* return address of DR register */
+    return ( ( uint32_t ) & ( USARTx->DR ) );
 }
 
 /**
@@ -2399,9 +2400,9 @@ __STATIC_INLINE uint32_t LL_USART_DMA_GetRegAddr(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval Value between Min_Data=0x00 and Max_Data=0xFF
   */
-__STATIC_INLINE uint8_t LL_USART_ReceiveData8(USART_TypeDef *USARTx)
+__STATIC_INLINE uint8_t LL_USART_ReceiveData8( USART_TypeDef *USARTx )
 {
-  return (uint8_t)(READ_BIT(USARTx->DR, USART_DR_DR));
+    return ( uint8_t )( READ_BIT( USARTx->DR, USART_DR_DR ) );
 }
 
 /**
@@ -2410,9 +2411,9 @@ __STATIC_INLINE uint8_t LL_USART_ReceiveData8(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval Value between Min_Data=0x00 and Max_Data=0x1FF
   */
-__STATIC_INLINE uint16_t LL_USART_ReceiveData9(USART_TypeDef *USARTx)
+__STATIC_INLINE uint16_t LL_USART_ReceiveData9( USART_TypeDef *USARTx )
 {
-  return (uint16_t)(READ_BIT(USARTx->DR, USART_DR_DR));
+    return ( uint16_t )( READ_BIT( USARTx->DR, USART_DR_DR ) );
 }
 
 /**
@@ -2422,9 +2423,9 @@ __STATIC_INLINE uint16_t LL_USART_ReceiveData9(USART_TypeDef *USARTx)
   * @param  Value between Min_Data=0x00 and Max_Data=0xFF
   * @retval None
   */
-__STATIC_INLINE void LL_USART_TransmitData8(USART_TypeDef *USARTx, uint8_t Value)
+__STATIC_INLINE void LL_USART_TransmitData8( USART_TypeDef *USARTx, uint8_t Value )
 {
-  USARTx->DR = Value;
+    USARTx->DR = Value;
 }
 
 /**
@@ -2434,9 +2435,9 @@ __STATIC_INLINE void LL_USART_TransmitData8(USART_TypeDef *USARTx, uint8_t Value
   * @param  Value between Min_Data=0x00 and Max_Data=0x1FF
   * @retval None
   */
-__STATIC_INLINE void LL_USART_TransmitData9(USART_TypeDef *USARTx, uint16_t Value)
+__STATIC_INLINE void LL_USART_TransmitData9( USART_TypeDef *USARTx, uint16_t Value )
 {
-  USARTx->DR = Value & 0x1FFU;
+    USARTx->DR = Value & 0x1FFU;
 }
 
 /**
@@ -2453,9 +2454,9 @@ __STATIC_INLINE void LL_USART_TransmitData9(USART_TypeDef *USARTx, uint16_t Valu
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_RequestBreakSending(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_RequestBreakSending( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR1, USART_CR1_SBK);
+    SET_BIT( USARTx->CR1, USART_CR1_SBK );
 }
 
 /**
@@ -2464,9 +2465,9 @@ __STATIC_INLINE void LL_USART_RequestBreakSending(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_RequestEnterMuteMode(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_RequestEnterMuteMode( USART_TypeDef *USARTx )
 {
-  SET_BIT(USARTx->CR1, USART_CR1_RWU);
+    SET_BIT( USARTx->CR1, USART_CR1_RWU );
 }
 
 /**
@@ -2475,9 +2476,9 @@ __STATIC_INLINE void LL_USART_RequestEnterMuteMode(USART_TypeDef *USARTx)
   * @param  USARTx USART Instance
   * @retval None
   */
-__STATIC_INLINE void LL_USART_RequestExitMuteMode(USART_TypeDef *USARTx)
+__STATIC_INLINE void LL_USART_RequestExitMuteMode( USART_TypeDef *USARTx )
 {
-  CLEAR_BIT(USARTx->CR1, USART_CR1_RWU);
+    CLEAR_BIT( USARTx->CR1, USART_CR1_RWU );
 }
 
 /**
@@ -2488,11 +2489,11 @@ __STATIC_INLINE void LL_USART_RequestExitMuteMode(USART_TypeDef *USARTx)
 /** @defgroup USART_LL_EF_Init Initialization and de-initialization functions
   * @{
   */
-ErrorStatus LL_USART_DeInit(USART_TypeDef *USARTx);
-ErrorStatus LL_USART_Init(USART_TypeDef *USARTx, LL_USART_InitTypeDef *USART_InitStruct);
-void        LL_USART_StructInit(LL_USART_InitTypeDef *USART_InitStruct);
-ErrorStatus LL_USART_ClockInit(USART_TypeDef *USARTx, LL_USART_ClockInitTypeDef *USART_ClockInitStruct);
-void        LL_USART_ClockStructInit(LL_USART_ClockInitTypeDef *USART_ClockInitStruct);
+ErrorStatus LL_USART_DeInit( USART_TypeDef *USARTx );
+ErrorStatus LL_USART_Init( USART_TypeDef *USARTx, LL_USART_InitTypeDef *USART_InitStruct );
+void        LL_USART_StructInit( LL_USART_InitTypeDef *USART_InitStruct );
+ErrorStatus LL_USART_ClockInit( USART_TypeDef *USARTx, LL_USART_ClockInitTypeDef *USART_ClockInitStruct );
+void        LL_USART_ClockStructInit( LL_USART_ClockInitTypeDef *USART_ClockInitStruct );
 /**
   * @}
   */

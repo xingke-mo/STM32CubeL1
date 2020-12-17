@@ -1,4 +1,4 @@
-/** 
+/**
   ******************************************************************************
   * @file    Examples_LL/I2C/I2C_TwoBoards_MasterTx_SlaveRx_DMA/Src/stm32l1xx_it.c
   * @author  MCD Application Team
@@ -47,7 +47,7 @@
   * @param  None
   * @retval None
   */
-void NMI_Handler(void)
+void NMI_Handler( void )
 {
 }
 
@@ -56,12 +56,12 @@ void NMI_Handler(void)
   * @param  None
   * @retval None
   */
-void HardFault_Handler(void)
+void HardFault_Handler( void )
 {
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Hard Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -69,12 +69,12 @@ void HardFault_Handler(void)
   * @param  None
   * @retval None
   */
-void MemManage_Handler(void)
+void MemManage_Handler( void )
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Memory Manage exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -82,12 +82,12 @@ void MemManage_Handler(void)
   * @param  None
   * @retval None
   */
-void BusFault_Handler(void)
+void BusFault_Handler( void )
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Bus Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -95,12 +95,12 @@ void BusFault_Handler(void)
   * @param  None
   * @retval None
   */
-void UsageFault_Handler(void)
+void UsageFault_Handler( void )
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Usage Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -108,7 +108,7 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
-void SVC_Handler(void)
+void SVC_Handler( void )
 {
 }
 
@@ -117,7 +117,7 @@ void SVC_Handler(void)
   * @param  None
   * @retval None
   */
-void DebugMon_Handler(void)
+void DebugMon_Handler( void )
 {
 }
 
@@ -126,7 +126,7 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-void PendSV_Handler(void)
+void PendSV_Handler( void )
 {
 }
 
@@ -135,7 +135,7 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
+void SysTick_Handler( void )
 {
 }
 
@@ -151,16 +151,16 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
-void USER_BUTTON_IRQHANDLER(void)
+void USER_BUTTON_IRQHANDLER( void )
 {
-  /* Manage Flags */
-  if(LL_EXTI_IsActiveFlag_0_31(USER_BUTTON_EXTI_LINE) != RESET)
-  {
-    LL_EXTI_ClearFlag_0_31(USER_BUTTON_EXTI_LINE);
+    /* Manage Flags */
+    if( LL_EXTI_IsActiveFlag_0_31( USER_BUTTON_EXTI_LINE ) != RESET )
+    {
+        LL_EXTI_ClearFlag_0_31( USER_BUTTON_EXTI_LINE );
 
-    /* Manage code in main.c.*/
-    UserButton_Callback(); 
-  }
+        /* Manage code in main.c.*/
+        UserButton_Callback();
+    }
 }
 #ifdef SLAVE_BOARD
 /**
@@ -168,17 +168,17 @@ void USER_BUTTON_IRQHANDLER(void)
   * @param  None
   * @retval None
   */
-void DMA1_Channel7_IRQHandler(void)
+void DMA1_Channel7_IRQHandler( void )
 {
-  if(LL_DMA_IsActiveFlag_TC7(DMA1))
-  {
-    LL_DMA_ClearFlag_GI7(DMA1);
-    DMA1_Transfer_Complete_Callback();
-  }
-  else if(LL_DMA_IsActiveFlag_TE7(DMA1))
-  {
-    DMA1_Transfer_Error_Callback();
-  }
+    if( LL_DMA_IsActiveFlag_TC7( DMA1 ) )
+    {
+        LL_DMA_ClearFlag_GI7( DMA1 );
+        DMA1_Transfer_Complete_Callback();
+    }
+    else if( LL_DMA_IsActiveFlag_TE7( DMA1 ) )
+    {
+        DMA1_Transfer_Error_Callback();
+    }
 }
 
 #else /* MASTER_BOARD */
@@ -188,17 +188,17 @@ void DMA1_Channel7_IRQHandler(void)
   * @param  None
   * @retval None
   */
-void DMA1_Channel6_IRQHandler(void)
+void DMA1_Channel6_IRQHandler( void )
 {
-  if(LL_DMA_IsActiveFlag_TC6(DMA1))
-  {
-    LL_DMA_ClearFlag_GI6(DMA1);
-    DMA1_Transfer_Complete_Callback();
-  }
-  else if(LL_DMA_IsActiveFlag_TE6(DMA1))
-  {
-    DMA1_Transfer_Error_Callback();
-  }
+    if( LL_DMA_IsActiveFlag_TC6( DMA1 ) )
+    {
+        LL_DMA_ClearFlag_GI6( DMA1 );
+        DMA1_Transfer_Complete_Callback();
+    }
+    else if( LL_DMA_IsActiveFlag_TE6( DMA1 ) )
+    {
+        DMA1_Transfer_Error_Callback();
+    }
 }
 #endif /* SLAVE_BOARD */
 

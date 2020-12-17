@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright © 2017 STMicroelectronics International N.V. 
+  * <h2><center>&copy; Copyright © 2017 STMicroelectronics International N.V.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license SLA0044,
@@ -23,11 +23,11 @@
 /* To call before modifying any critical data. In case the host is inside or
 asked for enterring the critical section, this routine will wait for the host to
 leave the critical section. */
-void enterLock(void);
+void enterLock( void );
 
 /* Leave the critical section. If the host is waiting, access will be granted
 to him. Otherwise the first next one asking will own the turn. */
-void exitLock(void);
+void exitLock( void );
 
 #endif /* STM_CRITICAL_SECTION_H */
 

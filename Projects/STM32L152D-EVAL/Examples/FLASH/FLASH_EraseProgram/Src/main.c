@@ -39,14 +39,14 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 uint32_t Address = 0, PAGEError = 0;
-__IO uint32_t data32 = 0 , MemoryProgramStatus = 0;
+__IO uint32_t data32 = 0, MemoryProgramStatus = 0;
 
 /*Variable used for Erase procedure*/
 static FLASH_EraseInitTypeDef EraseInitStruct;
 
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
-static void Error_Handler(void);
+void SystemClock_Config( void );
+static void Error_Handler( void );
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -55,113 +55,114 @@ static void Error_Handler(void);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  /* STM32L1xx HAL library initialization:
-       - Configure the Flash prefetch
-       - Systick timer is configured by default as source of time base, but user 
-         can eventually implement his proper time base source (a general purpose 
-         timer for example or other time source), keeping in mind that Time base 
-         duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
-         handled in milliseconds basis.
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
-  HAL_Init();
+    /* STM32L1xx HAL library initialization:
+         - Configure the Flash prefetch
+         - Systick timer is configured by default as source of time base, but user
+           can eventually implement his proper time base source (a general purpose
+           timer for example or other time source), keeping in mind that Time base
+           duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and
+           handled in milliseconds basis.
+         - Set NVIC Group Priority to 4
+         - Low Level Initialization
+       */
+    HAL_Init();
 
-  /* Initialize LED1, LED2 and LED3 */
-  BSP_LED_Init(LED1);
-  BSP_LED_Init(LED2);
-  BSP_LED_Init(LED3);
+    /* Initialize LED1, LED2 and LED3 */
+    BSP_LED_Init( LED1 );
+    BSP_LED_Init( LED2 );
+    BSP_LED_Init( LED3 );
 
-  /* Configure the system clock to 32 MHz */
-  SystemClock_Config();
+    /* Configure the system clock to 32 MHz */
+    SystemClock_Config();
 
-  /* Unlock the Flash to enable the flash control register access *************/
-  HAL_FLASH_Unlock();
+    /* Unlock the Flash to enable the flash control register access *************/
+    HAL_FLASH_Unlock();
 
-  /* Erase the user Flash area
-    (area defined by FLASH_USER_START_ADDR and FLASH_USER_END_ADDR) ***********/
+    /* Erase the user Flash area
+      (area defined by FLASH_USER_START_ADDR and FLASH_USER_END_ADDR) ***********/
 
-  /* Fill EraseInit structure*/
-  EraseInitStruct.TypeErase   = FLASH_TYPEERASE_PAGES;
-  EraseInitStruct.PageAddress = FLASH_USER_START_ADDR;
-  EraseInitStruct.NbPages     = (FLASH_USER_END_ADDR - FLASH_USER_START_ADDR) / FLASH_PAGE_SIZE;
+    /* Fill EraseInit structure*/
+    EraseInitStruct.TypeErase   = FLASH_TYPEERASE_PAGES;
+    EraseInitStruct.PageAddress = FLASH_USER_START_ADDR;
+    EraseInitStruct.NbPages     = ( FLASH_USER_END_ADDR - FLASH_USER_START_ADDR ) / FLASH_PAGE_SIZE;
 
-  if (HAL_FLASHEx_Erase(&EraseInitStruct, &PAGEError) != HAL_OK)
-  {
-    /*
-      Error occurred while page erase.
-      User can add here some code to deal with this error.
-      PAGEError will contain the faulty page and then to know the code error on this page,
-      user can call function 'HAL_FLASH_GetError()'
-    */
-    /* Infinite loop */
-    while (1)
+    if( HAL_FLASHEx_Erase( &EraseInitStruct, &PAGEError ) != HAL_OK )
     {
-      BSP_LED_On(LED3);
+        /*
+          Error occurred while page erase.
+          User can add here some code to deal with this error.
+          PAGEError will contain the faulty page and then to know the code error on this page,
+          user can call function 'HAL_FLASH_GetError()'
+        */
+        /* Infinite loop */
+        while( 1 )
+        {
+            BSP_LED_On( LED3 );
+        }
     }
-  }
 
-  /* Program the user Flash area word by word
-    (area defined by FLASH_USER_START_ADDR and FLASH_USER_END_ADDR) ***********/
+    /* Program the user Flash area word by word
+      (area defined by FLASH_USER_START_ADDR and FLASH_USER_END_ADDR) ***********/
 
-  Address = FLASH_USER_START_ADDR;
+    Address = FLASH_USER_START_ADDR;
 
-  while (Address < FLASH_USER_END_ADDR)
-  {
-    if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, Address, DATA_32) == HAL_OK)
+    while( Address < FLASH_USER_END_ADDR )
     {
-      Address = Address + 4;
+        if( HAL_FLASH_Program( FLASH_TYPEPROGRAM_WORD, Address, DATA_32 ) == HAL_OK )
+        {
+            Address = Address + 4;
+        }
+        else
+        {
+            /* Error occurred while writing data in Flash memory.
+               User can add here some code to deal with this error */
+            while( 1 )
+            {
+                BSP_LED_On( LED3 );
+            }
+        }
+    }
+
+    /* Lock the Flash to disable the flash control register access (recommended
+       to protect the FLASH memory against possible unwanted operation) *********/
+    HAL_FLASH_Lock();
+
+    /* Check if the programmed data is OK
+        MemoryProgramStatus = 0: data programmed correctly
+        MemoryProgramStatus != 0: number of words not programmed correctly ******/
+    Address = FLASH_USER_START_ADDR;
+    MemoryProgramStatus = 0x0;
+
+    while( Address < FLASH_USER_END_ADDR )
+    {
+        data32 = *( __IO uint32_t * )Address;
+
+        if( data32 != DATA_32 )
+        {
+            MemoryProgramStatus++;
+        }
+
+        Address = Address + 4;
+    }
+
+    /*Check if there is an issue to program data*/
+    if( MemoryProgramStatus == 0 )
+    {
+        /* No error detected. Switch on LED1*/
+        BSP_LED_On( LED1 );
     }
     else
     {
-      /* Error occurred while writing data in Flash memory.
-         User can add here some code to deal with this error */
-      while (1)
-      {
-        BSP_LED_On(LED3);
-      }
+        /* Error detected. Switch on LED2*/
+        BSP_LED_On( LED2 );
     }
-  }
 
-  /* Lock the Flash to disable the flash control register access (recommended
-     to protect the FLASH memory against possible unwanted operation) *********/
-  HAL_FLASH_Lock();
-
-  /* Check if the programmed data is OK
-      MemoryProgramStatus = 0: data programmed correctly
-      MemoryProgramStatus != 0: number of words not programmed correctly ******/
-  Address = FLASH_USER_START_ADDR;
-  MemoryProgramStatus = 0x0;
-
-  while (Address < FLASH_USER_END_ADDR)
-  {
-    data32 = *(__IO uint32_t *)Address;
-
-    if (data32 != DATA_32)
+    /* Infinite loop */
+    while( 1 )
     {
-      MemoryProgramStatus++;
     }
-    Address = Address + 4;
-  }
-
-  /*Check if there is an issue to program data*/
-  if (MemoryProgramStatus == 0)
-  {
-    /* No error detected. Switch on LED1*/
-    BSP_LED_On(LED1);
-  }
-  else
-  {
-    /* Error detected. Switch on LED2*/
-    BSP_LED_On(LED2);
-  }
-
-  /* Infinite loop */
-  while (1)
-  {
-  }
 }
 
 /**
@@ -180,54 +181,61 @@ int main(void)
   *            Flash Latency(WS)              = 1
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 
-  /* Enable HSE Oscillator and Activate PLL with HSE as source */
-  RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState            = RCC_HSE_ON;
-  RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLL_MUL12;
-  RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLL_DIV3;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /* Enable HSE Oscillator and Activate PLL with HSE as source */
+    RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSE;
+    RCC_OscInitStruct.HSEState            = RCC_HSE_ON;
+    RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
+    RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSE;
+    RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLL_MUL12;
+    RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLL_DIV3;
 
-  /* Set Voltage scale1 as MCU will run at 32MHz */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-  
-  /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
-  while (__HAL_PWR_GET_FLAG(PWR_FLAG_VOS) != RESET) {};
+    if( HAL_RCC_OscConfig( &RCC_OscInitStruct ) != HAL_OK )
+    {
+        Error_Handler();
+    }
 
-  /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
-  clocks dividers */
-  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /* Set Voltage scale1 as MCU will run at 32MHz */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    __HAL_PWR_VOLTAGESCALING_CONFIG( PWR_REGULATOR_VOLTAGE_SCALE1 );
+
+    /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+    while( __HAL_PWR_GET_FLAG( PWR_FLAG_VOS ) != RESET ) {};
+
+    /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
+    clocks dividers */
+    RCC_ClkInitStruct.ClockType = ( RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 );
+
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+    if( HAL_RCC_ClockConfig( &RCC_ClkInitStruct, FLASH_LATENCY_1 ) != HAL_OK )
+    {
+        Error_Handler();
+    }
 }
 /**
   * @brief  This function is executed in case of error occurrence.
   * @param  None
   * @retval None
   */
-static void Error_Handler(void)
+static void Error_Handler( void )
 {
-  /* Turn LED3 on */
-  BSP_LED_On(LED3);
-  while(1)
-  {
-  }
+    /* Turn LED3 on */
+    BSP_LED_On( LED3 );
+
+    while( 1 )
+    {
+    }
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -238,15 +246,15 @@ static void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 /**

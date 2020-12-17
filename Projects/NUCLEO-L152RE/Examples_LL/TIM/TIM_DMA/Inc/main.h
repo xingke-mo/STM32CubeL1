@@ -31,18 +31,18 @@
 #include "stm32l1xx_ll_tim.h"
 #include "stm32l1xx_ll_dma.h"
 #if defined(USE_FULL_ASSERT)
-#include "stm32_assert.h"
+    #include "stm32_assert.h"
 #endif /* USE_FULL_ASSERT */
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /**
-  * @brief LED2 
+  * @brief LED2
   */
 #define LED2_PIN                           LL_GPIO_PIN_5
 #define LED2_GPIO_PORT                     GPIOA
-#define LED2_GPIO_CLK_ENABLE()             LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA)  
- 
+#define LED2_GPIO_CLK_ENABLE()             LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA)
+
 /**
   * @brief Toggle periods for various blinking modes
   */
@@ -53,9 +53,9 @@
 /* Exported macros --s---------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 /* IRQ Handler treatment */
-void TimerUpdate_Callback(void);
-void TransferComplete_Callback(void);
-void TransferError_Callback(void);
+void TimerUpdate_Callback( void );
+void TransferComplete_Callback( void );
+void TransferError_Callback( void );
 
 #endif /* __MAIN_H */
 

@@ -48,9 +48,9 @@ uint32_t uwCRCValue = 0;
 
 static const uint32_t aDataBuffer[BUFFER_SIZE] =
 {
-  0x00001021, 0x20423063, 0x408450a5,
-  0x60c670e7, 0x9129a14a, 0xb16bc18c,
-  0xd1ade1ce, 0xf1ef1231, 0x32732252
+    0x00001021, 0x20423063, 0x408450a5,
+    0x60c670e7, 0x9129a14a, 0xb16bc18c,
+    0xd1ade1ce, 0xf1ef1231, 0x32732252
 };
 
 /* Expected CRC Value */
@@ -58,8 +58,8 @@ uint32_t uwExpectedCRCValue = 0xFF813A5C;
 
 
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
-static void Error_Handler(void);
+void SystemClock_Config( void );
+static void Error_Handler( void );
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -68,76 +68,77 @@ static void Error_Handler(void);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  register uint32_t index = 0;
+    register uint32_t index = 0;
 
-  /* STM32L1xx HAL library initialization:
-       - Configure the Flash prefetch
-       - Systick timer is configured by default as source of time base, but user 
-         can eventually implement his proper time base source (a general purpose 
-         timer for example or other time source), keeping in mind that Time base 
-         duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
-         handled in milliseconds basis.
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
-  HAL_Init();
-  
-  /* Configure the system clock to 32 MHz */
-  SystemClock_Config();
+    /* STM32L1xx HAL library initialization:
+         - Configure the Flash prefetch
+         - Systick timer is configured by default as source of time base, but user
+           can eventually implement his proper time base source (a general purpose
+           timer for example or other time source), keeping in mind that Time base
+           duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and
+           handled in milliseconds basis.
+         - Set NVIC Group Priority to 4
+         - Low Level Initialization
+       */
+    HAL_Init();
 
-  /* Configure LED2 */
-  BSP_LED_Init(LED2);
+    /* Configure the system clock to 32 MHz */
+    SystemClock_Config();
 
-  /*##-1- Configure the CRC peripheral #######################################*/
-  CrcHandle.Instance = CRC;
+    /* Configure LED2 */
+    BSP_LED_Init( LED2 );
 
-  if (HAL_CRC_Init(&CrcHandle) != HAL_OK)
-  {
-    /* Initialization Error */
-    Error_Handler();
-  }
+    /*##-1- Configure the CRC peripheral #######################################*/
+    CrcHandle.Instance = CRC;
 
-  /*##-2- Compute the CRC of "aDataBuffer" ###################################*/
-  uwCRCValue = HAL_CRC_Calculate(&CrcHandle, (uint32_t *)&aDataBuffer, BUFFER_SIZE);
-
-  /*##-3- Compare the CRC value to the Expected one ##########################*/
-  if (uwCRCValue != uwExpectedCRCValue)
-  {
-    /* Wrong CRC value: enter Error_Handler */
-    Error_Handler();
-  }
-  else
-  {
-    /*##-4- Compute the CRC of "aDataBuffer" ###################################*/
-    /* Reset the CRC calculation unit */
-    LL_CRC_ResetCRCCalculationUnit(CRC);
-
-    /* Compute the CRC of Data Buffer array*/
-    for (index = 0; index < BUFFER_SIZE; index++)
+    if( HAL_CRC_Init( &CrcHandle ) != HAL_OK )
     {
-      LL_CRC_FeedData32(CRC, aDataBuffer[index]);
+        /* Initialization Error */
+        Error_Handler();
     }
-    uwCRCValue = LL_CRC_ReadData32(CRC);
 
-    /*##-5- Compare the CRC value to the Expected one ##########################*/
-    if (uwCRCValue != uwExpectedCRCValue)
+    /*##-2- Compute the CRC of "aDataBuffer" ###################################*/
+    uwCRCValue = HAL_CRC_Calculate( &CrcHandle, ( uint32_t * )&aDataBuffer, BUFFER_SIZE );
+
+    /*##-3- Compare the CRC value to the Expected one ##########################*/
+    if( uwCRCValue != uwExpectedCRCValue )
     {
-      /* Wrong CRC value: enter Error_Handler */
-      Error_Handler();
+        /* Wrong CRC value: enter Error_Handler */
+        Error_Handler();
     }
     else
     {
-      /* Right CRC value: Turn LED2 on */
-      BSP_LED_On(LED2);
-    }
-  }
+        /*##-4- Compute the CRC of "aDataBuffer" ###################################*/
+        /* Reset the CRC calculation unit */
+        LL_CRC_ResetCRCCalculationUnit( CRC );
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+        /* Compute the CRC of Data Buffer array*/
+        for( index = 0; index < BUFFER_SIZE; index++ )
+        {
+            LL_CRC_FeedData32( CRC, aDataBuffer[index] );
+        }
+
+        uwCRCValue = LL_CRC_ReadData32( CRC );
+
+        /*##-5- Compare the CRC value to the Expected one ##########################*/
+        if( uwCRCValue != uwExpectedCRCValue )
+        {
+            /* Wrong CRC value: enter Error_Handler */
+            Error_Handler();
+        }
+        else
+        {
+            /* Right CRC value: Turn LED2 on */
+            BSP_LED_On( LED2 );
+        }
+    }
+
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -155,58 +156,64 @@ int main(void)
   *            Flash Latency(WS)              = 1
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 
-  /* Enable HSI Oscillator and Activate PLL with HSI as source */
-  RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState            = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLL_MUL6;
-  RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLL_DIV3;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    /* Initialization Error */
-    while(1); 
-  }
+    /* Enable HSI Oscillator and Activate PLL with HSI as source */
+    RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSI;
+    RCC_OscInitStruct.HSIState            = RCC_HSI_ON;
+    RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+    RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
+    RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSI;
+    RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLL_MUL6;
+    RCC_OscInitStruct.PLL.PLLDIV          = RCC_PLL_DIV3;
 
-  /* Set Voltage scale1 as MCU will run at 32MHz */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-  
-  /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
-  while (__HAL_PWR_GET_FLAG(PWR_FLAG_VOS) != RESET) {};
+    if( HAL_RCC_OscConfig( &RCC_OscInitStruct ) != HAL_OK )
+    {
+        /* Initialization Error */
+        while( 1 );
+    }
 
-  /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
-  clocks dividers */
-  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
-  {
-    /* Initialization Error */
-    while(1); 
-  }
+    /* Set Voltage scale1 as MCU will run at 32MHz */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    __HAL_PWR_VOLTAGESCALING_CONFIG( PWR_REGULATOR_VOLTAGE_SCALE1 );
+
+    /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+    while( __HAL_PWR_GET_FLAG( PWR_FLAG_VOS ) != RESET ) {};
+
+    /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
+    clocks dividers */
+    RCC_ClkInitStruct.ClockType = ( RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 );
+
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+    if( HAL_RCC_ClockConfig( &RCC_ClkInitStruct, FLASH_LATENCY_1 ) != HAL_OK )
+    {
+        /* Initialization Error */
+        while( 1 );
+    }
 }
 /**
   * @brief  This function is executed in case of error occurrence.
   * @param  None
   * @retval None
   */
-static void Error_Handler(void)
+static void Error_Handler( void )
 {
-  while (1)
-  {
-    /* Error if LED2 is slowly blinking (1 sec. period) */
-    BSP_LED_Toggle(LED2); 
-    HAL_Delay(1000);   
-  }
+    while( 1 )
+    {
+        /* Error if LED2 is slowly blinking (1 sec. period) */
+        BSP_LED_Toggle( LED2 );
+        HAL_Delay( 1000 );
+    }
 
 }
 
@@ -218,15 +225,15 @@ static void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 

@@ -22,7 +22,7 @@
 #define _CPU_UTILS_H__
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -35,7 +35,7 @@
 #define CALCULATION_PERIOD    1000
 
 /* Exported functions ------------------------------------------------------- */
-uint16_t osGetCPUUsage (void);
+uint16_t osGetCPUUsage( void );
 
 #ifdef __cplusplus
 }

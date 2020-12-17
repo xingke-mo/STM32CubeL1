@@ -37,14 +37,14 @@
   * @brief Timeout value
   */
 #if (USE_TIMEOUT == 1)
-#define DMA_SEND_TIMEOUT_TC_MS               5
-#ifdef SLAVE_BOARD
-#define I2C_SEND_TIMEOUT_STOP_MS             5
-#else /* MASTER BOARD */
-#define I2C_SEND_TIMEOUT_TXE_MS              5
-#define I2C_SEND_TIMEOUT_SB_MS               5
-#define I2C_SEND_TIMEOUT_ADDR_MS             5
-#endif
+    #define DMA_SEND_TIMEOUT_TC_MS               5
+    #ifdef SLAVE_BOARD
+        #define I2C_SEND_TIMEOUT_STOP_MS             5
+    #else /* MASTER BOARD */
+        #define I2C_SEND_TIMEOUT_TXE_MS              5
+        #define I2C_SEND_TIMEOUT_SB_MS               5
+        #define I2C_SEND_TIMEOUT_ADDR_MS             5
+    #endif
 #endif /* USE_TIMEOUT */
 
 /**
@@ -58,22 +58,22 @@
 
 /* Private variables ---------------------------------------------------------*/
 #if (USE_TIMEOUT == 1)
-uint32_t Timeout                             = 0; /* Variable used for Timeout management */
+    uint32_t Timeout                             = 0; /* Variable used for Timeout management */
 #endif /* USE_TIMEOUT */
 const uint8_t aLedOn[]                       = "LED ON";
 
 /**
   * @brief Variables related to SlaveReceive process
   */
-__IO uint8_t  ubNbDataToReceive              = sizeof(aLedOn);
-uint8_t       aReceiveBuffer[sizeof(aLedOn)] = {0};
+__IO uint8_t  ubNbDataToReceive              = sizeof( aLedOn );
+uint8_t       aReceiveBuffer[sizeof( aLedOn )] = {0};
 __IO uint8_t  ubSlaveTransferComplete        = 0;
 
 /**
   * @brief Variables related to MasterTransmit process
   */
-__IO uint8_t  ubNbDataToTransmit             = sizeof(aLedOn);
-uint8_t*      pTransmitBuffer                = (uint8_t*)aLedOn;
+__IO uint8_t  ubNbDataToTransmit             = sizeof( aLedOn );
+uint8_t      *pTransmitBuffer                = ( uint8_t * )aLedOn;
 __IO uint8_t  ubMasterTransferComplete       = 0;
 /**
   * @brief Variables related to MasterReceive and SlaveTransmit process
@@ -81,26 +81,26 @@ __IO uint8_t  ubMasterTransferComplete       = 0;
 __IO uint8_t ubButtonPress                  = 0;
 
 /* Private function prototypes -----------------------------------------------*/
-void     SystemClock_Config(void);
-void     LED_Init(void);
-void     LED_On(void);
-void     LED_Off(void);
-void     LED_Blinking(uint32_t Period);
-void     Configure_DMA(void);
-void     UserButton_Init(void);
-void     WaitForUserButtonPress(void);
+void     SystemClock_Config( void );
+void     LED_Init( void );
+void     LED_On( void );
+void     LED_Off( void );
+void     LED_Blinking( uint32_t Period );
+void     Configure_DMA( void );
+void     UserButton_Init( void );
+void     WaitForUserButtonPress( void );
 
 #ifdef SLAVE_BOARD
-void     Configure_I2C_Slave(void);
-void     Activate_I2C_Slave(void);
-void     Handle_I2C_Slave(void);
-uint8_t  Buffercmp8(uint8_t* pBuffer1, uint8_t* pBuffer2, uint8_t BufferLength);
+    void     Configure_I2C_Slave( void );
+    void     Activate_I2C_Slave( void );
+    void     Handle_I2C_Slave( void );
+    uint8_t  Buffercmp8( uint8_t *pBuffer1, uint8_t *pBuffer2, uint8_t BufferLength );
 
 #else /* MASTER_BOARD */
 
-void     Configure_I2C_Master(void);
-void     Activate_I2C_Master(void);
-void     Handle_I2C_Master(void);
+    void     Configure_I2C_Master( void );
+    void     Activate_I2C_Master( void );
+    void     Handle_I2C_Master( void );
 #endif /* SLAVE_BOARD */
 
 /* Private functions ---------------------------------------------------------*/
@@ -110,53 +110,53 @@ void     Handle_I2C_Master(void);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  /* Configure the system clock to 32 MHz */
-  SystemClock_Config();
+    /* Configure the system clock to 32 MHz */
+    SystemClock_Config();
 
-  /* Initialize LED2 */
-  LED_Init();
+    /* Initialize LED2 */
+    LED_Init();
 
-  /* Set LED2 Off */
-  LED_Off();
+    /* Set LED2 Off */
+    LED_Off();
 
-  /* Initialize User push-button in EXTI mode */
-  UserButton_Init();
+    /* Initialize User push-button in EXTI mode */
+    UserButton_Init();
 
-  /* Configure DMA1_Channel7 and DMA1_Channel6 (DMA IP configuration in transfer memory to peripheral (I2C1)  */
-  Configure_DMA();
+    /* Configure DMA1_Channel7 and DMA1_Channel6 (DMA IP configuration in transfer memory to peripheral (I2C1)  */
+    Configure_DMA();
 
 #ifdef SLAVE_BOARD
-  /* Configure I2C1 (I2C IP configuration in Slave mode and related GPIO initialization) */
-  Configure_I2C_Slave();
+    /* Configure I2C1 (I2C IP configuration in Slave mode and related GPIO initialization) */
+    Configure_I2C_Slave();
 
-  /* Wait for User push-button press to start transfer */
-  WaitForUserButtonPress();
+    /* Wait for User push-button press to start transfer */
+    WaitForUserButtonPress();
 
-  /* Enable the I2C1 peripheral (Slave) */
-  Activate_I2C_Slave();
+    /* Enable the I2C1 peripheral (Slave) */
+    Activate_I2C_Slave();
 
-  /* Handle I2C1 events (Slave) */
-  Handle_I2C_Slave();
+    /* Handle I2C1 events (Slave) */
+    Handle_I2C_Slave();
 #else /* MASTER_BOARD */
-  /* Configure I2C1 (I2C IP configuration in Master mode and related GPIO initialization) */
-  Configure_I2C_Master();
+    /* Configure I2C1 (I2C IP configuration in Master mode and related GPIO initialization) */
+    Configure_I2C_Master();
 
-  /* Wait for User push-button press to start transfer */
-  WaitForUserButtonPress();
+    /* Wait for User push-button press to start transfer */
+    WaitForUserButtonPress();
 
-  /* Enable the I2C1 peripheral (Master) */
-  Activate_I2C_Master();
+    /* Enable the I2C1 peripheral (Master) */
+    Activate_I2C_Master();
 
-  /* Handle I2C1 events (Master) */
-  Handle_I2C_Master();
+    /* Handle I2C1 events (Master) */
+    Handle_I2C_Master();
 #endif /* SLAVE_BOARD */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -170,47 +170,47 @@ int main(void)
   * @param   None
   * @retval  None
   */
-void Configure_DMA(void)
+void Configure_DMA( void )
 {
-  /* DMA1_Channel7 used for I2C1 Reception
-   * DMA1_Channel6 used for I2C1 Transmission
-   */
-  /* (1) Enable the clock of DMA1 */
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
+    /* DMA1_Channel7 used for I2C1 Reception
+     * DMA1_Channel6 used for I2C1 Transmission
+     */
+    /* (1) Enable the clock of DMA1 */
+    LL_AHB1_GRP1_EnableClock( LL_AHB1_GRP1_PERIPH_DMA1 );
 
-  /* (2) Configure NVIC for DMA transfer complete/error interrupts */
-  NVIC_SetPriority(DMA1_Channel7_IRQn, 0);
-  NVIC_EnableIRQ(DMA1_Channel7_IRQn);
-  NVIC_SetPriority(DMA1_Channel6_IRQn, 0);
-  NVIC_EnableIRQ(DMA1_Channel6_IRQn);
+    /* (2) Configure NVIC for DMA transfer complete/error interrupts */
+    NVIC_SetPriority( DMA1_Channel7_IRQn, 0 );
+    NVIC_EnableIRQ( DMA1_Channel7_IRQn );
+    NVIC_SetPriority( DMA1_Channel6_IRQn, 0 );
+    NVIC_EnableIRQ( DMA1_Channel6_IRQn );
 
-  /* (3) Configure the DMA1_Channel7 functionnal parameters */
-  LL_DMA_ConfigTransfer(DMA1, LL_DMA_CHANNEL_7, LL_DMA_DIRECTION_PERIPH_TO_MEMORY | \
-                                                LL_DMA_PRIORITY_HIGH              | \
-                                                LL_DMA_MODE_NORMAL                | \
-                                                LL_DMA_PERIPH_NOINCREMENT           | \
-                                                LL_DMA_MEMORY_INCREMENT           | \
-                                                LL_DMA_PDATAALIGN_BYTE            | \
-                                                LL_DMA_MDATAALIGN_BYTE);
-  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_7, ubNbDataToReceive);
-  LL_DMA_ConfigAddresses(DMA1, LL_DMA_CHANNEL_7, (uint32_t)LL_I2C_DMA_GetRegAddr(I2C1), (uint32_t)&(aReceiveBuffer), LL_DMA_GetDataTransferDirection(DMA1, LL_DMA_CHANNEL_7));
+    /* (3) Configure the DMA1_Channel7 functionnal parameters */
+    LL_DMA_ConfigTransfer( DMA1, LL_DMA_CHANNEL_7, LL_DMA_DIRECTION_PERIPH_TO_MEMORY | \
+                           LL_DMA_PRIORITY_HIGH              | \
+                           LL_DMA_MODE_NORMAL                | \
+                           LL_DMA_PERIPH_NOINCREMENT           | \
+                           LL_DMA_MEMORY_INCREMENT           | \
+                           LL_DMA_PDATAALIGN_BYTE            | \
+                           LL_DMA_MDATAALIGN_BYTE );
+    LL_DMA_SetDataLength( DMA1, LL_DMA_CHANNEL_7, ubNbDataToReceive );
+    LL_DMA_ConfigAddresses( DMA1, LL_DMA_CHANNEL_7, ( uint32_t )LL_I2C_DMA_GetRegAddr( I2C1 ), ( uint32_t ) & ( aReceiveBuffer ), LL_DMA_GetDataTransferDirection( DMA1, LL_DMA_CHANNEL_7 ) );
 
-  /* (4) Configure the DMA1_Channel6 functionnal parameters */
-  LL_DMA_ConfigTransfer(DMA1, LL_DMA_CHANNEL_6, LL_DMA_DIRECTION_MEMORY_TO_PERIPH | \
-                                                LL_DMA_PRIORITY_HIGH              | \
-                                                LL_DMA_MODE_NORMAL                | \
-                                                LL_DMA_PERIPH_NOINCREMENT           | \
-                                                LL_DMA_MEMORY_INCREMENT           | \
-                                                LL_DMA_PDATAALIGN_BYTE            | \
-                                                LL_DMA_MDATAALIGN_BYTE);
-  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_6, ubNbDataToTransmit);
-  LL_DMA_ConfigAddresses(DMA1, LL_DMA_CHANNEL_6, (uint32_t)pTransmitBuffer, (uint32_t)LL_I2C_DMA_GetRegAddr(I2C1), LL_DMA_GetDataTransferDirection(DMA1, LL_DMA_CHANNEL_6));
+    /* (4) Configure the DMA1_Channel6 functionnal parameters */
+    LL_DMA_ConfigTransfer( DMA1, LL_DMA_CHANNEL_6, LL_DMA_DIRECTION_MEMORY_TO_PERIPH | \
+                           LL_DMA_PRIORITY_HIGH              | \
+                           LL_DMA_MODE_NORMAL                | \
+                           LL_DMA_PERIPH_NOINCREMENT           | \
+                           LL_DMA_MEMORY_INCREMENT           | \
+                           LL_DMA_PDATAALIGN_BYTE            | \
+                           LL_DMA_MDATAALIGN_BYTE );
+    LL_DMA_SetDataLength( DMA1, LL_DMA_CHANNEL_6, ubNbDataToTransmit );
+    LL_DMA_ConfigAddresses( DMA1, LL_DMA_CHANNEL_6, ( uint32_t )pTransmitBuffer, ( uint32_t )LL_I2C_DMA_GetRegAddr( I2C1 ), LL_DMA_GetDataTransferDirection( DMA1, LL_DMA_CHANNEL_6 ) );
 
-  /* (4) Enable DMA interrupts complete/error */
-  LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_7);
-  LL_DMA_EnableIT_TE(DMA1, LL_DMA_CHANNEL_7);
-  LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_6);
-  LL_DMA_EnableIT_TE(DMA1, LL_DMA_CHANNEL_6);
+    /* (4) Enable DMA interrupts complete/error */
+    LL_DMA_EnableIT_TC( DMA1, LL_DMA_CHANNEL_7 );
+    LL_DMA_EnableIT_TE( DMA1, LL_DMA_CHANNEL_7 );
+    LL_DMA_EnableIT_TC( DMA1, LL_DMA_CHANNEL_6 );
+    LL_DMA_EnableIT_TE( DMA1, LL_DMA_CHANNEL_6 );
 }
 
 #ifdef SLAVE_BOARD
@@ -227,66 +227,66 @@ void Configure_DMA(void)
   * @param  None
   * @retval None
   */
-void Configure_I2C_Slave(void)
+void Configure_I2C_Slave( void )
 {
-  /* (1) Enables GPIO clock and configures the I2C1 pins **********************/
-  /*    (SCL on PB.8, SDA on PB.9)                     **********************/
+    /* (1) Enables GPIO clock and configures the I2C1 pins **********************/
+    /*    (SCL on PB.8, SDA on PB.9)                     **********************/
 
-  /* Enable the peripheral clock of GPIOB */
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
+    /* Enable the peripheral clock of GPIOB */
+    LL_AHB1_GRP1_EnableClock( LL_AHB1_GRP1_PERIPH_GPIOB );
 
-  /* Configure SCL Pin as : Alternate function, High Speed, Open drain, Pull up */
-  LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_8, LL_GPIO_MODE_ALTERNATE);
-  LL_GPIO_SetAFPin_8_15(GPIOB, LL_GPIO_PIN_8, LL_GPIO_AF_4);
-  LL_GPIO_SetPinSpeed(GPIOB, LL_GPIO_PIN_8, LL_GPIO_SPEED_FREQ_HIGH);
-  LL_GPIO_SetPinOutputType(GPIOB, LL_GPIO_PIN_8, LL_GPIO_OUTPUT_OPENDRAIN);
-  LL_GPIO_SetPinPull(GPIOB, LL_GPIO_PIN_8, LL_GPIO_PULL_UP);
+    /* Configure SCL Pin as : Alternate function, High Speed, Open drain, Pull up */
+    LL_GPIO_SetPinMode( GPIOB, LL_GPIO_PIN_8, LL_GPIO_MODE_ALTERNATE );
+    LL_GPIO_SetAFPin_8_15( GPIOB, LL_GPIO_PIN_8, LL_GPIO_AF_4 );
+    LL_GPIO_SetPinSpeed( GPIOB, LL_GPIO_PIN_8, LL_GPIO_SPEED_FREQ_HIGH );
+    LL_GPIO_SetPinOutputType( GPIOB, LL_GPIO_PIN_8, LL_GPIO_OUTPUT_OPENDRAIN );
+    LL_GPIO_SetPinPull( GPIOB, LL_GPIO_PIN_8, LL_GPIO_PULL_UP );
 
-  /* Configure SDA Pin as : Alternate function, High Speed, Open drain, Pull up */
-  LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_9, LL_GPIO_MODE_ALTERNATE);
-  LL_GPIO_SetAFPin_8_15(GPIOB, LL_GPIO_PIN_9, LL_GPIO_AF_4);
-  LL_GPIO_SetPinSpeed(GPIOB, LL_GPIO_PIN_9, LL_GPIO_SPEED_FREQ_HIGH);
-  LL_GPIO_SetPinOutputType(GPIOB, LL_GPIO_PIN_9, LL_GPIO_OUTPUT_OPENDRAIN);
-  LL_GPIO_SetPinPull(GPIOB, LL_GPIO_PIN_9, LL_GPIO_PULL_UP);
+    /* Configure SDA Pin as : Alternate function, High Speed, Open drain, Pull up */
+    LL_GPIO_SetPinMode( GPIOB, LL_GPIO_PIN_9, LL_GPIO_MODE_ALTERNATE );
+    LL_GPIO_SetAFPin_8_15( GPIOB, LL_GPIO_PIN_9, LL_GPIO_AF_4 );
+    LL_GPIO_SetPinSpeed( GPIOB, LL_GPIO_PIN_9, LL_GPIO_SPEED_FREQ_HIGH );
+    LL_GPIO_SetPinOutputType( GPIOB, LL_GPIO_PIN_9, LL_GPIO_OUTPUT_OPENDRAIN );
+    LL_GPIO_SetPinPull( GPIOB, LL_GPIO_PIN_9, LL_GPIO_PULL_UP );
 
-  /* (2) Enable the I2C1 peripheral clock *************************************/
+    /* (2) Enable the I2C1 peripheral clock *************************************/
 
-  /* Enable the peripheral clock for I2C1 */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_I2C1);
+    /* Enable the peripheral clock for I2C1 */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_I2C1 );
 
-  /* (3) Configure I2C1 functional parameters ********************************/
+    /* (3) Configure I2C1 functional parameters ********************************/
 
-  /* Disable I2C1 prior modifying configuration registers */
-  LL_I2C_Disable(I2C1);
+    /* Disable I2C1 prior modifying configuration registers */
+    LL_I2C_Disable( I2C1 );
 
-  /* Configure the Own Address1 :
-   *  - OwnAddress1 is SLAVE_OWN_ADDRESS
-   *  - OwnAddrSize is LL_I2C_OWNADDRESS1_7BIT
-   */
-  LL_I2C_SetOwnAddress1(I2C1, SLAVE_OWN_ADDRESS, LL_I2C_OWNADDRESS1_7BIT);
+    /* Configure the Own Address1 :
+     *  - OwnAddress1 is SLAVE_OWN_ADDRESS
+     *  - OwnAddrSize is LL_I2C_OWNADDRESS1_7BIT
+     */
+    LL_I2C_SetOwnAddress1( I2C1, SLAVE_OWN_ADDRESS, LL_I2C_OWNADDRESS1_7BIT );
 
-  /* Enable Clock stretching */
-  /* Reset Value is Clock stretching enabled */
-  //LL_I2C_EnableClockStretching(I2C1);
-  
-  /* Enable General Call                  */
-  /* Reset Value is General Call disabled */
-  //LL_I2C_EnableGeneralCall(I2C1);
+    /* Enable Clock stretching */
+    /* Reset Value is Clock stretching enabled */
+    //LL_I2C_EnableClockStretching(I2C1);
 
-  /* Configure the 7bits Own Address2     */
-  /* Reset Values of :
-   *     - OwnAddress2 is 0x00
-   *     - Own Address2 is disabled
-   */
-  //LL_I2C_SetOwnAddress2(I2C1, 0x00);
-  //LL_I2C_DisableOwnAddress2(I2C1);
+    /* Enable General Call                  */
+    /* Reset Value is General Call disabled */
+    //LL_I2C_EnableGeneralCall(I2C1);
 
-  /* Enable Peripheral in I2C mode */
-  /* Reset Value is I2C mode */
-  //LL_I2C_SetMode(I2C1, LL_I2C_MODE_I2C);
+    /* Configure the 7bits Own Address2     */
+    /* Reset Values of :
+     *     - OwnAddress2 is 0x00
+     *     - Own Address2 is disabled
+     */
+    //LL_I2C_SetOwnAddress2(I2C1, 0x00);
+    //LL_I2C_DisableOwnAddress2(I2C1);
 
-  /* (4) Enable DMA reception requests and I2C1 *******************************/
-  LL_I2C_EnableDMAReq_RX(I2C1);
+    /* Enable Peripheral in I2C mode */
+    /* Reset Value is I2C mode */
+    //LL_I2C_SetMode(I2C1, LL_I2C_MODE_I2C);
+
+    /* (4) Enable DMA reception requests and I2C1 *******************************/
+    LL_I2C_EnableDMAReq_RX( I2C1 );
 }
 
 /**
@@ -296,10 +296,10 @@ void Configure_I2C_Slave(void)
   * @param  None
   * @retval None
   */
-void Activate_I2C_Slave(void)
+void Activate_I2C_Slave( void )
 {
-  /* (1) Enable I2C1 **********************************************************/
-  LL_I2C_Enable(I2C1);
+    /* (1) Enable I2C1 **********************************************************/
+    LL_I2C_Enable( I2C1 );
 }
 
 #else /* MASTER_BOARD */
@@ -317,76 +317,76 @@ void Activate_I2C_Slave(void)
   * @param  None
   * @retval None
   */
-void Configure_I2C_Master(void)
+void Configure_I2C_Master( void )
 {
-  LL_RCC_ClocksTypeDef rcc_clocks;
+    LL_RCC_ClocksTypeDef rcc_clocks;
 
-  /* (1) Enables GPIO clock and configures the I2C1 pins **********************/
-  /*    (SCL on PB.8, SDA on PB.9)                     **********************/
+    /* (1) Enables GPIO clock and configures the I2C1 pins **********************/
+    /*    (SCL on PB.8, SDA on PB.9)                     **********************/
 
-  /* Enable the peripheral clock of GPIOB */
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
+    /* Enable the peripheral clock of GPIOB */
+    LL_AHB1_GRP1_EnableClock( LL_AHB1_GRP1_PERIPH_GPIOB );
 
-  /* Configure SCL Pin as : Alternate function, High Speed, Open drain, Pull up */
-  LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_8, LL_GPIO_MODE_ALTERNATE);
-  LL_GPIO_SetAFPin_8_15(GPIOB, LL_GPIO_PIN_8, LL_GPIO_AF_4);
-  LL_GPIO_SetPinSpeed(GPIOB, LL_GPIO_PIN_8, LL_GPIO_SPEED_FREQ_HIGH);
-  LL_GPIO_SetPinOutputType(GPIOB, LL_GPIO_PIN_8, LL_GPIO_OUTPUT_OPENDRAIN);
-  LL_GPIO_SetPinPull(GPIOB, LL_GPIO_PIN_8, LL_GPIO_PULL_UP);
+    /* Configure SCL Pin as : Alternate function, High Speed, Open drain, Pull up */
+    LL_GPIO_SetPinMode( GPIOB, LL_GPIO_PIN_8, LL_GPIO_MODE_ALTERNATE );
+    LL_GPIO_SetAFPin_8_15( GPIOB, LL_GPIO_PIN_8, LL_GPIO_AF_4 );
+    LL_GPIO_SetPinSpeed( GPIOB, LL_GPIO_PIN_8, LL_GPIO_SPEED_FREQ_HIGH );
+    LL_GPIO_SetPinOutputType( GPIOB, LL_GPIO_PIN_8, LL_GPIO_OUTPUT_OPENDRAIN );
+    LL_GPIO_SetPinPull( GPIOB, LL_GPIO_PIN_8, LL_GPIO_PULL_UP );
 
-  /* Configure SDA Pin as : Alternate function, High Speed, Open drain, Pull up */
-  LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_9, LL_GPIO_MODE_ALTERNATE);
-  LL_GPIO_SetAFPin_8_15(GPIOB, LL_GPIO_PIN_9, LL_GPIO_AF_4);
-  LL_GPIO_SetPinSpeed(GPIOB, LL_GPIO_PIN_9, LL_GPIO_SPEED_FREQ_HIGH);
-  LL_GPIO_SetPinOutputType(GPIOB, LL_GPIO_PIN_9, LL_GPIO_OUTPUT_OPENDRAIN);
-  LL_GPIO_SetPinPull(GPIOB, LL_GPIO_PIN_9, LL_GPIO_PULL_UP);
+    /* Configure SDA Pin as : Alternate function, High Speed, Open drain, Pull up */
+    LL_GPIO_SetPinMode( GPIOB, LL_GPIO_PIN_9, LL_GPIO_MODE_ALTERNATE );
+    LL_GPIO_SetAFPin_8_15( GPIOB, LL_GPIO_PIN_9, LL_GPIO_AF_4 );
+    LL_GPIO_SetPinSpeed( GPIOB, LL_GPIO_PIN_9, LL_GPIO_SPEED_FREQ_HIGH );
+    LL_GPIO_SetPinOutputType( GPIOB, LL_GPIO_PIN_9, LL_GPIO_OUTPUT_OPENDRAIN );
+    LL_GPIO_SetPinPull( GPIOB, LL_GPIO_PIN_9, LL_GPIO_PULL_UP );
 
-  /* (2) Enable the I2C1 peripheral clock *************************************/
+    /* (2) Enable the I2C1 peripheral clock *************************************/
 
-  /* Enable the peripheral clock for I2C1 */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_I2C1);
+    /* Enable the peripheral clock for I2C1 */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_I2C1 );
 
-  /* (3) Configure I2C1 functional parameters ********************************/
-  
-  /* Disable I2C1 prior modifying configuration registers */
-  LL_I2C_Disable(I2C1);
-  
-  /* Retrieve Clock frequencies */
-  LL_RCC_GetSystemClocksFreq(&rcc_clocks);
+    /* (3) Configure I2C1 functional parameters ********************************/
 
-  /* Configure the SCL Clock Speed */
-  LL_I2C_ConfigSpeed(I2C1, rcc_clocks.PCLK1_Frequency, I2C_SPEEDCLOCK, I2C_DUTYCYCLE);
-  
-  /* Configure the Own Address1                   */
-  /* Reset Values of :
-   *     - OwnAddress1 is 0x00
-   *     - OwnAddrSize is LL_I2C_OWNADDRESS1_7BIT
-   */
-  //LL_I2C_SetOwnAddress1(I2C1, 0x00, LL_I2C_OWNADDRESS1_7BIT);
+    /* Disable I2C1 prior modifying configuration registers */
+    LL_I2C_Disable( I2C1 );
 
-  /* Enable Clock stretching */
-  /* Reset Value is Clock stretching enabled */
-  //LL_I2C_EnableClockStretching(I2C1);
+    /* Retrieve Clock frequencies */
+    LL_RCC_GetSystemClocksFreq( &rcc_clocks );
 
-  
-  /* Enable General Call                  */
-  /* Reset Value is General Call disabled */
-  //LL_I2C_EnableGeneralCall(I2C1);
+    /* Configure the SCL Clock Speed */
+    LL_I2C_ConfigSpeed( I2C1, rcc_clocks.PCLK1_Frequency, I2C_SPEEDCLOCK, I2C_DUTYCYCLE );
 
-  /* Configure the 7bits Own Address2     */
-  /* Reset Values of :
-   *     - OwnAddress2 is 0x00
-   *     - Own Address2 is disabled
-   */
-  //LL_I2C_SetOwnAddress2(I2C1, 0x00);
-  //LL_I2C_DisableOwnAddress2(I2C1);
+    /* Configure the Own Address1                   */
+    /* Reset Values of :
+     *     - OwnAddress1 is 0x00
+     *     - OwnAddrSize is LL_I2C_OWNADDRESS1_7BIT
+     */
+    //LL_I2C_SetOwnAddress1(I2C1, 0x00, LL_I2C_OWNADDRESS1_7BIT);
 
-  /* Enable Peripheral in I2C mode */
-  /* Reset Value is I2C mode */
-  //LL_I2C_SetMode(I2C1, LL_I2C_MODE_I2C);
+    /* Enable Clock stretching */
+    /* Reset Value is Clock stretching enabled */
+    //LL_I2C_EnableClockStretching(I2C1);
 
-  /* (4) Enable DMA transmission requests and I2C1 ****************************/
-  LL_I2C_EnableDMAReq_TX(I2C1);
+
+    /* Enable General Call                  */
+    /* Reset Value is General Call disabled */
+    //LL_I2C_EnableGeneralCall(I2C1);
+
+    /* Configure the 7bits Own Address2     */
+    /* Reset Values of :
+     *     - OwnAddress2 is 0x00
+     *     - Own Address2 is disabled
+     */
+    //LL_I2C_SetOwnAddress2(I2C1, 0x00);
+    //LL_I2C_DisableOwnAddress2(I2C1);
+
+    /* Enable Peripheral in I2C mode */
+    /* Reset Value is I2C mode */
+    //LL_I2C_SetMode(I2C1, LL_I2C_MODE_I2C);
+
+    /* (4) Enable DMA transmission requests and I2C1 ****************************/
+    LL_I2C_EnableDMAReq_TX( I2C1 );
 }
 
 /**
@@ -396,10 +396,10 @@ void Configure_I2C_Master(void)
   * @param  None
   * @retval None
   */
-void Activate_I2C_Master(void)
+void Activate_I2C_Master( void )
 {
-  /* (1) Enable I2C1 **********************************************************/
-  LL_I2C_Enable(I2C1);
+    /* (1) Enable I2C1 **********************************************************/
+    LL_I2C_Enable( I2C1 );
 }
 #endif /* SLAVE_BOARD */
 
@@ -408,19 +408,19 @@ void Activate_I2C_Master(void)
   * @param  None
   * @retval None
   */
-void LED_Init(void)
+void LED_Init( void )
 {
-  /* Enable the LED2 Clock */
-  LED2_GPIO_CLK_ENABLE();
+    /* Enable the LED2 Clock */
+    LED2_GPIO_CLK_ENABLE();
 
-  /* Configure IO in output push-pull mode to drive external LED2 */
-  LL_GPIO_SetPinMode(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT);
-  /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
-  //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
-  /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
-  //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
-  /* Reset value is LL_GPIO_PULL_NO */
-  //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
+    /* Configure IO in output push-pull mode to drive external LED2 */
+    LL_GPIO_SetPinMode( LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT );
+    /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
+    //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
+    /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
+    //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
+    /* Reset value is LL_GPIO_PULL_NO */
+    //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
 }
 
 /**
@@ -428,10 +428,10 @@ void LED_Init(void)
   * @param  None
   * @retval None
   */
-void LED_On(void)
+void LED_On( void )
 {
-  /* Turn LED2 on */
-  LL_GPIO_SetOutputPin(LED2_GPIO_PORT, LED2_PIN);
+    /* Turn LED2 on */
+    LL_GPIO_SetOutputPin( LED2_GPIO_PORT, LED2_PIN );
 }
 
 /**
@@ -439,75 +439,76 @@ void LED_On(void)
   * @param  None
   * @retval None
   */
-void LED_Off(void)
+void LED_Off( void )
 {
-  /* Turn LED2 off */
-  LL_GPIO_ResetOutputPin(LED2_GPIO_PORT, LED2_PIN);
+    /* Turn LED2 off */
+    LL_GPIO_ResetOutputPin( LED2_GPIO_PORT, LED2_PIN );
 }
 
 /**
   * @brief  Set LED2 to Blinking mode for an infinite loop (toggle period based on value provided as input parameter).
   * @param  Period : Period of time (in ms) between each toggling of LED
-  *   This parameter can be user defined values. Pre-defined values used in that example are :   
+  *   This parameter can be user defined values. Pre-defined values used in that example are :
   *     @arg LED_BLINK_FAST : Fast Blinking
   *     @arg LED_BLINK_SLOW : Slow Blinking
   *     @arg LED_BLINK_ERROR : Error specific Blinking
   * @retval None
   */
-void LED_Blinking(uint32_t Period)
+void LED_Blinking( uint32_t Period )
 {
-  /* Turn LED2 on */
-  LL_GPIO_SetOutputPin(LED2_GPIO_PORT, LED2_PIN);
+    /* Turn LED2 on */
+    LL_GPIO_SetOutputPin( LED2_GPIO_PORT, LED2_PIN );
 
-  /* Toggle IO in an infinite loop */
-  while (1)
-  {
-    LL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);  
-    LL_mDelay(Period);
-  }
+    /* Toggle IO in an infinite loop */
+    while( 1 )
+    {
+        LL_GPIO_TogglePin( LED2_GPIO_PORT, LED2_PIN );
+        LL_mDelay( Period );
+    }
 }
 
 /**
   * @brief  Configures User push-button in GPIO or EXTI Line Mode.
-  * @param  None 
+  * @param  None
   * @retval None
   */
-void UserButton_Init(void)
+void UserButton_Init( void )
 {
-  /* Enable the BUTTON Clock */
-  USER_BUTTON_GPIO_CLK_ENABLE();
+    /* Enable the BUTTON Clock */
+    USER_BUTTON_GPIO_CLK_ENABLE();
 
-  /* Configure GPIO for BUTTON */
-  LL_GPIO_SetPinMode(USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_MODE_INPUT);
-  LL_GPIO_SetPinPull(USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_PULL_NO);
+    /* Configure GPIO for BUTTON */
+    LL_GPIO_SetPinMode( USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_MODE_INPUT );
+    LL_GPIO_SetPinPull( USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_PULL_NO );
 
-  /* Connect External Line to the GPIO*/
-  USER_BUTTON_SYSCFG_SET_EXTI();
+    /* Connect External Line to the GPIO*/
+    USER_BUTTON_SYSCFG_SET_EXTI();
 
-  /* Enable a rising trigger External line 13 Interrupt */
-  USER_BUTTON_EXTI_LINE_ENABLE();
-  USER_BUTTON_EXTI_FALLING_TRIG_ENABLE();
+    /* Enable a rising trigger External line 13 Interrupt */
+    USER_BUTTON_EXTI_LINE_ENABLE();
+    USER_BUTTON_EXTI_FALLING_TRIG_ENABLE();
 
-  /* Configure NVIC for USER_BUTTON_EXTI_IRQn */
-  NVIC_EnableIRQ(USER_BUTTON_EXTI_IRQn); 
-  NVIC_SetPriority(USER_BUTTON_EXTI_IRQn,0x03);  
+    /* Configure NVIC for USER_BUTTON_EXTI_IRQn */
+    NVIC_EnableIRQ( USER_BUTTON_EXTI_IRQn );
+    NVIC_SetPriority( USER_BUTTON_EXTI_IRQn, 0x03 );
 }
 
 /**
   * @brief  Wait for User push-button press to start transfer.
-  * @param  None 
+  * @param  None
   * @retval None
   */
-  /*  */
-void WaitForUserButtonPress(void)
+/*  */
+void WaitForUserButtonPress( void )
 {
-  while (ubButtonPress == 0)
-  {
-    LL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
-    LL_mDelay(LED_BLINK_FAST);
-  }
-  /* Turn LED2 off */
-  LL_GPIO_ResetOutputPin(LED2_GPIO_PORT, LED2_PIN);
+    while( ubButtonPress == 0 )
+    {
+        LL_GPIO_TogglePin( LED2_GPIO_PORT, LED2_PIN );
+        LL_mDelay( LED_BLINK_FAST );
+    }
+
+    /* Turn LED2 off */
+    LL_GPIO_ResetOutputPin( LED2_GPIO_PORT, LED2_PIN );
 }
 
 #ifdef SLAVE_BOARD
@@ -523,98 +524,102 @@ void WaitForUserButtonPress(void)
   * @param  None
   * @retval None
   */
-void Handle_I2C_Slave(void)
+void Handle_I2C_Slave( void )
 {
 
-  /* (1) Prepare acknowledge for Slave address reception **********************/
-  LL_I2C_AcknowledgeNextData(I2C1, LL_I2C_ACK);
+    /* (1) Prepare acknowledge for Slave address reception **********************/
+    LL_I2C_AcknowledgeNextData( I2C1, LL_I2C_ACK );
 
-  /* (2) Wait ADDR flag and check address match code and direction ************/
-  while(!LL_I2C_IsActiveFlag_ADDR(I2C1))
-  {
-  }
-
-  /* Verify the transfer direction, direction at Read (mean write direction for Master), Slave enters receiver mode */
-  if(LL_I2C_GetTransferDirection(I2C1) == LL_I2C_DIRECTION_READ)
-  {
-    /* (2.1) Enable DMA transfer (before clearing ADDR FLag) ****************/
-    LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_7);
-
-    /* Clear ADDR flag value in ISR register */
-    LL_I2C_ClearFlag_ADDR(I2C1);
-  }
-  else
-  {
-    /* Clear ADDR flag value in ISR register */
-    LL_I2C_ClearFlag_ADDR(I2C1);
-
-    /* Call Error function */
-    Error_Callback();
-  }
-
-  /* (3) Loop until end of transfer completed (DMA TC raised) *****************/
-
-#if (USE_TIMEOUT == 1)
-  Timeout = DMA_SEND_TIMEOUT_TC_MS;
-#endif /* USE_TIMEOUT */
-
-  /* Loop until DMA transfer complete event */
-  while(!ubSlaveTransferComplete)
-  {
-#if (USE_TIMEOUT == 1)
-    /* Check Systick counter flag to decrement the time-out value */
-    if (LL_SYSTICK_IsActiveCounterFlag()) 
+    /* (2) Wait ADDR flag and check address match code and direction ************/
+    while( !LL_I2C_IsActiveFlag_ADDR( I2C1 ) )
     {
-      if(Timeout-- == 0)
-      {
-        /* Time-out occurred. Set LED to blinking mode */
-        LED_Blinking(LED_BLINK_SLOW);
-      }
     }
-#endif /* USE_TIMEOUT */
-  }
-  
-  /* (4) Loop until end of slave reception completed (STOP flag raised) *******/
 
-#if (USE_TIMEOUT == 1)
-  Timeout = I2C_SEND_TIMEOUT_STOP_MS;
-#endif /* USE_TIMEOUT */
-
-  /* Loop until STOP flag is raised  */
-  while(!LL_I2C_IsActiveFlag_STOP(I2C1))
-  {
-#if (USE_TIMEOUT == 1)
-    /* Check Systick counter flag to decrement the time-out value */
-    if (LL_SYSTICK_IsActiveCounterFlag()) 
+    /* Verify the transfer direction, direction at Read (mean write direction for Master), Slave enters receiver mode */
+    if( LL_I2C_GetTransferDirection( I2C1 ) == LL_I2C_DIRECTION_READ )
     {
-      if(Timeout-- == 0)
-      {
-        /* Time-out occurred. Set LED2 to blinking mode */
-        LED_Blinking(LED_BLINK_SLOW);
-      }
+        /* (2.1) Enable DMA transfer (before clearing ADDR FLag) ****************/
+        LL_DMA_EnableChannel( DMA1, LL_DMA_CHANNEL_7 );
+
+        /* Clear ADDR flag value in ISR register */
+        LL_I2C_ClearFlag_ADDR( I2C1 );
     }
+    else
+    {
+        /* Clear ADDR flag value in ISR register */
+        LL_I2C_ClearFlag_ADDR( I2C1 );
+
+        /* Call Error function */
+        Error_Callback();
+    }
+
+    /* (3) Loop until end of transfer completed (DMA TC raised) *****************/
+
+#if (USE_TIMEOUT == 1)
+    Timeout = DMA_SEND_TIMEOUT_TC_MS;
 #endif /* USE_TIMEOUT */
-  }
 
-  /* (5) Clear pending flags, Data consistency are checking into Slave process */
+    /* Loop until DMA transfer complete event */
+    while( !ubSlaveTransferComplete )
+    {
+#if (USE_TIMEOUT == 1)
 
-  /* End of I2C_SlaveReceiver_MasterTransmitter_DMA Process */
-  LL_I2C_ClearFlag_STOP(I2C1);
+        /* Check Systick counter flag to decrement the time-out value */
+        if( LL_SYSTICK_IsActiveCounterFlag() )
+        {
+            if( Timeout-- == 0 )
+            {
+                /* Time-out occurred. Set LED to blinking mode */
+                LED_Blinking( LED_BLINK_SLOW );
+            }
+        }
 
-  /* Check if datas request to turn on the LED2 */
-  if(Buffercmp8((uint8_t*)aReceiveBuffer, (uint8_t*)aLedOn, (ubNbDataToReceive-1)) == 0)
-  {
-    /* Turn LED2 On:
-     * Expected bytes have been received
-     * Slave Rx sequence completed successfully
-     */
-    LED_On();
-  }
-  else
-  {
-    /* Call Error function */
-    Error_Callback();
-  }
+#endif /* USE_TIMEOUT */
+    }
+
+    /* (4) Loop until end of slave reception completed (STOP flag raised) *******/
+
+#if (USE_TIMEOUT == 1)
+    Timeout = I2C_SEND_TIMEOUT_STOP_MS;
+#endif /* USE_TIMEOUT */
+
+    /* Loop until STOP flag is raised  */
+    while( !LL_I2C_IsActiveFlag_STOP( I2C1 ) )
+    {
+#if (USE_TIMEOUT == 1)
+
+        /* Check Systick counter flag to decrement the time-out value */
+        if( LL_SYSTICK_IsActiveCounterFlag() )
+        {
+            if( Timeout-- == 0 )
+            {
+                /* Time-out occurred. Set LED2 to blinking mode */
+                LED_Blinking( LED_BLINK_SLOW );
+            }
+        }
+
+#endif /* USE_TIMEOUT */
+    }
+
+    /* (5) Clear pending flags, Data consistency are checking into Slave process */
+
+    /* End of I2C_SlaveReceiver_MasterTransmitter_DMA Process */
+    LL_I2C_ClearFlag_STOP( I2C1 );
+
+    /* Check if datas request to turn on the LED2 */
+    if( Buffercmp8( ( uint8_t * )aReceiveBuffer, ( uint8_t * )aLedOn, ( ubNbDataToReceive - 1 ) ) == 0 )
+    {
+        /* Turn LED2 On:
+         * Expected bytes have been received
+         * Slave Rx sequence completed successfully
+         */
+        LED_On();
+    }
+    else
+    {
+        /* Call Error function */
+        Error_Callback();
+    }
 }
 
 /**
@@ -625,20 +630,20 @@ void Handle_I2C_Slave(void)
   *    - 0: Comparison is OK (the two Buffers are identical)
   *    - Value different from 0: Comparison is NOK (Buffers are different)
   */
-uint8_t Buffercmp8(uint8_t* pBuffer1, uint8_t* pBuffer2, uint8_t BufferLength)
+uint8_t Buffercmp8( uint8_t *pBuffer1, uint8_t *pBuffer2, uint8_t BufferLength )
 {
-  while (BufferLength--)
-  {
-    if (*pBuffer1 != *pBuffer2)
+    while( BufferLength-- )
     {
-      return 1;
+        if( *pBuffer1 != *pBuffer2 )
+        {
+            return 1;
+        }
+
+        pBuffer1++;
+        pBuffer2++;
     }
 
-    pBuffer1++;
-    pBuffer2++;
-  }
-
-  return 0;
+    return 0;
 }
 
 #else /* MASTER_BOARD */
@@ -658,121 +663,129 @@ uint8_t Buffercmp8(uint8_t* pBuffer1, uint8_t* pBuffer2, uint8_t BufferLength)
   * @param  None
   * @retval None
   */
-void Handle_I2C_Master(void)
+void Handle_I2C_Master( void )
 {
-  /* (1) Enable DMA transfer **************************************************/
-  LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_6);
+    /* (1) Enable DMA transfer **************************************************/
+    LL_DMA_EnableChannel( DMA1, LL_DMA_CHANNEL_6 );
 
-  /* (2) Prepare acknowledge for Master data reception ************************/
-  LL_I2C_AcknowledgeNextData(I2C1, LL_I2C_ACK);
-  
-  /* (3) Initiate a Start condition to the Slave device ***********************/
-  /* Master Generate Start condition */
-  LL_I2C_GenerateStartCondition(I2C1);
+    /* (2) Prepare acknowledge for Master data reception ************************/
+    LL_I2C_AcknowledgeNextData( I2C1, LL_I2C_ACK );
 
-  /* (4) Loop until Start Bit transmitted (SB flag raised) ********************/
+    /* (3) Initiate a Start condition to the Slave device ***********************/
+    /* Master Generate Start condition */
+    LL_I2C_GenerateStartCondition( I2C1 );
+
+    /* (4) Loop until Start Bit transmitted (SB flag raised) ********************/
 
 #if (USE_TIMEOUT == 1)
-  Timeout = I2C_SEND_TIMEOUT_SB_MS;
+    Timeout = I2C_SEND_TIMEOUT_SB_MS;
 #endif /* USE_TIMEOUT */
 
-  /* Loop until SB flag is raised  */
-  while(!LL_I2C_IsActiveFlag_SB(I2C1))
-  {
-#if (USE_TIMEOUT == 1)
-    /* Check Systick counter flag to decrement the time-out value */
-    if (LL_SYSTICK_IsActiveCounterFlag()) 
+    /* Loop until SB flag is raised  */
+    while( !LL_I2C_IsActiveFlag_SB( I2C1 ) )
     {
-      if(Timeout-- == 0)
-      {
-        /* Time-out occurred. Set LED2 to blinking mode */
-        LED_Blinking(LED_BLINK_SLOW);
-      }
+#if (USE_TIMEOUT == 1)
+
+        /* Check Systick counter flag to decrement the time-out value */
+        if( LL_SYSTICK_IsActiveCounterFlag() )
+        {
+            if( Timeout-- == 0 )
+            {
+                /* Time-out occurred. Set LED2 to blinking mode */
+                LED_Blinking( LED_BLINK_SLOW );
+            }
+        }
+
+#endif /* USE_TIMEOUT */
     }
-#endif /* USE_TIMEOUT */
-  }
 
-  /* (5) Send Slave address with a 7-Bit SLAVE_OWN_ADDRESS for a write request */
-    LL_I2C_TransmitData8(I2C1, SLAVE_OWN_ADDRESS | I2C_REQUEST_WRITE);
+    /* (5) Send Slave address with a 7-Bit SLAVE_OWN_ADDRESS for a write request */
+    LL_I2C_TransmitData8( I2C1, SLAVE_OWN_ADDRESS | I2C_REQUEST_WRITE );
 
-  /* (6) Loop until Address Acknowledgement received (ADDR flag raised) *******/
+    /* (6) Loop until Address Acknowledgement received (ADDR flag raised) *******/
 
 #if (USE_TIMEOUT == 1)
-  Timeout = I2C_SEND_TIMEOUT_ADDR_MS;
+    Timeout = I2C_SEND_TIMEOUT_ADDR_MS;
 #endif /* USE_TIMEOUT */
 
-  /* Loop until ADDR flag is raised  */
-  while(!LL_I2C_IsActiveFlag_ADDR(I2C1))
-  {
-#if (USE_TIMEOUT == 1)
-    /* Check Systick counter flag to decrement the time-out value */
-    if (LL_SYSTICK_IsActiveCounterFlag()) 
+    /* Loop until ADDR flag is raised  */
+    while( !LL_I2C_IsActiveFlag_ADDR( I2C1 ) )
     {
-      if(Timeout-- == 0)
-      {
-        /* Time-out occurred. Set LED2 to blinking mode */
-        LED_Blinking(LED_BLINK_SLOW);
-      }
+#if (USE_TIMEOUT == 1)
+
+        /* Check Systick counter flag to decrement the time-out value */
+        if( LL_SYSTICK_IsActiveCounterFlag() )
+        {
+            if( Timeout-- == 0 )
+            {
+                /* Time-out occurred. Set LED2 to blinking mode */
+                LED_Blinking( LED_BLINK_SLOW );
+            }
+        }
+
+#endif /* USE_TIMEOUT */
     }
-#endif /* USE_TIMEOUT */
-  }
 
-  /* (7) Clear ADDR flag and loop until end of transfer completed (DMA TC raised) */
+    /* (7) Clear ADDR flag and loop until end of transfer completed (DMA TC raised) */
 
-  /* Clear ADDR flag value in ISR register */
-  LL_I2C_ClearFlag_ADDR(I2C1);
+    /* Clear ADDR flag value in ISR register */
+    LL_I2C_ClearFlag_ADDR( I2C1 );
 
 #if (USE_TIMEOUT == 1)
-  Timeout = DMA_SEND_TIMEOUT_TC_MS;
+    Timeout = DMA_SEND_TIMEOUT_TC_MS;
 #endif /* USE_TIMEOUT */
 
-  /* Loop until DMA transfer complete event */
-  while(!ubMasterTransferComplete)
-  {
-#if (USE_TIMEOUT == 1)
-    /* Check Systick counter flag to decrement the time-out value */
-    if (LL_SYSTICK_IsActiveCounterFlag()) 
+    /* Loop until DMA transfer complete event */
+    while( !ubMasterTransferComplete )
     {
-      if(Timeout-- == 0)
-      {
-        /* Time-out occurred. Set LED2 to blinking mode */
-        LED_Blinking(LED_BLINK_SLOW);
-      }
+#if (USE_TIMEOUT == 1)
+
+        /* Check Systick counter flag to decrement the time-out value */
+        if( LL_SYSTICK_IsActiveCounterFlag() )
+        {
+            if( Timeout-- == 0 )
+            {
+                /* Time-out occurred. Set LED2 to blinking mode */
+                LED_Blinking( LED_BLINK_SLOW );
+            }
+        }
+
+#endif /* USE_TIMEOUT */
     }
-#endif /* USE_TIMEOUT */
-  }
 
-  /* (8) Loop until end of master transfer completed (TXE flag raised) then generate STOP condition
-   *             -8.1- Data consistency are checking into Slave process. */
+    /* (8) Loop until end of master transfer completed (TXE flag raised) then generate STOP condition
+     *             -8.1- Data consistency are checking into Slave process. */
 
 #if (USE_TIMEOUT == 1)
-  Timeout = I2C_SEND_TIMEOUT_TXE_MS;
+    Timeout = I2C_SEND_TIMEOUT_TXE_MS;
 #endif /* USE_TIMEOUT */
 
-  /* Loop until end of master transfer completed (TXE flag raised) */
-  while(!LL_I2C_IsActiveFlag_TXE(I2C1))
-  {
-#if (USE_TIMEOUT == 1)
-    /* Check Systick counter flag to decrement the time-out value */
-    if (LL_SYSTICK_IsActiveCounterFlag()) 
+    /* Loop until end of master transfer completed (TXE flag raised) */
+    while( !LL_I2C_IsActiveFlag_TXE( I2C1 ) )
     {
-      if(Timeout-- == 0)
-      {
-        /* Time-out occurred. Set LED2 to blinking mode */
-        LED_Blinking(LED_BLINK_SLOW);
-      }
-    }
+#if (USE_TIMEOUT == 1)
+
+        /* Check Systick counter flag to decrement the time-out value */
+        if( LL_SYSTICK_IsActiveCounterFlag() )
+        {
+            if( Timeout-- == 0 )
+            {
+                /* Time-out occurred. Set LED2 to blinking mode */
+                LED_Blinking( LED_BLINK_SLOW );
+            }
+        }
+
 #endif /* USE_TIMEOUT */
-  }
+    }
 
-  /* Generate Stop condition */
-  LL_I2C_GenerateStopCondition(I2C1);
+    /* Generate Stop condition */
+    LL_I2C_GenerateStopCondition( I2C1 );
 
-  /* Turn LED2 On:
-   *  - Expected bytes have been sent
-   *  - Master Tx sequence completed successfully
-   */
-  LED_On();
+    /* Turn LED2 On:
+     *  - Expected bytes have been sent
+     *  - Master Tx sequence completed successfully
+     */
+    LED_On();
 }
 #endif /* SLAVE_BOARD */
 
@@ -791,57 +804,62 @@ void Handle_I2C_Master(void)
   *            Flash Latency(WS)              = 1
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
-  /* Enable ACC64 access and set FLASH latency */ 
-  LL_FLASH_Enable64bitAccess();; 
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
+    /* Enable ACC64 access and set FLASH latency */
+    LL_FLASH_Enable64bitAccess();;
+    LL_FLASH_SetLatency( LL_FLASH_LATENCY_1 );
 
-  /* Set Voltage scale1 as MCU will run at 32MHz */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-  LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
-  
-  /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
-  while (LL_PWR_IsActiveFlag_VOSF() != 0)
-  {
-  };
-  
-  /* Enable HSI if not already activated*/
-  if (LL_RCC_HSI_IsReady() == 0)
-  {
-    /* HSI configuration and activation */
-    LL_RCC_HSI_Enable();
-    while(LL_RCC_HSI_IsReady() != 1)
+    /* Set Voltage scale1 as MCU will run at 32MHz */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_PWR );
+    LL_PWR_SetRegulVoltageScaling( LL_PWR_REGU_VOLTAGE_SCALE1 );
+
+    /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+    while( LL_PWR_IsActiveFlag_VOSF() != 0 )
     {
     };
-  }
-  
-  /* Main PLL configuration and activation */
-  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3);
 
-  LL_RCC_PLL_Enable();
-  while(LL_RCC_PLL_IsReady() != 1)
-  {
-  };
-  
-  /* Sysclk activation on the main PLL */
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
-  {
-  };
-  
-  /* Set APB1 & APB2 prescaler*/
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
+    /* Enable HSI if not already activated*/
+    if( LL_RCC_HSI_IsReady() == 0 )
+    {
+        /* HSI configuration and activation */
+        LL_RCC_HSI_Enable();
 
-  /* Set systick to 1ms in using frequency set to 32MHz                             */
-  /* This frequency can be calculated through LL RCC macro                          */
-  /* ex: __LL_RCC_CALC_PLLCLK_FREQ (HSI_VALUE, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3); */
-  LL_Init1msTick(32000000);
-  
-  /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
-  LL_SetSystemCoreClock(32000000);
+        while( LL_RCC_HSI_IsReady() != 1 )
+        {
+        };
+    }
+
+    /* Main PLL configuration and activation */
+    LL_RCC_PLL_ConfigDomain_SYS( LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3 );
+
+    LL_RCC_PLL_Enable();
+
+    while( LL_RCC_PLL_IsReady() != 1 )
+    {
+    };
+
+    /* Sysclk activation on the main PLL */
+    LL_RCC_SetAHBPrescaler( LL_RCC_SYSCLK_DIV_1 );
+
+    LL_RCC_SetSysClkSource( LL_RCC_SYS_CLKSOURCE_PLL );
+
+    while( LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL )
+    {
+    };
+
+    /* Set APB1 & APB2 prescaler*/
+    LL_RCC_SetAPB1Prescaler( LL_RCC_APB1_DIV_1 );
+
+    LL_RCC_SetAPB2Prescaler( LL_RCC_APB2_DIV_1 );
+
+    /* Set systick to 1ms in using frequency set to 32MHz                             */
+    /* This frequency can be calculated through LL RCC macro                          */
+    /* ex: __LL_RCC_CALC_PLLCLK_FREQ (HSI_VALUE, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3); */
+    LL_Init1msTick( 32000000 );
+
+    /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
+    LL_SetSystemCoreClock( 32000000 );
 }
 /******************************************************************************/
 /*   IRQ HANDLER TREATMENT Functions                                          */
@@ -851,10 +869,10 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-void UserButton_Callback(void)
+void UserButton_Callback( void )
 {
-  /* Update User push-button variable : to be checked in waiting loop in main program */
-  ubButtonPress = 1;
+    /* Update User push-button variable : to be checked in waiting loop in main program */
+    ubButtonPress = 1;
 }
 #ifdef SLAVE_BOARD
 /**
@@ -865,8 +883,8 @@ void UserButton_Callback(void)
   */
 void DMA1_Transfer_Complete_Callback()
 {
-  /* DMA transfer completed */
-  ubSlaveTransferComplete = 1;
+    /* DMA transfer completed */
+    ubSlaveTransferComplete = 1;
 }
 
 /**
@@ -877,11 +895,11 @@ void DMA1_Transfer_Complete_Callback()
   */
 void DMA1_Transfer_Error_Callback()
 {
-  /* Disable DMA1_Channel7_IRQn */
-  NVIC_DisableIRQ(DMA1_Channel7_IRQn);
-                  
-  /* Error detected during DMA transfer */
-  LED_Blinking(LED_BLINK_ERROR);
+    /* Disable DMA1_Channel7_IRQn */
+    NVIC_DisableIRQ( DMA1_Channel7_IRQn );
+
+    /* Error detected during DMA transfer */
+    LED_Blinking( LED_BLINK_ERROR );
 }
 
 #else /* MASTER_BOARD */
@@ -894,8 +912,8 @@ void DMA1_Transfer_Error_Callback()
   */
 void DMA1_Transfer_Complete_Callback()
 {
-  /* DMA transfer completed */
-  ubMasterTransferComplete = 1;
+    /* DMA transfer completed */
+    ubMasterTransferComplete = 1;
 }
 
 /**
@@ -906,11 +924,11 @@ void DMA1_Transfer_Complete_Callback()
   */
 void DMA1_Transfer_Error_Callback()
 {
-  /* Disable DMA1_Channel6_IRQn */
-  NVIC_DisableIRQ(DMA1_Channel6_IRQn);
+    /* Disable DMA1_Channel6_IRQn */
+    NVIC_DisableIRQ( DMA1_Channel6_IRQn );
 
-  /* Error detected during DMA transfer */
-  LED_Blinking(LED_BLINK_ERROR);
+    /* Error detected during DMA transfer */
+    LED_Blinking( LED_BLINK_ERROR );
 }
 #endif /* SLAVE_BOARD */
 
@@ -919,14 +937,14 @@ void DMA1_Transfer_Error_Callback()
   * @param  None
   * @retval None
   */
-void Error_Callback(void)
+void Error_Callback( void )
 {
-  /* Disable DMA1_Channel7_IRQn and DMA1_Channel6_IRQn */
-  NVIC_DisableIRQ(DMA1_Channel7_IRQn);
-  NVIC_DisableIRQ(DMA1_Channel6_IRQn);
+    /* Disable DMA1_Channel7_IRQn and DMA1_Channel6_IRQn */
+    NVIC_DisableIRQ( DMA1_Channel7_IRQn );
+    NVIC_DisableIRQ( DMA1_Channel6_IRQn );
 
-  /* Unexpected event : Set LED2 to Blinking mode to indicate error occurs */
-  LED_Blinking(LED_BLINK_ERROR);
+    /* Unexpected event : Set LED2 to Blinking mode to indicate error occurs */
+    LED_Blinking( LED_BLINK_ERROR );
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -938,15 +956,15 @@ void Error_Callback(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d", file, line) */
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 

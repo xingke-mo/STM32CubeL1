@@ -1,4 +1,4 @@
-/** 
+/**
   ******************************************************************************
   * @file    Examples_LL/ADC/ADC_ContinuousConversion_TriggerSW/Src/stm32l1xx_it.c
   * @author  MCD Application Team
@@ -47,7 +47,7 @@
   * @param  None
   * @retval None
   */
-void NMI_Handler(void)
+void NMI_Handler( void )
 {
 }
 
@@ -56,12 +56,12 @@ void NMI_Handler(void)
   * @param  None
   * @retval None
   */
-void HardFault_Handler(void)
+void HardFault_Handler( void )
 {
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Hard Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -69,12 +69,12 @@ void HardFault_Handler(void)
   * @param  None
   * @retval None
   */
-void MemManage_Handler(void)
+void MemManage_Handler( void )
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Memory Manage exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -82,12 +82,12 @@ void MemManage_Handler(void)
   * @param  None
   * @retval None
   */
-void BusFault_Handler(void)
+void BusFault_Handler( void )
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Bus Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -95,12 +95,12 @@ void BusFault_Handler(void)
   * @param  None
   * @retval None
   */
-void UsageFault_Handler(void)
+void UsageFault_Handler( void )
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Usage Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -108,7 +108,7 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
-void SVC_Handler(void)
+void SVC_Handler( void )
 {
 }
 
@@ -117,7 +117,7 @@ void SVC_Handler(void)
   * @param  None
   * @retval None
   */
-void DebugMon_Handler(void)
+void DebugMon_Handler( void )
 {
 }
 
@@ -126,7 +126,7 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-void PendSV_Handler(void)
+void PendSV_Handler( void )
 {
 }
 
@@ -135,7 +135,7 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
+void SysTick_Handler( void )
 {
 }
 
@@ -151,19 +151,19 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
-void USER_BUTTON_IRQHANDLER(void)
+void USER_BUTTON_IRQHANDLER( void )
 {
-  /* Manage Flags */
-  if(LL_EXTI_IsActiveFlag_0_31(USER_BUTTON_EXTI_LINE) != RESET)
-  {
-    /* Call interruption treatment function */
-    UserButton_Callback();
-    
-    /* Clear EXTI line flag */
-    /* Note: Clear flag after callback function to minimize user button       */
-    /*       switch debounce parasitics.                                      */
-    LL_EXTI_ClearFlag_0_31(USER_BUTTON_EXTI_LINE);
-  }
+    /* Manage Flags */
+    if( LL_EXTI_IsActiveFlag_0_31( USER_BUTTON_EXTI_LINE ) != RESET )
+    {
+        /* Call interruption treatment function */
+        UserButton_Callback();
+
+        /* Clear EXTI line flag */
+        /* Note: Clear flag after callback function to minimize user button       */
+        /*       switch debounce parasitics.                                      */
+        LL_EXTI_ClearFlag_0_31( USER_BUTTON_EXTI_LINE );
+    }
 }
 
 /**
@@ -171,17 +171,17 @@ void USER_BUTTON_IRQHANDLER(void)
   * @param  None
   * @retval None
   */
-void ADC1_IRQHandler(void)
+void ADC1_IRQHandler( void )
 {
-  /* Check whether ADC group regular overrun caused the ADC interruption */
-  if(LL_ADC_IsActiveFlag_OVR(ADC1) != 0)
-  {
-    /* Clear flag ADC group regular overrun */
-    LL_ADC_ClearFlag_OVR(ADC1);
-    
-    /* Call interruption treatment function */
-    AdcGrpRegularOverrunError_Callback();
-  }
+    /* Check whether ADC group regular overrun caused the ADC interruption */
+    if( LL_ADC_IsActiveFlag_OVR( ADC1 ) != 0 )
+    {
+        /* Clear flag ADC group regular overrun */
+        LL_ADC_ClearFlag_OVR( ADC1 );
+
+        /* Call interruption treatment function */
+        AdcGrpRegularOverrunError_Callback();
+    }
 }
 
 /**

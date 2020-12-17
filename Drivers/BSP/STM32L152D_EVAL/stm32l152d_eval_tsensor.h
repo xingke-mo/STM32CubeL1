@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    stm32l152d_eval_tsensor.h
   * @author  MCD Application Team
-  * @brief   This file contains all the functions prototypes for the 
+  * @brief   This file contains all the functions prototypes for the
   *          stm32l152d_eval_tsensor.c firmware driver.
   ******************************************************************************
   * @attention
@@ -23,46 +23,46 @@
 #define __STM32L152D_EVAL_TSENSOR_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l152d_eval.h"
-#include "../Components/stlm75/stlm75.h"   
+#include "../Components/stlm75/stlm75.h"
 
 /** @addtogroup BSP
   * @{
   */
-  
+
 /** @addtogroup STM32L152D_EVAL
   * @{
-  */ 
-  
+  */
+
 /** @addtogroup STM32L152D_EVAL_TSENSOR
   * @{
-  */  
+  */
 
 /** @defgroup STM32L152D_EVAL_TSENSOR_Exported_Types Exported Types
   * @{
   */
-   
-/** 
-  * @brief  TSENSOR Status  
-  */ 
+
+/**
+  * @brief  TSENSOR Status
+  */
 typedef enum
 {
-  TSENSOR_OK = 0,
-  TSENSOR_ERROR
-}TSENSOR_Status_TypDef;
+    TSENSOR_OK = 0,
+    TSENSOR_ERROR
+} TSENSOR_Status_TypDef;
 
 /**
   * @}
   */
-  
+
 /** @defgroup STM32L152D_EVAL_TSENSOR_Exported_Constants Exported Constants
   * @{
-  */ 
-/* Temperature Sensor hardware I2C address */ 
+  */
+/* Temperature Sensor hardware I2C address */
 #define TSENSOR_I2C_ADDRESS_A01 0x90
 #define TSENSOR_I2C_ADDRESS_A02 0x92
 
@@ -75,11 +75,11 @@ typedef enum
 
 /** @addtogroup STM32L152D_EVAL_I2C_TSENSOR_Exported_Functions
   * @{
-  */ 
-uint32_t BSP_TSENSOR_Init(void);
-uint8_t  BSP_TSENSOR_ReadStatus(void);
-float BSP_TSENSOR_ReadTemp(void);
- 
+  */
+uint32_t BSP_TSENSOR_Init( void );
+uint8_t  BSP_TSENSOR_ReadStatus( void );
+float BSP_TSENSOR_ReadTemp( void );
+
 #ifdef __cplusplus
 }
 #endif
@@ -99,6 +99,6 @@ float BSP_TSENSOR_ReadTemp(void);
 
 /**
   * @}
-  */ 
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

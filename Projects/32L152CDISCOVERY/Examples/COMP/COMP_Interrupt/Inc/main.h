@@ -16,7 +16,7 @@
   *
   ******************************************************************************
   */
-  
+
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __MAIN_H
 #define __MAIN_H
@@ -27,7 +27,7 @@
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-/* User can use this section to tailor COMPx instance used and associated 
+/* User can use this section to tailor COMPx instance used and associated
    resources */
 /* Definition for COMPx clock resources */
 #define COMPx_GPIO_CLK_ENABLE()        __HAL_RCC_GPIOA_CLK_ENABLE()
@@ -35,7 +35,7 @@
 
 /* Definition for COMPx Channel Pin */
 #define COMPx_PIN                      GPIO_PIN_1
-#define COMPx_GPIO_PORT                GPIOA 
+#define COMPx_GPIO_PORT                GPIOA
 
 /* Definition for COMPx's NVIC */
 #define COMPx_IRQn                     COMP_IRQn

@@ -35,18 +35,18 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 __IO uint8_t ubExecuteRunMode = 1;
-#ifdef USE_LED  
-__IO uint16_t uhLedBlinkSpeed = LED_BLINK_FAST;
+#ifdef USE_LED
+    __IO uint16_t uhLedBlinkSpeed = LED_BLINK_FAST;
 #endif
 /* Private function prototypes -----------------------------------------------*/
-void     SystemClock_Config(void);
-void     Configure_PWR(void);
+void     SystemClock_Config( void );
+void     Configure_PWR( void );
 #ifdef USE_LED
-void     LED_Init(void);
-void     LED_Blinking(void);
+    void     LED_Init( void );
+    void     LED_Blinking( void );
 #endif
-void     UserButton_Init(void);
-void     EnterRunMode_LowPower_65KHz(void);
+void     UserButton_Init( void );
+void     EnterRunMode_LowPower_65KHz( void );
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -55,43 +55,43 @@ void     EnterRunMode_LowPower_65KHz(void);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  /* Configure the system clock to 2.097 MHz 
-   * Voltage Scaling Range 1
-   */
-  SystemClock_Config();
+    /* Configure the system clock to 2.097 MHz
+     * Voltage Scaling Range 1
+     */
+    SystemClock_Config();
 
 #ifdef USE_LED
-  /* Initialize LED2 */
-  LED_Init();
+    /* Initialize LED2 */
+    LED_Init();
 #endif
 
-  /* Initialize User push-button */
-  UserButton_Init();
+    /* Initialize User push-button */
+    UserButton_Init();
 
-  /* Configure Power IP */
-  Configure_PWR();
+    /* Configure Power IP */
+    Configure_PWR();
 
-  /* Enable the FLASH power down during Low Power Run mode */
-  LL_FLASH_EnableRunPowerDown();
-  
-  while(ubExecuteRunMode)
-  {
-#ifdef USE_LED   
-    /* Led blinking until User push-button action */
-    LED_Blinking();
+    /* Enable the FLASH power down during Low Power Run mode */
+    LL_FLASH_EnableRunPowerDown();
+
+    while( ubExecuteRunMode )
+    {
+#ifdef USE_LED
+        /* Led blinking until User push-button action */
+        LED_Blinking();
 #endif
-  }
+    }
 
-  /* Infinite loop */
-  while (1)
-  {
-#ifdef USE_LED   
-    /* Led blinking in infinite loop*/
-    LED_Blinking();
+    /* Infinite loop */
+    while( 1 )
+    {
+#ifdef USE_LED
+        /* Led blinking in infinite loop*/
+        LED_Blinking();
 #endif
-  }
+    }
 }
 
 #ifdef USE_LED
@@ -100,19 +100,19 @@ int main(void)
   * @param  None
   * @retval None
   */
-void LED_Init(void)
+void LED_Init( void )
 {
-  /* Enable the LED2 Clock */
-  LED2_GPIO_CLK_ENABLE();
+    /* Enable the LED2 Clock */
+    LED2_GPIO_CLK_ENABLE();
 
-  /* Configure IO in output push-pull mode to drive external LED2 */
-  LL_GPIO_SetPinMode(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT);
-  /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
-  //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
-  /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
-  //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
-  /* Reset value is LL_GPIO_PULL_NO */
-  //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
+    /* Configure IO in output push-pull mode to drive external LED2 */
+    LL_GPIO_SetPinMode( LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT );
+    /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
+    //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
+    /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
+    //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
+    /* Reset value is LL_GPIO_PULL_NO */
+    //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
 }
 
 /**
@@ -120,11 +120,11 @@ void LED_Init(void)
   * @param  None
   * @retval None
   */
-void LED_Blinking(void)
+void LED_Blinking( void )
 {
-  /* Toggle IO. Shall be call in a loop to toggle */
-  LL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
-  LL_mDelay(uhLedBlinkSpeed);
+    /* Toggle IO. Shall be call in a loop to toggle */
+    LL_GPIO_TogglePin( LED2_GPIO_PORT, LED2_PIN );
+    LL_mDelay( uhLedBlinkSpeed );
 }
 #endif
 
@@ -133,25 +133,25 @@ void LED_Blinking(void)
   * @param  None
   * @retval None
   */
-void UserButton_Init(void)
+void UserButton_Init( void )
 {
-  /* Enable the BUTTON Clock */
-  USER_BUTTON_GPIO_CLK_ENABLE();
+    /* Enable the BUTTON Clock */
+    USER_BUTTON_GPIO_CLK_ENABLE();
 
-  /* Configure GPIO for BUTTON */
-  LL_GPIO_SetPinMode(USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_MODE_INPUT);
-  LL_GPIO_SetPinPull(USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_PULL_NO);
+    /* Configure GPIO for BUTTON */
+    LL_GPIO_SetPinMode( USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_MODE_INPUT );
+    LL_GPIO_SetPinPull( USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_PULL_NO );
 
-  /* Connect External Line to the GPIO*/
-  USER_BUTTON_SYSCFG_SET_EXTI();
+    /* Connect External Line to the GPIO*/
+    USER_BUTTON_SYSCFG_SET_EXTI();
 
-  /* Enable a rising trigger External line 15 to 10 Interrupt */
-  USER_BUTTON_EXTI_LINE_ENABLE();
-  USER_BUTTON_EXTI_FALLING_TRIG_ENABLE();
+    /* Enable a rising trigger External line 15 to 10 Interrupt */
+    USER_BUTTON_EXTI_LINE_ENABLE();
+    USER_BUTTON_EXTI_FALLING_TRIG_ENABLE();
 
-  /* Configure NVIC for USER_BUTTON_EXTI_IRQn */
-  NVIC_EnableIRQ(USER_BUTTON_EXTI_IRQn); 
-  NVIC_SetPriority(USER_BUTTON_EXTI_IRQn,0x03);
+    /* Configure NVIC for USER_BUTTON_EXTI_IRQn */
+    NVIC_EnableIRQ( USER_BUTTON_EXTI_IRQn );
+    NVIC_SetPriority( USER_BUTTON_EXTI_IRQn, 0x03 );
 }
 
 /**
@@ -159,10 +159,10 @@ void UserButton_Init(void)
   * @param  None
   * @retval None
   */
-void Configure_PWR(void)
+void Configure_PWR( void )
 {
-  /* Enable Power Clock */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
+    /* Enable Power Clock */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_PWR );
 
 }
 
@@ -171,64 +171,65 @@ void Configure_PWR(void)
   * @param  None
   * @retval None
   */
-void EnterRunMode_LowPower_65KHz(void)
+void EnterRunMode_LowPower_65KHz( void )
 {
-  LL_GPIO_InitTypeDef gpio_initstruct = {LL_GPIO_PIN_ALL, LL_GPIO_MODE_ANALOG, 
-                                         LL_GPIO_SPEED_FREQ_HIGH, LL_GPIO_OUTPUT_PUSHPULL, 
-                                         LL_GPIO_PULL_NO, LL_GPIO_AF_0};
+    LL_GPIO_InitTypeDef gpio_initstruct = {LL_GPIO_PIN_ALL, LL_GPIO_MODE_ANALOG,
+                                           LL_GPIO_SPEED_FREQ_HIGH, LL_GPIO_OUTPUT_PUSHPULL,
+                                           LL_GPIO_PULL_NO, LL_GPIO_AF_0
+                                          };
 
-  /* Set all GPIO in analog state to reduce power consumption,                */
-  /* Note: Debug using ST-Link is not possible during the execution of this   */
-  /*       example because communication between ST-link and the device       */
-  /*       under test is done through UART. All GPIO pins are disabled (set   */
-  /*       to analog input mode) including  UART I/O pins.                    */
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA |
-                           LL_AHB1_GRP1_PERIPH_GPIOB |
-                           LL_AHB1_GRP1_PERIPH_GPIOC |
-                           LL_AHB1_GRP1_PERIPH_GPIOD |
-                           LL_AHB1_GRP1_PERIPH_GPIOE |
-                           LL_AHB1_GRP1_PERIPH_GPIOF |
-                           LL_AHB1_GRP1_PERIPH_GPIOG |
-                           LL_AHB1_GRP1_PERIPH_GPIOH);
+    /* Set all GPIO in analog state to reduce power consumption,                */
+    /* Note: Debug using ST-Link is not possible during the execution of this   */
+    /*       example because communication between ST-link and the device       */
+    /*       under test is done through UART. All GPIO pins are disabled (set   */
+    /*       to analog input mode) including  UART I/O pins.                    */
+    LL_AHB1_GRP1_EnableClock( LL_AHB1_GRP1_PERIPH_GPIOA |
+                              LL_AHB1_GRP1_PERIPH_GPIOB |
+                              LL_AHB1_GRP1_PERIPH_GPIOC |
+                              LL_AHB1_GRP1_PERIPH_GPIOD |
+                              LL_AHB1_GRP1_PERIPH_GPIOE |
+                              LL_AHB1_GRP1_PERIPH_GPIOF |
+                              LL_AHB1_GRP1_PERIPH_GPIOG |
+                              LL_AHB1_GRP1_PERIPH_GPIOH );
 
-  LL_GPIO_Init(GPIOB, &gpio_initstruct);
-  LL_GPIO_Init(GPIOC, &gpio_initstruct);
-  LL_GPIO_Init(GPIOD, &gpio_initstruct);
-  LL_GPIO_Init(GPIOE, &gpio_initstruct);
-  LL_GPIO_Init(GPIOF, &gpio_initstruct);
-  LL_GPIO_Init(GPIOG, &gpio_initstruct);
-  LL_GPIO_Init(GPIOH, &gpio_initstruct);
+    LL_GPIO_Init( GPIOB, &gpio_initstruct );
+    LL_GPIO_Init( GPIOC, &gpio_initstruct );
+    LL_GPIO_Init( GPIOD, &gpio_initstruct );
+    LL_GPIO_Init( GPIOE, &gpio_initstruct );
+    LL_GPIO_Init( GPIOF, &gpio_initstruct );
+    LL_GPIO_Init( GPIOG, &gpio_initstruct );
+    LL_GPIO_Init( GPIOH, &gpio_initstruct );
 #ifdef USE_LED
-  gpio_initstruct.Pin &= ~LL_GPIO_PIN_5;
+    gpio_initstruct.Pin &= ~LL_GPIO_PIN_5;
 #endif /* USE_LED */
-  LL_GPIO_Init(GPIOA, &gpio_initstruct);
-  
+    LL_GPIO_Init( GPIOA, &gpio_initstruct );
+
 #if !defined(USE_LED)
-  LL_AHB1_GRP1_DisableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
+    LL_AHB1_GRP1_DisableClock( LL_AHB1_GRP1_PERIPH_GPIOA );
 #endif /* !USE_LED */
-  LL_AHB1_GRP1_DisableClock(LL_AHB1_GRP1_PERIPH_GPIOB |
-                            LL_AHB1_GRP1_PERIPH_GPIOC |
-                            LL_AHB1_GRP1_PERIPH_GPIOD |
-                            LL_AHB1_GRP1_PERIPH_GPIOE |
-                            LL_AHB1_GRP1_PERIPH_GPIOF |
-                            LL_AHB1_GRP1_PERIPH_GPIOG |
-                            LL_AHB1_GRP1_PERIPH_GPIOH);
+    LL_AHB1_GRP1_DisableClock( LL_AHB1_GRP1_PERIPH_GPIOB |
+                               LL_AHB1_GRP1_PERIPH_GPIOC |
+                               LL_AHB1_GRP1_PERIPH_GPIOD |
+                               LL_AHB1_GRP1_PERIPH_GPIOE |
+                               LL_AHB1_GRP1_PERIPH_GPIOF |
+                               LL_AHB1_GRP1_PERIPH_GPIOG |
+                               LL_AHB1_GRP1_PERIPH_GPIOH );
 
-  /* 1 - Set Frequency to 65 KHz to activate Low Power Run Mode */
-  LL_RCC_MSI_SetRange(LL_RCC_MSIRANGE_0);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_MSI); 
-  /* Set systick to 1ms in using frequency set to 65 KHz */
-  LL_Init1msTick(65*1000);
-  /* Update CMSIS variable */
-  SystemCoreClock = 65*1000;
+    /* 1 - Set Frequency to 65 KHz to activate Low Power Run Mode */
+    LL_RCC_MSI_SetRange( LL_RCC_MSIRANGE_0 );
+    LL_RCC_SetSysClkSource( LL_RCC_SYS_CLKSOURCE_MSI );
+    /* Set systick to 1ms in using frequency set to 65 KHz */
+    LL_Init1msTick( 65 * 1000 );
+    /* Update CMSIS variable */
+    SystemCoreClock = 65 * 1000;
 
-  /* 2 - Set Voltage scaling to Range 2  */
-  LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE2);   
+    /* 2 - Set Voltage scaling to Range 2  */
+    LL_PWR_SetRegulVoltageScaling( LL_PWR_REGU_VOLTAGE_SCALE2 );
 
-  /* 3 - Activate Low Power Run Mode */
-  /* Enable ultra low power mode */
-  LL_PWR_EnableUltraLowPower();
-  LL_PWR_EnterLowPowerRunMode();
+    /* 3 - Activate Low Power Run Mode */
+    /* Enable ultra low power mode */
+    LL_PWR_EnableUltraLowPower();
+    LL_PWR_EnterLowPowerRunMode();
 }
 
 /**
@@ -244,42 +245,45 @@ void EnterRunMode_LowPower_65KHz(void)
   *            Flash Latency(WS)              = 0
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
-  /* Set FLASH latency */ 
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_0);
+    /* Set FLASH latency */
+    LL_FLASH_SetLatency( LL_FLASH_LATENCY_0 );
 
-  /* Set MSI Range5 */
-  LL_RCC_MSI_SetRange(LL_RCC_MSIRANGE_5);
-  
-  /* Enable MSI if not already activated*/
-  if (LL_RCC_MSI_IsReady() == 0)
-  {
-    /* MSI configuration and activation */
-    LL_RCC_MSI_Enable();
-    while(LL_RCC_MSI_IsReady() != 1)
+    /* Set MSI Range5 */
+    LL_RCC_MSI_SetRange( LL_RCC_MSIRANGE_5 );
+
+    /* Enable MSI if not already activated*/
+    if( LL_RCC_MSI_IsReady() == 0 )
+    {
+        /* MSI configuration and activation */
+        LL_RCC_MSI_Enable();
+
+        while( LL_RCC_MSI_IsReady() != 1 )
+        {
+        };
+    }
+
+    /* Sysclk activation on the main PLL */
+    LL_RCC_SetAHBPrescaler( LL_RCC_SYSCLK_DIV_1 );
+    LL_RCC_SetSysClkSource( LL_RCC_SYS_CLKSOURCE_MSI );
+
+    while( LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_MSI )
     {
     };
-  }
-  
-  /* Sysclk activation on the main PLL */
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_MSI);
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_MSI)
-  {
-  };
-  
-  /* Set APB1 & APB2 prescaler*/
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
 
-  /* Set systick to 1ms in using frequency set to 2.97MHz                            */
-  /* This frequency can be calculated through LL RCC macro                          */
-  /* ex: __LL_RCC_CALC_MSI_FREQ(LL_RCC_MSIRANGE_5); */
-  LL_Init1msTick(2097000);
-  
-  /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
-  LL_SetSystemCoreClock(2097000);
+    /* Set APB1 & APB2 prescaler*/
+    LL_RCC_SetAPB1Prescaler( LL_RCC_APB1_DIV_1 );
+
+    LL_RCC_SetAPB2Prescaler( LL_RCC_APB2_DIV_1 );
+
+    /* Set systick to 1ms in using frequency set to 2.97MHz                            */
+    /* This frequency can be calculated through LL RCC macro                          */
+    /* ex: __LL_RCC_CALC_MSI_FREQ(LL_RCC_MSIRANGE_5); */
+    LL_Init1msTick( 2097000 );
+
+    /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
+    LL_SetSystemCoreClock( 2097000 );
 }
 
 /******************************************************************************/
@@ -290,19 +294,19 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-void UserButton_Callback(void)
+void UserButton_Callback( void )
 {
-  /* Decrease core frequency and voltage. Enter Low Power Run mode
-   * Frequency: 2.097 MHz -> 65KHz
-   * Voltage Scaling Range 2
-   * LowPowerRunMode activated
-   */
-  EnterRunMode_LowPower_65KHz();
-#ifdef USE_LED  
-  uhLedBlinkSpeed = LED_BLINK_SLOW;
+    /* Decrease core frequency and voltage. Enter Low Power Run mode
+     * Frequency: 2.097 MHz -> 65KHz
+     * Voltage Scaling Range 2
+     * LowPowerRunMode activated
+     */
+    EnterRunMode_LowPower_65KHz();
+#ifdef USE_LED
+    uhLedBlinkSpeed = LED_BLINK_SLOW;
 #endif
-  /* Exit Test */
-  ubExecuteRunMode = 0;
+    /* Exit Test */
+    ubExecuteRunMode = 0;
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -314,15 +318,15 @@ void UserButton_Callback(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d", file, line) */
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 

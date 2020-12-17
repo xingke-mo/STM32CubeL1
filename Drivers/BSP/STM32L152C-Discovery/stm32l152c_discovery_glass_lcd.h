@@ -1,26 +1,26 @@
- /**
-  ******************************************************************************
-  * @file    stm32l152c_discovery_glass_lcd.h
-  * @author  MCD Application Team
-  * @brief   Header file for stm32l152c_discovery_glass_lcd.c module.
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */ 
+/**
+ ******************************************************************************
+ * @file    stm32l152c_discovery_glass_lcd.h
+ * @author  MCD Application Team
+ * @brief   Header file for stm32l152c_discovery_glass_lcd.c module.
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ * This software component is licensed by ST under BSD 3-Clause license,
+ * the "License"; You may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at:
+ *                        opensource.org/licenses/BSD-3-Clause
+ *
+ ******************************************************************************
+ */
 
 /** @addtogroup BSP
   * @{
   */
-  
+
 /** @addtogroup STM32L152C_DISCOVERY
   * @{
   */
@@ -30,7 +30,7 @@
 #define __stm32l152c_discovery_GLASS_LCD_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -38,7 +38,7 @@
 
 /** @addtogroup STM32L152C_Discovery_GLASS_LCD
   * @{
-  */ 
+  */
 
 /** @defgroup STM32L152C-Discovery_GLASS_LCD_Exported_Types Exported Types
   * @{
@@ -48,14 +48,14 @@
   */
 typedef enum
 {
-  LCD_DIGIT_POSITION_1 = 1,
-  LCD_DIGIT_POSITION_2 = 2,
-  LCD_DIGIT_POSITION_3 = 3,
-  LCD_DIGIT_POSITION_4 = 4,
-  LCD_DIGIT_POSITION_5 = 5,
-  LCD_DIGIT_POSITION_6 = 6,
-  LCD_DIGIT_MAX_NUMBER = 6,
-}DigitPosition_Typedef;
+    LCD_DIGIT_POSITION_1 = 1,
+    LCD_DIGIT_POSITION_2 = 2,
+    LCD_DIGIT_POSITION_3 = 3,
+    LCD_DIGIT_POSITION_4 = 4,
+    LCD_DIGIT_POSITION_5 = 5,
+    LCD_DIGIT_POSITION_6 = 6,
+    LCD_DIGIT_MAX_NUMBER = 6,
+} DigitPosition_Typedef;
 
 /**
   * @brief LCD Glass point
@@ -64,9 +64,9 @@ typedef enum
 
 typedef enum
 {
-  POINT_OFF = 0,
-  POINT_ON = 1
-}Point_Typedef;
+    POINT_OFF = 0,
+    POINT_ON = 1
+} Point_Typedef;
 
 /**
   * @brief LCD Glass Double point
@@ -74,9 +74,9 @@ typedef enum
   */
 typedef enum
 {
-  DOUBLEPOINT_OFF = 0,
-  DOUBLEPOINT_ON = 1
-}DoublePoint_Typedef;
+    DOUBLEPOINT_OFF = 0,
+    DOUBLEPOINT_ON = 1
+} DoublePoint_Typedef;
 
 /**
   * @brief LCD Glass Battery Level
@@ -84,35 +84,35 @@ typedef enum
   */
 typedef enum
 {
-  BATTERYLEVEL_OFF = 0,
-  BATTERYLEVEL_1_4 = 1,
-  BATTERYLEVEL_1_2 = 2,
-  BATTERYLEVEL_3_4 = 3,
-  BATTERYLEVEL_FULL = 4
-}BatteryLevel_Typedef;
+    BATTERYLEVEL_OFF = 0,
+    BATTERYLEVEL_1_4 = 1,
+    BATTERYLEVEL_1_2 = 2,
+    BATTERYLEVEL_3_4 = 3,
+    BATTERYLEVEL_FULL = 4
+} BatteryLevel_Typedef;
 
 /**
   * @brief LCD Glass Bar Id
   */
 typedef enum
 {
-  LCD_BAR_NONE  = 0,
-  LCD_BAR_0     = (1 << 0),
-  LCD_BAR_1     = (1 << 1),
-  LCD_BAR_2     = (1 << 2),
-  LCD_BAR_3     = (1 << 3)
-}BarId_Typedef;
+    LCD_BAR_NONE  = 0,
+    LCD_BAR_0     = ( 1 << 0 ),
+    LCD_BAR_1     = ( 1 << 1 ),
+    LCD_BAR_2     = ( 1 << 2 ),
+    LCD_BAR_3     = ( 1 << 3 )
+} BarId_Typedef;
 
 /**
   * @}
   */
-  
+
 /** @defgroup STM32L152C-Discovery_GLASS_LCD_Exported_Defines Exported Defines
   * @{
   */
 
 /**
-  * @brief LCD digit defintion 
+  * @brief LCD digit defintion
   */
 #define COM_PER_DIGIT_NB          4/*!< Specifies number of COM to address a digit */
 #define SEG_PER_DIGIT_NB          4/*!< Specifies number of SEG to address a digit */
@@ -452,31 +452,31 @@ typedef enum
 
 /**
   * @}
-  */   
+  */
 
 /** @addtogroup STM32L152C-Discovery_LCD_Exported_Functions
   * @{
   */
-void BSP_LCD_GLASS_Init(void);
-void BSP_LCD_GLASS_DeInit(void);
-void BSP_LCD_GLASS_BlinkConfig(uint32_t BlinkMode, uint32_t BlinkFrequency);
-void BSP_LCD_GLASS_Contrast(uint32_t Contrast);
-void BSP_LCD_GLASS_DisplayChar(uint8_t* ch, Point_Typedef Point, DoublePoint_Typedef Column, DigitPosition_Typedef Position);
-void BSP_LCD_GLASS_DisplayString(uint8_t* ptr);
-void BSP_LCD_GLASS_WriteChar(uint8_t* ch, uint8_t Point, uint8_t Column, uint8_t Position);
-void BSP_LCD_GLASS_DisplayStrDeci(uint16_t* ptr);
-void BSP_LCD_GLASS_ScrollSentence(uint8_t* ptr, uint16_t nScroll, uint16_t ScrollSpeed);
-void BSP_LCD_GLASS_DisplayBar(uint32_t BarId);
-void BSP_LCD_GLASS_ClearBar(uint32_t BarId);
-void BSP_LCD_GLASS_BarLevelConfig(uint8_t BarLevel);
-void BSP_LCD_GLASS_Clear(void);
+void BSP_LCD_GLASS_Init( void );
+void BSP_LCD_GLASS_DeInit( void );
+void BSP_LCD_GLASS_BlinkConfig( uint32_t BlinkMode, uint32_t BlinkFrequency );
+void BSP_LCD_GLASS_Contrast( uint32_t Contrast );
+void BSP_LCD_GLASS_DisplayChar( uint8_t *ch, Point_Typedef Point, DoublePoint_Typedef Column, DigitPosition_Typedef Position );
+void BSP_LCD_GLASS_DisplayString( uint8_t *ptr );
+void BSP_LCD_GLASS_WriteChar( uint8_t *ch, uint8_t Point, uint8_t Column, uint8_t Position );
+void BSP_LCD_GLASS_DisplayStrDeci( uint16_t *ptr );
+void BSP_LCD_GLASS_ScrollSentence( uint8_t *ptr, uint16_t nScroll, uint16_t ScrollSpeed );
+void BSP_LCD_GLASS_DisplayBar( uint32_t BarId );
+void BSP_LCD_GLASS_ClearBar( uint32_t BarId );
+void BSP_LCD_GLASS_BarLevelConfig( uint8_t BarLevel );
+void BSP_LCD_GLASS_Clear( void );
 /**
   * @}
   */
 
 /**
   * @}
-  */   
+  */
 
 #ifdef __cplusplus
 }
@@ -486,10 +486,10 @@ void BSP_LCD_GLASS_Clear(void);
 
 /**
   * @}
-  */   
+  */
 
 /**
   * @}
-  */   
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

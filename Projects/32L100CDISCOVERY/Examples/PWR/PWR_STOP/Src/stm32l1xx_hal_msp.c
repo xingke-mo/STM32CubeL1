@@ -43,43 +43,45 @@
   * @brief RTC MSP Initialization
   *        This function configures the hardware resources used in this example
   * @param hrtc: RTC handle pointer
-  * 
-  * @note  Care must be taken when HAL_RCCEx_PeriphCLKConfig() is used to select 
-  *        the RTC clock source; in this case the Backup domain will be reset in  
-  *        order to modify the RTC Clock source, as consequence RTC registers (including 
+  *
+  * @note  Care must be taken when HAL_RCCEx_PeriphCLKConfig() is used to select
+  *        the RTC clock source; in this case the Backup domain will be reset in
+  *        order to modify the RTC Clock source, as consequence RTC registers (including
   *        the backup registers) and RCC_BDCR register are set to their reset values.
-  *             
+  *
   * @retval None
   */
-void HAL_RTC_MspInit(RTC_HandleTypeDef *hrtc)
+void HAL_RTC_MspInit( RTC_HandleTypeDef *hrtc )
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct;
-  RCC_PeriphCLKInitTypeDef  PeriphClkInitStruct;
+    RCC_OscInitTypeDef RCC_OscInitStruct;
+    RCC_PeriphCLKInitTypeDef  PeriphClkInitStruct;
 
-  /*##-1- Configue LSI as RTC clock soucre ###################################*/ 
-  RCC_OscInitStruct.OscillatorType =  RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_LSE;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
-  RCC_OscInitStruct.LSEState = RCC_LSE_OFF;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /*##-1- Configue LSI as RTC clock soucre ###################################*/
+    RCC_OscInitStruct.OscillatorType =  RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_LSE;
+    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+    RCC_OscInitStruct.LSIState = RCC_LSI_ON;
+    RCC_OscInitStruct.LSEState = RCC_LSE_OFF;
 
-  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
-  PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
-  if(HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
-  { 
-    Error_Handler();
-  }
+    if( HAL_RCC_OscConfig( &RCC_OscInitStruct ) != HAL_OK )
+    {
+        Error_Handler();
+    }
 
-  /*##-2- Enable RTC peripheral Clocks #######################################*/ 
-  /* Enable RTC Clock */
-  __HAL_RCC_RTC_ENABLE();
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
+    PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
 
-  /*##-4- Configure the NVIC for RTC_WKUP_IRQn  #########################*/
-  HAL_NVIC_SetPriority(RTC_WKUP_IRQn, 0x03, 0);
-  HAL_NVIC_EnableIRQ(RTC_WKUP_IRQn);
+    if( HAL_RCCEx_PeriphCLKConfig( &PeriphClkInitStruct ) != HAL_OK )
+    {
+        Error_Handler();
+    }
+
+    /*##-2- Enable RTC peripheral Clocks #######################################*/
+    /* Enable RTC Clock */
+    __HAL_RCC_RTC_ENABLE();
+
+    /*##-4- Configure the NVIC for RTC_WKUP_IRQn  #########################*/
+    HAL_NVIC_SetPriority( RTC_WKUP_IRQn, 0x03, 0 );
+    HAL_NVIC_EnableIRQ( RTC_WKUP_IRQn );
 }
 
 /**
@@ -89,10 +91,10 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef *hrtc)
   * @param hrtc: RTC handle pointer
   * @retval None
   */
-void HAL_RTC_MspDeInit(RTC_HandleTypeDef *hrtc)
+void HAL_RTC_MspDeInit( RTC_HandleTypeDef *hrtc )
 {
-  /*##-1- Reset peripherals ##################################################*/
-  __HAL_RCC_RTC_DISABLE();
+    /*##-1- Reset peripherals ##################################################*/
+    __HAL_RCC_RTC_DISABLE();
 }
 
 /**

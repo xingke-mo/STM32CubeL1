@@ -32,9 +32,9 @@
   * @param  pdev: Device handle
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
+USBD_StatusTypeDef USBD_LL_Init( USBD_HandleTypeDef *pdev )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -42,9 +42,9 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
   * @param  pdev: Device handle
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_DeInit(USBD_HandleTypeDef *pdev)
+USBD_StatusTypeDef USBD_LL_DeInit( USBD_HandleTypeDef *pdev )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -52,9 +52,9 @@ USBD_StatusTypeDef USBD_LL_DeInit(USBD_HandleTypeDef *pdev)
   * @param  pdev: Device handle
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_Start(USBD_HandleTypeDef *pdev)
+USBD_StatusTypeDef USBD_LL_Start( USBD_HandleTypeDef *pdev )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -62,9 +62,9 @@ USBD_StatusTypeDef USBD_LL_Start(USBD_HandleTypeDef *pdev)
   * @param  pdev: Device handle
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_Stop(USBD_HandleTypeDef *pdev)
+USBD_StatusTypeDef USBD_LL_Stop( USBD_HandleTypeDef *pdev )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -75,12 +75,12 @@ USBD_StatusTypeDef USBD_LL_Stop(USBD_HandleTypeDef *pdev)
   * @param  ep_mps: Endpoint Max Packet Size
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_OpenEP(USBD_HandleTypeDef *pdev,
-                                  uint8_t ep_addr,
-                                  uint8_t ep_type,
-                                  uint16_t ep_mps)
+USBD_StatusTypeDef USBD_LL_OpenEP( USBD_HandleTypeDef *pdev,
+                                   uint8_t ep_addr,
+                                   uint8_t ep_type,
+                                   uint16_t ep_mps )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -89,9 +89,9 @@ USBD_StatusTypeDef USBD_LL_OpenEP(USBD_HandleTypeDef *pdev,
   * @param  ep_addr: Endpoint Number
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_CloseEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
+USBD_StatusTypeDef USBD_LL_CloseEP( USBD_HandleTypeDef *pdev, uint8_t ep_addr )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -100,9 +100,9 @@ USBD_StatusTypeDef USBD_LL_CloseEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
   * @param  ep_addr: Endpoint Number
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_FlushEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
+USBD_StatusTypeDef USBD_LL_FlushEP( USBD_HandleTypeDef *pdev, uint8_t ep_addr )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -111,9 +111,9 @@ USBD_StatusTypeDef USBD_LL_FlushEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
   * @param  ep_addr: Endpoint Number
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_StallEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
+USBD_StatusTypeDef USBD_LL_StallEP( USBD_HandleTypeDef *pdev, uint8_t ep_addr )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -122,9 +122,9 @@ USBD_StatusTypeDef USBD_LL_StallEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
   * @param  ep_addr: Endpoint Number
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_ClearStallEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
+USBD_StatusTypeDef USBD_LL_ClearStallEP( USBD_HandleTypeDef *pdev, uint8_t ep_addr )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -133,9 +133,9 @@ USBD_StatusTypeDef USBD_LL_ClearStallEP(USBD_HandleTypeDef *pdev, uint8_t ep_add
   * @param  ep_addr: Endpoint Number
   * @retval Stall (1: Yes, 0: No)
   */
-uint8_t USBD_LL_IsStallEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
+uint8_t USBD_LL_IsStallEP( USBD_HandleTypeDef *pdev, uint8_t ep_addr )
 {
-   return 0;
+    return 0;
 }
 
 /**
@@ -144,9 +144,9 @@ uint8_t USBD_LL_IsStallEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
   * @param  ep_addr: Endpoint Number
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_SetUSBAddress(USBD_HandleTypeDef *pdev, uint8_t dev_addr)
+USBD_StatusTypeDef USBD_LL_SetUSBAddress( USBD_HandleTypeDef *pdev, uint8_t dev_addr )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -157,12 +157,12 @@ USBD_StatusTypeDef USBD_LL_SetUSBAddress(USBD_HandleTypeDef *pdev, uint8_t dev_a
   * @param  size: Data size
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_Transmit(USBD_HandleTypeDef *pdev,
-                                    uint8_t ep_addr,
-                                    uint8_t *pbuf,
-                                    uint16_t size)
+USBD_StatusTypeDef USBD_LL_Transmit( USBD_HandleTypeDef *pdev,
+                                     uint8_t ep_addr,
+                                     uint8_t *pbuf,
+                                     uint16_t size )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -173,12 +173,12 @@ USBD_StatusTypeDef USBD_LL_Transmit(USBD_HandleTypeDef *pdev,
   * @param  size: Data size
   * @retval USBD Status
   */
-USBD_StatusTypeDef USBD_LL_PrepareReceive(USBD_HandleTypeDef *pdev,
-                                          uint8_t ep_addr,
-                                          uint8_t *pbuf,
-                                          uint16_t size)
+USBD_StatusTypeDef USBD_LL_PrepareReceive( USBD_HandleTypeDef *pdev,
+        uint8_t ep_addr,
+        uint8_t *pbuf,
+        uint16_t size )
 {
-  return USBD_OK;
+    return USBD_OK;
 }
 
 /**
@@ -187,9 +187,9 @@ USBD_StatusTypeDef USBD_LL_PrepareReceive(USBD_HandleTypeDef *pdev,
   * @param  ep_addr: Endpoint Number
   * @retval Recived Data Size
   */
-uint32_t USBD_LL_GetRxDataSize(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
+uint32_t USBD_LL_GetRxDataSize( USBD_HandleTypeDef *pdev, uint8_t ep_addr )
 {
-  return 0;
+    return 0;
 }
 
 /**
@@ -197,7 +197,7 @@ uint32_t USBD_LL_GetRxDataSize(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
   * @param  Delay: Delay in ms
   * @retval None
   */
-void USBD_LL_Delay(uint32_t Delay)
+void USBD_LL_Delay( uint32_t Delay )
 {
 }
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

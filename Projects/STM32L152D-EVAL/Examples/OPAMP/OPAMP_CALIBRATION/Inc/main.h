@@ -39,13 +39,13 @@
 
 #define OPAMPx_FORCE_RESET()              __HAL_RCC_DAC_FORCE_RESET()
 #define OPAMPx_RELEASE_RESET()            __HAL_RCC_DAC_RELEASE_RESET()
-   
+
 /* Definition of OPAMPx channels pins */
 #define OPAMP1_NON_INVERTING_INPUT_PIN        GPIO_PIN_2
 #define OPAMP1_NON_INVERTING_INPUT_GPIO_PORT  GPIOA
 #define OPAMP1_OUTPUT_PIN                     GPIO_PIN_3
 #define OPAMP1_OUTPUT_GPIO_PORT               GPIOA
-   
+
 /* ## Definition of DAC related resources ################################### */
 /* Definition of DACx clock resources */
 #define DACx                            DAC

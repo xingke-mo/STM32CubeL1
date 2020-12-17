@@ -41,26 +41,26 @@ __IO FlagStatus TamperStatus = RESET;
 /* Backup registers table */
 uint32_t aBKPDataReg[BACKUP_COUNT] =
 {
-  LL_RTC_BKP_DR0,  LL_RTC_BKP_DR1,  LL_RTC_BKP_DR2,
-  LL_RTC_BKP_DR3,  LL_RTC_BKP_DR4,  LL_RTC_BKP_DR5,
-  LL_RTC_BKP_DR6,  LL_RTC_BKP_DR7,  LL_RTC_BKP_DR8,
-  LL_RTC_BKP_DR9,  LL_RTC_BKP_DR10, LL_RTC_BKP_DR11,
-  LL_RTC_BKP_DR12, LL_RTC_BKP_DR13, LL_RTC_BKP_DR14,
-  LL_RTC_BKP_DR15, LL_RTC_BKP_DR16, LL_RTC_BKP_DR17,
-  LL_RTC_BKP_DR18, LL_RTC_BKP_DR19, LL_RTC_BKP_DR20,
-  LL_RTC_BKP_DR21, LL_RTC_BKP_DR22, LL_RTC_BKP_DR23,
-  LL_RTC_BKP_DR24, LL_RTC_BKP_DR25, LL_RTC_BKP_DR26,
-  LL_RTC_BKP_DR27, LL_RTC_BKP_DR28, LL_RTC_BKP_DR29,
-  LL_RTC_BKP_DR30, LL_RTC_BKP_DR31
+    LL_RTC_BKP_DR0,  LL_RTC_BKP_DR1,  LL_RTC_BKP_DR2,
+    LL_RTC_BKP_DR3,  LL_RTC_BKP_DR4,  LL_RTC_BKP_DR5,
+    LL_RTC_BKP_DR6,  LL_RTC_BKP_DR7,  LL_RTC_BKP_DR8,
+    LL_RTC_BKP_DR9,  LL_RTC_BKP_DR10, LL_RTC_BKP_DR11,
+    LL_RTC_BKP_DR12, LL_RTC_BKP_DR13, LL_RTC_BKP_DR14,
+    LL_RTC_BKP_DR15, LL_RTC_BKP_DR16, LL_RTC_BKP_DR17,
+    LL_RTC_BKP_DR18, LL_RTC_BKP_DR19, LL_RTC_BKP_DR20,
+    LL_RTC_BKP_DR21, LL_RTC_BKP_DR22, LL_RTC_BKP_DR23,
+    LL_RTC_BKP_DR24, LL_RTC_BKP_DR25, LL_RTC_BKP_DR26,
+    LL_RTC_BKP_DR27, LL_RTC_BKP_DR28, LL_RTC_BKP_DR29,
+    LL_RTC_BKP_DR30, LL_RTC_BKP_DR31
 };
 
 /* Private function prototypes -----------------------------------------------*/
-void     SystemClock_Config(void);
-void     Configure_RTC(void);
-void     Configure_RTC_Tamper(void);
-void     LED_Init(void);
-void     LED_On(void);
-void     LED_Blinking(uint32_t Period);
+void     SystemClock_Config( void );
+void     Configure_RTC( void );
+void     Configure_RTC_Tamper( void );
+void     LED_Init( void );
+void     LED_On( void );
+void     LED_Blinking( uint32_t Period );
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -69,51 +69,51 @@ void     LED_Blinking(uint32_t Period);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  register uint32_t index = 0;
+    register uint32_t index = 0;
 
-  /* Configure the system clock to 32 MHz */
-  SystemClock_Config();
+    /* Configure the system clock to 32 MHz */
+    SystemClock_Config();
 
-  /* Initialize LED2 */
-  LED_Init();
+    /* Initialize LED2 */
+    LED_Init();
 
-  /* Configure the RTC peripheral */
-  Configure_RTC();
+    /* Configure the RTC peripheral */
+    Configure_RTC();
 
-  /* Configure RTC Tamper */
-  Configure_RTC_Tamper();
+    /* Configure RTC Tamper */
+    Configure_RTC_Tamper();
 
-  /* Write Data on the Back Up registers  */
-  for (index = 0; index < BACKUP_COUNT; index++)
-  {
-    LL_RTC_BAK_SetRegister(RTC, aBKPDataReg[index], 0xDF59 + (index * 0x5A));
-  }
-
-  /* Check Data is stored on the Back Up registers */
-  for (index = 0; index < BACKUP_COUNT; index++)
-  {
-    if (LL_RTC_BAK_GetRegister(RTC, aBKPDataReg[index]) != (0xDF59 + (index * 0x5A)))
+    /* Write Data on the Back Up registers  */
+    for( index = 0; index < BACKUP_COUNT; index++ )
     {
-      LED_Blinking(LED_BLINK_ERROR);
+        LL_RTC_BAK_SetRegister( RTC, aBKPDataReg[index], 0xDF59 + ( index * 0x5A ) );
     }
-  }
 
-  /* Wait for Tamper detection */
-  while(TamperStatus != SET)
-  {
-    LL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);  
-    LL_mDelay(LED_BLINK_FAST);
-  }
-  
-  /* LED2 On: Tamper button pressed */
-  LED_On();
-    
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Check Data is stored on the Back Up registers */
+    for( index = 0; index < BACKUP_COUNT; index++ )
+    {
+        if( LL_RTC_BAK_GetRegister( RTC, aBKPDataReg[index] ) != ( 0xDF59 + ( index * 0x5A ) ) )
+        {
+            LED_Blinking( LED_BLINK_ERROR );
+        }
+    }
+
+    /* Wait for Tamper detection */
+    while( TamperStatus != SET )
+    {
+        LL_GPIO_TogglePin( LED2_GPIO_PORT, LED2_PIN );
+        LL_mDelay( LED_BLINK_FAST );
+    }
+
+    /* LED2 On: Tamper button pressed */
+    LED_On();
+
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -121,14 +121,14 @@ int main(void)
   * @param  None
   * @retval None
   */
-void Configure_RTC(void)
+void Configure_RTC( void )
 {
-  /* Enables the PWR Clock and Enables access to the backup domain */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-  LL_PWR_EnableBkUpAccess();
+    /* Enables the PWR Clock and Enables access to the backup domain */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_PWR );
+    LL_PWR_EnableBkUpAccess();
 
-  /* Enable RTC Clock */ 
-  LL_RCC_EnableRTC();
+    /* Enable RTC Clock */
+    LL_RCC_EnableRTC();
 }
 
 /**
@@ -139,42 +139,42 @@ void Configure_RTC(void)
   * @param  None
   * @retval None
   */
-void Configure_RTC_Tamper(void)
+void Configure_RTC_Tamper( void )
 {
-  /* Sampling frequency */
-  /* Reset value is LL_RTC_TAMPER_SAMPLFREQDIV_32768 */
-  //LL_RTC_TAMPER_SetSamplingFreq(RTC, LL_RTC_TAMPER_SAMPLFREQDIV_32768);
-  /* Precharge duration */
-  /* Reset value is LL_RTC_TAMPER_DURATION_1RTCCLK */
-  //LL_RTC_TAMPER_SetPrecharge(RTC, LL_RTC_TAMPER_DURATION_1RTCCLK);
-  /* Enable Pull up */
-  /* Reset value is pull-up enabled */
-  //LL_RTC_TAMPER_EnablePullUp(RTC);
-  /* Disable timestamp on tamper detection */
-  /* Reset value is timestamp on tamper disabled */
-  //LL_RTC_TS_DisableOnTamper(RTC);
-  
-  /* Set Tamper trigger to falling edge */
-  /* Reset value is LL_RTC_TAMPER_FILTER_DISABLE */
-  //LL_RTC_TAMPER_SetFilterCount(RTC, LL_RTC_TAMPER_FILTER_DISABLE);
-  LL_RTC_TAMPER_EnableActiveLevel(RTC, LL_RTC_TAMPER_ACTIVELEVEL_TAMP1);
-  
-  /* Enable tamper detection */
-  LL_RTC_TAMPER_Enable(RTC, LL_RTC_TAMPER_1);
-  
-  /* Enable IT TAMPER */
-  LL_RTC_EnableIT_TAMP(RTC);
+    /* Sampling frequency */
+    /* Reset value is LL_RTC_TAMPER_SAMPLFREQDIV_32768 */
+    //LL_RTC_TAMPER_SetSamplingFreq(RTC, LL_RTC_TAMPER_SAMPLFREQDIV_32768);
+    /* Precharge duration */
+    /* Reset value is LL_RTC_TAMPER_DURATION_1RTCCLK */
+    //LL_RTC_TAMPER_SetPrecharge(RTC, LL_RTC_TAMPER_DURATION_1RTCCLK);
+    /* Enable Pull up */
+    /* Reset value is pull-up enabled */
+    //LL_RTC_TAMPER_EnablePullUp(RTC);
+    /* Disable timestamp on tamper detection */
+    /* Reset value is timestamp on tamper disabled */
+    //LL_RTC_TS_DisableOnTamper(RTC);
 
-  /* Configure the NVIC for RTC Tamper */
-  NVIC_SetPriority(TAMPER_STAMP_IRQn, 0x0F);
-  NVIC_EnableIRQ(TAMPER_STAMP_IRQn);
-  
-  /* RTC Tamper Interrupt Configuration: EXTI configuration */
-  LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_19);
-  LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_19);
+    /* Set Tamper trigger to falling edge */
+    /* Reset value is LL_RTC_TAMPER_FILTER_DISABLE */
+    //LL_RTC_TAMPER_SetFilterCount(RTC, LL_RTC_TAMPER_FILTER_DISABLE);
+    LL_RTC_TAMPER_EnableActiveLevel( RTC, LL_RTC_TAMPER_ACTIVELEVEL_TAMP1 );
 
-  /* Clear the Tamper interrupt pending bit */
-  LL_RTC_ClearFlag_TAMP1(RTC);
+    /* Enable tamper detection */
+    LL_RTC_TAMPER_Enable( RTC, LL_RTC_TAMPER_1 );
+
+    /* Enable IT TAMPER */
+    LL_RTC_EnableIT_TAMP( RTC );
+
+    /* Configure the NVIC for RTC Tamper */
+    NVIC_SetPriority( TAMPER_STAMP_IRQn, 0x0F );
+    NVIC_EnableIRQ( TAMPER_STAMP_IRQn );
+
+    /* RTC Tamper Interrupt Configuration: EXTI configuration */
+    LL_EXTI_EnableIT_0_31( LL_EXTI_LINE_19 );
+    LL_EXTI_EnableRisingTrig_0_31( LL_EXTI_LINE_19 );
+
+    /* Clear the Tamper interrupt pending bit */
+    LL_RTC_ClearFlag_TAMP1( RTC );
 }
 
 /**
@@ -182,19 +182,19 @@ void Configure_RTC_Tamper(void)
   * @param  None
   * @retval None
   */
-void LED_Init(void)
+void LED_Init( void )
 {
-  /* Enable the LED2 Clock */
-  LED2_GPIO_CLK_ENABLE();
+    /* Enable the LED2 Clock */
+    LED2_GPIO_CLK_ENABLE();
 
-  /* Configure IO in output push-pull mode to drive external LED2 */
-  LL_GPIO_SetPinMode(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT);
-  /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
-  //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
-  /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
-  //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
-  /* Reset value is LL_GPIO_PULL_NO */
-  //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
+    /* Configure IO in output push-pull mode to drive external LED2 */
+    LL_GPIO_SetPinMode( LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT );
+    /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
+    //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
+    /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
+    //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
+    /* Reset value is LL_GPIO_PULL_NO */
+    //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
 }
 
 /**
@@ -202,10 +202,10 @@ void LED_Init(void)
   * @param  None
   * @retval None
   */
-void LED_On(void)
+void LED_On( void )
 {
-  /* Turn LED2 on */
-  LL_GPIO_SetOutputPin(LED2_GPIO_PORT, LED2_PIN);
+    /* Turn LED2 on */
+    LL_GPIO_SetOutputPin( LED2_GPIO_PORT, LED2_PIN );
 }
 
 /**
@@ -217,14 +217,14 @@ void LED_On(void)
   *     @arg LED_BLINK_ERROR : Error specific Blinking
   * @retval None
   */
-void LED_Blinking(uint32_t Period)
+void LED_Blinking( uint32_t Period )
 {
-  /* Toggle IO in an infinite loop */
-  while (1)
-  {
-    LL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);  
-    LL_mDelay(Period);
-  }
+    /* Toggle IO in an infinite loop */
+    while( 1 )
+    {
+        LL_GPIO_TogglePin( LED2_GPIO_PORT, LED2_PIN );
+        LL_mDelay( Period );
+    }
 }
 
 /**
@@ -242,57 +242,62 @@ void LED_Blinking(uint32_t Period)
   *            Flash Latency(WS)              = 1
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
-  /* Enable ACC64 access and set FLASH latency */ 
-  LL_FLASH_Enable64bitAccess();; 
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
+    /* Enable ACC64 access and set FLASH latency */
+    LL_FLASH_Enable64bitAccess();;
+    LL_FLASH_SetLatency( LL_FLASH_LATENCY_1 );
 
-  /* Set Voltage scale1 as MCU will run at 32MHz */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-  LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
-  
-  /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
-  while (LL_PWR_IsActiveFlag_VOSF() != 0)
-  {
-  };
-  
-  /* Enable HSI if not already activated*/
-  if (LL_RCC_HSI_IsReady() == 0)
-  {
-    /* HSI configuration and activation */
-    LL_RCC_HSI_Enable();
-    while(LL_RCC_HSI_IsReady() != 1)
+    /* Set Voltage scale1 as MCU will run at 32MHz */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_PWR );
+    LL_PWR_SetRegulVoltageScaling( LL_PWR_REGU_VOLTAGE_SCALE1 );
+
+    /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+    while( LL_PWR_IsActiveFlag_VOSF() != 0 )
     {
     };
-  }
-  
-  /* Main PLL configuration and activation */
-  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3);
 
-  LL_RCC_PLL_Enable();
-  while(LL_RCC_PLL_IsReady() != 1)
-  {
-  };
-  
-  /* Sysclk activation on the main PLL */
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
-  {
-  };
-  
-  /* Set APB1 & APB2 prescaler*/
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
+    /* Enable HSI if not already activated*/
+    if( LL_RCC_HSI_IsReady() == 0 )
+    {
+        /* HSI configuration and activation */
+        LL_RCC_HSI_Enable();
 
-  /* Set systick to 1ms in using frequency set to 32MHz                             */
-  /* This frequency can be calculated through LL RCC macro                          */
-  /* ex: __LL_RCC_CALC_PLLCLK_FREQ (HSI_VALUE, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3); */
-  LL_Init1msTick(32000000);
-  
-  /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
-  LL_SetSystemCoreClock(32000000);
+        while( LL_RCC_HSI_IsReady() != 1 )
+        {
+        };
+    }
+
+    /* Main PLL configuration and activation */
+    LL_RCC_PLL_ConfigDomain_SYS( LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3 );
+
+    LL_RCC_PLL_Enable();
+
+    while( LL_RCC_PLL_IsReady() != 1 )
+    {
+    };
+
+    /* Sysclk activation on the main PLL */
+    LL_RCC_SetAHBPrescaler( LL_RCC_SYSCLK_DIV_1 );
+
+    LL_RCC_SetSysClkSource( LL_RCC_SYS_CLKSOURCE_PLL );
+
+    while( LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL )
+    {
+    };
+
+    /* Set APB1 & APB2 prescaler*/
+    LL_RCC_SetAPB1Prescaler( LL_RCC_APB1_DIV_1 );
+
+    LL_RCC_SetAPB2Prescaler( LL_RCC_APB2_DIV_1 );
+
+    /* Set systick to 1ms in using frequency set to 32MHz                             */
+    /* This frequency can be calculated through LL RCC macro                          */
+    /* ex: __LL_RCC_CALC_PLLCLK_FREQ (HSI_VALUE, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3); */
+    LL_Init1msTick( 32000000 );
+
+    /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
+    LL_SetSystemCoreClock( 32000000 );
 }
 
 /******************************************************************************/
@@ -303,22 +308,23 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-void Tamper_Callback(void)
+void Tamper_Callback( void )
 {
-  register uint32_t index = 0;
-  
-  /* Deactivate the tamper */
-  LL_RTC_TAMPER_Disable(RTC, LL_RTC_TAMPER_1);
-    
-  /* Check Data is cleared on the Back Up registers */
-  for (index = 0; index < BACKUP_COUNT; index++)
-  {
-    if (LL_RTC_BAK_GetRegister(RTC, aBKPDataReg[index]) != 0x00)
+    register uint32_t index = 0;
+
+    /* Deactivate the tamper */
+    LL_RTC_TAMPER_Disable( RTC, LL_RTC_TAMPER_1 );
+
+    /* Check Data is cleared on the Back Up registers */
+    for( index = 0; index < BACKUP_COUNT; index++ )
     {
-      LED_Blinking(LED_BLINK_ERROR);
+        if( LL_RTC_BAK_GetRegister( RTC, aBKPDataReg[index] ) != 0x00 )
+        {
+            LED_Blinking( LED_BLINK_ERROR );
+        }
     }
-  }
-  TamperStatus = SET;
+
+    TamperStatus = SET;
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -330,15 +336,15 @@ void Tamper_Callback(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d", file, line) */
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 

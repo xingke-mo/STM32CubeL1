@@ -34,27 +34,27 @@
   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
-  */ 
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __ILI9325_H
 #define __ILI9325_H
 
 #ifdef __cplusplus
- extern "C" {
-#endif 
+extern "C" {
+#endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "../Common/lcd.h"
 
 /** @addtogroup BSP
   * @{
-  */ 
+  */
 
 /** @addtogroup Components
   * @{
-  */ 
-  
+  */
+
 /** @addtogroup ili9325
   * @{
   */
@@ -62,28 +62,28 @@
 /** @defgroup ILI9325_Exported_Types
   * @{
   */
-   
+
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup ILI9325_Exported_Constants
   * @{
   */
-/** 
-  * @brief  ILI9325 ID  
-  */  
+/**
+  * @brief  ILI9325 ID
+  */
 #define  ILI9325_ID    0x9325
-   
-/** 
-  * @brief  ILI9325 Size  
-  */  
+
+/**
+  * @brief  ILI9325 Size
+  */
 #define  ILI9325_LCD_PIXEL_WIDTH    ((uint16_t)320)
 #define  ILI9325_LCD_PIXEL_HEIGHT   ((uint16_t)240)
-   
-/** 
-  * @brief  ILI9325 Registers  
-  */ 
+
+/**
+  * @brief  ILI9325 Registers
+  */
 #define LCD_REG_0             0x00
 #define LCD_REG_1             0x01
 #define LCD_REG_2             0x02
@@ -196,45 +196,45 @@
 /**
   * @}
   */
-  
+
 /** @defgroup ILI9325_Exported_Functions
   * @{
-  */ 
-void     ili9325_Init(void);
-uint16_t ili9325_ReadID(void);
-void     ili9325_WriteReg(uint8_t LCDReg, uint16_t LCDRegValue);
-uint16_t ili9325_ReadReg(uint8_t LCDReg);
+  */
+void     ili9325_Init( void );
+uint16_t ili9325_ReadID( void );
+void     ili9325_WriteReg( uint8_t LCDReg, uint16_t LCDRegValue );
+uint16_t ili9325_ReadReg( uint8_t LCDReg );
 
-void     ili9325_DisplayOn(void);
-void     ili9325_DisplayOff(void);
-void     ili9325_SetCursor(uint16_t Xpos, uint16_t Ypos);
-void     ili9325_WritePixel(uint16_t Xpos, uint16_t Ypos, uint16_t RGBCode);
-uint16_t ili9325_ReadPixel(uint16_t Xpos, uint16_t Ypos);
+void     ili9325_DisplayOn( void );
+void     ili9325_DisplayOff( void );
+void     ili9325_SetCursor( uint16_t Xpos, uint16_t Ypos );
+void     ili9325_WritePixel( uint16_t Xpos, uint16_t Ypos, uint16_t RGBCode );
+uint16_t ili9325_ReadPixel( uint16_t Xpos, uint16_t Ypos );
 
-void     ili9325_DrawHLine(uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t Length);
-void     ili9325_DrawVLine(uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t Length);
-void     ili9325_DrawBitmap(uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp);
-void     ili9325_DrawRGBImage(uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint8_t *pdata);
+void     ili9325_DrawHLine( uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t Length );
+void     ili9325_DrawVLine( uint16_t RGBCode, uint16_t Xpos, uint16_t Ypos, uint16_t Length );
+void     ili9325_DrawBitmap( uint16_t Xpos, uint16_t Ypos, uint8_t *pbmp );
+void     ili9325_DrawRGBImage( uint16_t Xpos, uint16_t Ypos, uint16_t Xsize, uint16_t Ysize, uint8_t *pdata );
 
-void     ili9325_SetDisplayWindow(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
+void     ili9325_SetDisplayWindow( uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height );
 
 
-uint16_t ili9325_GetLcdPixelWidth(void);
-uint16_t ili9325_GetLcdPixelHeight(void);
+uint16_t ili9325_GetLcdPixelWidth( void );
+uint16_t ili9325_GetLcdPixelHeight( void );
 
 /* LCD driver structure */
 extern LCD_DrvTypeDef   ili9325_drv;
 
 /* LCD IO functions */
-void     LCD_IO_Init(void);
-void     LCD_IO_WriteMultipleData(uint8_t *pData, uint32_t Size);
-void     LCD_IO_WriteReg(uint8_t Reg);
-uint16_t LCD_IO_ReadData(uint16_t Reg);
+void     LCD_IO_Init( void );
+void     LCD_IO_WriteMultipleData( uint8_t *pData, uint32_t Size );
+void     LCD_IO_WriteReg( uint8_t Reg );
+uint16_t LCD_IO_ReadData( uint16_t Reg );
 
 /**
   * @}
-  */ 
-      
+  */
+
 #ifdef __cplusplus
 }
 #endif
@@ -243,14 +243,14 @@ uint16_t LCD_IO_ReadData(uint16_t Reg);
 
 /**
   * @}
-  */ 
-
-/**
-  * @}
-  */ 
+  */
 
 /**
   * @}
   */
-  
+
+/**
+  * @}
+  */
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

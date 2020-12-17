@@ -15,16 +15,16 @@
   *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
-  */ 
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32L1xx_HAL_CRYP_EX_H
 #define __STM32L1xx_HAL_CRYP_EX_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
-   
+
 #if defined(STM32L162xC) || defined(STM32L162xCA) || defined(STM32L162xD) || defined(STM32L162xE) || defined(STM32L162xDX)
 
 /* Includes ------------------------------------------------------------------*/
@@ -36,9 +36,9 @@
 
 /** @addtogroup CRYPEx
   * @{
-  */ 
+  */
 
-/* Exported types ------------------------------------------------------------*/ 
+/* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported functions --------------------------------------------------------*/
 
@@ -51,26 +51,26 @@
   */
 
 /* CallBack functions  ********************************************************/
-void HAL_CRYPEx_ComputationCpltCallback(CRYP_HandleTypeDef *hcryp);
+void HAL_CRYPEx_ComputationCpltCallback( CRYP_HandleTypeDef *hcryp );
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 #endif /* STM32L162xC || STM32L162xCA || STM32L162xD || STM32L162xE || STM32L162xDX*/
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
-  
+  */
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    LCD/LCD_SegmentsDrive/Inc/main.h 
+  * @file    LCD/LCD_SegmentsDrive/Inc/main.h
   * @author  MCD Application Team
   * @brief   Header for main.c module
   ******************************************************************************
@@ -29,7 +29,7 @@
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* ADC peripheral configuration defines */
-#define ADC_INSTANCE            ADC1           
+#define ADC_INSTANCE            ADC1
 #define ADC_CLK_ENABLE()        __HAL_RCC_ADC1_CLK_ENABLE()
 #define ADC_PIN                 GPIO_PIN_10           /* PF.10 */
 #define ADC_PORT                GPIOF

@@ -78,41 +78,41 @@
   * @retval HAL status
   */
 
-HAL_StatusTypeDef  HAL_PCDEx_PMAConfig(PCD_HandleTypeDef *hpcd,
-                                       uint16_t ep_addr,
-                                       uint16_t ep_kind,
-                                       uint32_t pmaadress)
+HAL_StatusTypeDef  HAL_PCDEx_PMAConfig( PCD_HandleTypeDef *hpcd,
+                                        uint16_t ep_addr,
+                                        uint16_t ep_kind,
+                                        uint32_t pmaadress )
 {
-  PCD_EPTypeDef *ep;
+    PCD_EPTypeDef *ep;
 
-  /* initialize ep structure*/
-  if ((0x80U & ep_addr) == 0x80U)
-  {
-    ep = &hpcd->IN_ep[ep_addr & EP_ADDR_MSK];
-  }
-  else
-  {
-    ep = &hpcd->OUT_ep[ep_addr];
-  }
+    /* initialize ep structure*/
+    if( ( 0x80U & ep_addr ) == 0x80U )
+    {
+        ep = &hpcd->IN_ep[ep_addr & EP_ADDR_MSK];
+    }
+    else
+    {
+        ep = &hpcd->OUT_ep[ep_addr];
+    }
 
-  /* Here we check if the endpoint is single or double Buffer*/
-  if (ep_kind == PCD_SNG_BUF)
-  {
-    /* Single Buffer */
-    ep->doublebuffer = 0U;
-    /* Configure the PMA */
-    ep->pmaadress = (uint16_t)pmaadress;
-  }
-  else /* USB_DBL_BUF */
-  {
-    /* Double Buffer Endpoint */
-    ep->doublebuffer = 1U;
-    /* Configure the PMA */
-    ep->pmaaddr0 = (uint16_t)(pmaadress & 0xFFFFU);
-    ep->pmaaddr1 = (uint16_t)((pmaadress & 0xFFFF0000U) >> 16);
-  }
+    /* Here we check if the endpoint is single or double Buffer*/
+    if( ep_kind == PCD_SNG_BUF )
+    {
+        /* Single Buffer */
+        ep->doublebuffer = 0U;
+        /* Configure the PMA */
+        ep->pmaadress = ( uint16_t )pmaadress;
+    }
+    else /* USB_DBL_BUF */
+    {
+        /* Double Buffer Endpoint */
+        ep->doublebuffer = 1U;
+        /* Configure the PMA */
+        ep->pmaaddr0 = ( uint16_t )( pmaadress & 0xFFFFU );
+        ep->pmaaddr1 = ( uint16_t )( ( pmaadress & 0xFFFF0000U ) >> 16 );
+    }
 
-  return HAL_OK;
+    return HAL_OK;
 }
 
 /**
@@ -123,14 +123,14 @@ HAL_StatusTypeDef  HAL_PCDEx_PMAConfig(PCD_HandleTypeDef *hpcd,
   * @param  state: connection state (0 : disconnected / 1: connected)
   * @retval None
   */
-__weak void HAL_PCDEx_SetConnectionState(PCD_HandleTypeDef *hpcd, uint8_t state)
+__weak void HAL_PCDEx_SetConnectionState( PCD_HandleTypeDef *hpcd, uint8_t state )
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hpcd);
-  UNUSED(state);
-  /* NOTE : This function Should not be modified, when the callback is needed,
-            the HAL_PCDEx_SetConnectionState could be implemented in the user file
-   */
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED( hpcd );
+    UNUSED( state );
+    /* NOTE : This function Should not be modified, when the callback is needed,
+              the HAL_PCDEx_SetConnectionState could be implemented in the user file
+     */
 }
 
 
@@ -140,15 +140,15 @@ __weak void HAL_PCDEx_SetConnectionState(PCD_HandleTypeDef *hpcd, uint8_t state)
   * @param  msg LPM message
   * @retval HAL status
   */
-__weak void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg)
+__weak void HAL_PCDEx_LPM_Callback( PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg )
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hpcd);
-  UNUSED(msg);
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED( hpcd );
+    UNUSED( msg );
 
-  /* NOTE : This function should not be modified, when the callback is needed,
-            the HAL_PCDEx_LPM_Callback could be implemented in the user file
-   */
+    /* NOTE : This function should not be modified, when the callback is needed,
+              the HAL_PCDEx_LPM_Callback could be implemented in the user file
+     */
 }
 
 /**
@@ -157,15 +157,15 @@ __weak void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef m
   * @param  msg LPM message
   * @retval HAL status
   */
-__weak void HAL_PCDEx_BCD_Callback(PCD_HandleTypeDef *hpcd, PCD_BCD_MsgTypeDef msg)
+__weak void HAL_PCDEx_BCD_Callback( PCD_HandleTypeDef *hpcd, PCD_BCD_MsgTypeDef msg )
 {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hpcd);
-  UNUSED(msg);
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED( hpcd );
+    UNUSED( msg );
 
-  /* NOTE : This function should not be modified, when the callback is needed,
-            the HAL_PCDEx_BCD_Callback could be implemented in the user file
-   */
+    /* NOTE : This function should not be modified, when the callback is needed,
+              the HAL_PCDEx_BCD_Callback could be implemented in the user file
+     */
 }
 
 /**

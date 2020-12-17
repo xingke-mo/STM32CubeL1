@@ -89,127 +89,132 @@
   * @note   If HAL_ERROR returned, first switch-OFF HSE clock oscillator with @ref HAL_RCC_OscConfig()
   *         to possibly update HSE divider.
   */
-HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClkInit)
+HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig( RCC_PeriphCLKInitTypeDef  *PeriphClkInit )
 {
-  uint32_t tickstart;
-  uint32_t temp_reg;
+    uint32_t tickstart;
+    uint32_t temp_reg;
 
-  /* Check the parameters */
-  assert_param(IS_RCC_PERIPHCLOCK(PeriphClkInit->PeriphClockSelection));
+    /* Check the parameters */
+    assert_param( IS_RCC_PERIPHCLOCK( PeriphClkInit->PeriphClockSelection ) );
 
-  /*------------------------------- RTC/LCD Configuration ------------------------*/
-  if ((((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_RTC) == RCC_PERIPHCLK_RTC)
+    /*------------------------------- RTC/LCD Configuration ------------------------*/
+    if( ( ( ( PeriphClkInit->PeriphClockSelection ) & RCC_PERIPHCLK_RTC ) == RCC_PERIPHCLK_RTC )
 #if defined(LCD)
-   || (((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_LCD) == RCC_PERIPHCLK_LCD)
+            || ( ( ( PeriphClkInit->PeriphClockSelection ) & RCC_PERIPHCLK_LCD ) == RCC_PERIPHCLK_LCD )
 #endif /* LCD */
-     )
-  {
-    /* check for RTC Parameters used to output RTCCLK */
-    if(((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_RTC) == RCC_PERIPHCLK_RTC)
+      )
     {
-      assert_param(IS_RCC_RTCCLKSOURCE(PeriphClkInit->RTCClockSelection));
-    }
-
-#if defined(LCD)
-    if(((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_LCD) == RCC_PERIPHCLK_LCD)
-    {
-      assert_param(IS_RCC_RTCCLKSOURCE(PeriphClkInit->LCDClockSelection));
-    }
-#endif /* LCD */
-
-    FlagStatus       pwrclkchanged = RESET;
-
-    /* As soon as function is called to change RTC clock source, activation of the
-       power domain is done. */
-    /* Requires to enable write access to Backup Domain of necessary */
-    if(__HAL_RCC_PWR_IS_CLK_DISABLED())
-    {
-      __HAL_RCC_PWR_CLK_ENABLE();
-      pwrclkchanged = SET;
-    }
-
-    if(HAL_IS_BIT_CLR(PWR->CR, PWR_CR_DBP))
-    {
-      /* Enable write access to Backup domain */
-      SET_BIT(PWR->CR, PWR_CR_DBP);
-
-      /* Wait for Backup domain Write protection disable */
-      tickstart = HAL_GetTick();
-
-      while(HAL_IS_BIT_CLR(PWR->CR, PWR_CR_DBP))
-      {
-        if((HAL_GetTick() - tickstart) > RCC_DBP_TIMEOUT_VALUE)
+        /* check for RTC Parameters used to output RTCCLK */
+        if( ( ( PeriphClkInit->PeriphClockSelection ) & RCC_PERIPHCLK_RTC ) == RCC_PERIPHCLK_RTC )
         {
-          return HAL_TIMEOUT;
+            assert_param( IS_RCC_RTCCLKSOURCE( PeriphClkInit->RTCClockSelection ) );
         }
-      }
-    }
 
-    /* Check if user wants to change HSE RTC prescaler whereas HSE is enabled */
-    temp_reg = (RCC->CR & RCC_CR_RTCPRE);
-    if ((temp_reg != (PeriphClkInit->RTCClockSelection & RCC_CR_RTCPRE))
+#if defined(LCD)
+
+        if( ( ( PeriphClkInit->PeriphClockSelection ) & RCC_PERIPHCLK_LCD ) == RCC_PERIPHCLK_LCD )
+        {
+            assert_param( IS_RCC_RTCCLKSOURCE( PeriphClkInit->LCDClockSelection ) );
+        }
+
+#endif /* LCD */
+
+        FlagStatus       pwrclkchanged = RESET;
+
+        /* As soon as function is called to change RTC clock source, activation of the
+           power domain is done. */
+        /* Requires to enable write access to Backup Domain of necessary */
+        if( __HAL_RCC_PWR_IS_CLK_DISABLED() )
+        {
+            __HAL_RCC_PWR_CLK_ENABLE();
+            pwrclkchanged = SET;
+        }
+
+        if( HAL_IS_BIT_CLR( PWR->CR, PWR_CR_DBP ) )
+        {
+            /* Enable write access to Backup domain */
+            SET_BIT( PWR->CR, PWR_CR_DBP );
+
+            /* Wait for Backup domain Write protection disable */
+            tickstart = HAL_GetTick();
+
+            while( HAL_IS_BIT_CLR( PWR->CR, PWR_CR_DBP ) )
+            {
+                if( ( HAL_GetTick() - tickstart ) > RCC_DBP_TIMEOUT_VALUE )
+                {
+                    return HAL_TIMEOUT;
+                }
+            }
+        }
+
+        /* Check if user wants to change HSE RTC prescaler whereas HSE is enabled */
+        temp_reg = ( RCC->CR & RCC_CR_RTCPRE );
+
+        if( ( temp_reg != ( PeriphClkInit->RTCClockSelection & RCC_CR_RTCPRE ) )
 #if defined (LCD)
-     || (temp_reg != (PeriphClkInit->LCDClockSelection & RCC_CR_RTCPRE))
+                || ( temp_reg != ( PeriphClkInit->LCDClockSelection & RCC_CR_RTCPRE ) )
 #endif /* LCD */
-       )
-    { /* Check HSE State */
-      if ((PeriphClkInit->RTCClockSelection & RCC_CSR_RTCSEL) == RCC_CSR_RTCSEL_HSE)
-      {
-        if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSERDY))
+          )
         {
-          /* To update HSE divider, first switch-OFF HSE clock oscillator*/
-          return HAL_ERROR;
+            /* Check HSE State */
+            if( ( PeriphClkInit->RTCClockSelection & RCC_CSR_RTCSEL ) == RCC_CSR_RTCSEL_HSE )
+            {
+                if( HAL_IS_BIT_SET( RCC->CR, RCC_CR_HSERDY ) )
+                {
+                    /* To update HSE divider, first switch-OFF HSE clock oscillator*/
+                    return HAL_ERROR;
+                }
+            }
         }
-      }
-    }
 
-    /* Reset the Backup domain only if the RTC Clock source selection is modified from reset value */
-    temp_reg = (RCC->CSR & RCC_CSR_RTCSEL);
+        /* Reset the Backup domain only if the RTC Clock source selection is modified from reset value */
+        temp_reg = ( RCC->CSR & RCC_CSR_RTCSEL );
 
-    if((temp_reg != 0x00000000U) && (((temp_reg != (PeriphClkInit->RTCClockSelection & RCC_CSR_RTCSEL)) \
-      && (((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_RTC) == RCC_PERIPHCLK_RTC))
+        if( ( temp_reg != 0x00000000U ) && ( ( ( temp_reg != ( PeriphClkInit->RTCClockSelection & RCC_CSR_RTCSEL ) ) \
+                                               && ( ( ( PeriphClkInit->PeriphClockSelection ) & RCC_PERIPHCLK_RTC ) == RCC_PERIPHCLK_RTC ) )
 #if defined(LCD)
-      || ((temp_reg != (PeriphClkInit->LCDClockSelection & RCC_CSR_RTCSEL)) \
-       && (((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_LCD) == RCC_PERIPHCLK_LCD))
+                                             || ( ( temp_reg != ( PeriphClkInit->LCDClockSelection & RCC_CSR_RTCSEL ) ) \
+                                                     && ( ( ( PeriphClkInit->PeriphClockSelection ) & RCC_PERIPHCLK_LCD ) == RCC_PERIPHCLK_LCD ) )
 #endif /* LCD */
-     ))
-    {
-      /* Store the content of CSR register before the reset of Backup Domain */
-      temp_reg = (RCC->CSR & ~(RCC_CSR_RTCSEL));
-
-      /* RTC Clock selection can be changed only if the Backup Domain is reset */
-      __HAL_RCC_BACKUPRESET_FORCE();
-      __HAL_RCC_BACKUPRESET_RELEASE();
-
-      /* Restore the Content of CSR register */
-      RCC->CSR = temp_reg;
-
-       /* Wait for LSERDY if LSE was enabled */
-      if (HAL_IS_BIT_SET(temp_reg, RCC_CSR_LSEON))
-      {
-        /* Get Start Tick */
-        tickstart = HAL_GetTick();
-
-        /* Wait till LSE is ready */
-        while(__HAL_RCC_GET_FLAG(RCC_FLAG_LSERDY) == 0U)
+                                           ) )
         {
-          if((HAL_GetTick() - tickstart ) > RCC_LSE_TIMEOUT_VALUE)
-          {
-            return HAL_TIMEOUT;
-          }
+            /* Store the content of CSR register before the reset of Backup Domain */
+            temp_reg = ( RCC->CSR & ~( RCC_CSR_RTCSEL ) );
+
+            /* RTC Clock selection can be changed only if the Backup Domain is reset */
+            __HAL_RCC_BACKUPRESET_FORCE();
+            __HAL_RCC_BACKUPRESET_RELEASE();
+
+            /* Restore the Content of CSR register */
+            RCC->CSR = temp_reg;
+
+            /* Wait for LSERDY if LSE was enabled */
+            if( HAL_IS_BIT_SET( temp_reg, RCC_CSR_LSEON ) )
+            {
+                /* Get Start Tick */
+                tickstart = HAL_GetTick();
+
+                /* Wait till LSE is ready */
+                while( __HAL_RCC_GET_FLAG( RCC_FLAG_LSERDY ) == 0U )
+                {
+                    if( ( HAL_GetTick() - tickstart ) > RCC_LSE_TIMEOUT_VALUE )
+                    {
+                        return HAL_TIMEOUT;
+                    }
+                }
+            }
         }
-      }
-    }
-    __HAL_RCC_RTC_CONFIG(PeriphClkInit->RTCClockSelection);
 
-    /* Require to disable power clock if necessary */
-    if(pwrclkchanged == SET)
-    {
-      __HAL_RCC_PWR_CLK_DISABLE();
-    }
-  }
+        __HAL_RCC_RTC_CONFIG( PeriphClkInit->RTCClockSelection );
 
-  return HAL_OK;
+        /* Require to disable power clock if necessary */
+        if( pwrclkchanged == SET )
+        {
+            __HAL_RCC_PWR_CLK_DISABLE();
+        }
+    }
+
+    return HAL_OK;
 }
 
 /**
@@ -218,30 +223,32 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClk
   *         returns the configuration information for the Extended Peripherals clocks(RTC/LCD clocks).
   * @retval None
   */
-void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClkInit)
+void HAL_RCCEx_GetPeriphCLKConfig( RCC_PeriphCLKInitTypeDef  *PeriphClkInit )
 {
-  uint32_t srcclk;
+    uint32_t srcclk;
 
-  /* Set all possible values for the extended clock type parameter------------*/
-  PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_RTC;
+    /* Set all possible values for the extended clock type parameter------------*/
+    PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_RTC;
 #if defined(LCD)
-  PeriphClkInit->PeriphClockSelection |= RCC_PERIPHCLK_LCD;
+    PeriphClkInit->PeriphClockSelection |= RCC_PERIPHCLK_LCD;
 #endif /* LCD */
 
-  /* Get the RTC/LCD configuration -----------------------------------------------*/
-  srcclk = __HAL_RCC_GET_RTC_SOURCE();
-  if (srcclk != RCC_RTCCLKSOURCE_HSE_DIV2)
-  {
-    /* Source clock is LSE or LSI*/
-    PeriphClkInit->RTCClockSelection = srcclk;
-  }
-  else
-  {
-    /* Source clock is HSE. Need to get the prescaler value*/
-    PeriphClkInit->RTCClockSelection = srcclk | (READ_BIT(RCC->CR, RCC_CR_RTCPRE));
-  }
+    /* Get the RTC/LCD configuration -----------------------------------------------*/
+    srcclk = __HAL_RCC_GET_RTC_SOURCE();
+
+    if( srcclk != RCC_RTCCLKSOURCE_HSE_DIV2 )
+    {
+        /* Source clock is LSE or LSI*/
+        PeriphClkInit->RTCClockSelection = srcclk;
+    }
+    else
+    {
+        /* Source clock is HSE. Need to get the prescaler value*/
+        PeriphClkInit->RTCClockSelection = srcclk | ( READ_BIT( RCC->CR, RCC_CR_RTCPRE ) );
+    }
+
 #if defined(LCD)
-  PeriphClkInit->LCDClockSelection = PeriphClkInit->RTCClockSelection;
+    PeriphClkInit->LCDClockSelection = PeriphClkInit->RTCClockSelection;
 #endif /* LCD */
 }
 
@@ -255,83 +262,87 @@ void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClkInit)
   * @note   (*) means that this peripheral is not present on all the devices
   * @retval Frequency in Hz (0: means that no available frequency for the peripheral)
   */
-uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
+uint32_t HAL_RCCEx_GetPeriphCLKFreq( uint32_t PeriphClk )
 {
-  uint32_t frequency = 0;
-  uint32_t srcclk;
+    uint32_t frequency = 0;
+    uint32_t srcclk;
 
-  /* Check the parameters */
-  assert_param(IS_RCC_PERIPHCLOCK(PeriphClk));
+    /* Check the parameters */
+    assert_param( IS_RCC_PERIPHCLOCK( PeriphClk ) );
 
-  switch (PeriphClk)
-  {
-  case RCC_PERIPHCLK_RTC:
-#if defined(LCD)
-  case RCC_PERIPHCLK_LCD:
-#endif /* LCD */
+    switch( PeriphClk )
     {
-      /* Get the current RTC source */
-      srcclk = __HAL_RCC_GET_RTC_SOURCE();
+    case RCC_PERIPHCLK_RTC:
+#if defined(LCD)
+    case RCC_PERIPHCLK_LCD:
+#endif /* LCD */
+        {
+            /* Get the current RTC source */
+            srcclk = __HAL_RCC_GET_RTC_SOURCE();
 
-      /* Check if LSE is ready if RTC clock selection is LSE */
-      if (srcclk == RCC_RTCCLKSOURCE_LSE)
-      {
-        if (HAL_IS_BIT_SET(RCC->CSR, RCC_CSR_LSERDY))
-        {
-          frequency = LSE_VALUE;
+            /* Check if LSE is ready if RTC clock selection is LSE */
+            if( srcclk == RCC_RTCCLKSOURCE_LSE )
+            {
+                if( HAL_IS_BIT_SET( RCC->CSR, RCC_CSR_LSERDY ) )
+                {
+                    frequency = LSE_VALUE;
+                }
+            }
+            /* Check if LSI is ready if RTC clock selection is LSI */
+            else if( srcclk == RCC_RTCCLKSOURCE_LSI )
+            {
+                if( HAL_IS_BIT_SET( RCC->CSR, RCC_CSR_LSIRDY ) )
+                {
+                    frequency = LSI_VALUE;
+                }
+            }
+            /* Check if HSE is ready and if RTC clock selection is HSE */
+            else if( srcclk == RCC_RTCCLKSOURCE_HSE_DIVX )
+            {
+                if( HAL_IS_BIT_SET( RCC->CR, RCC_CR_HSERDY ) )
+                {
+                    /* Get the current HSE clock divider */
+                    switch( __HAL_RCC_GET_RTC_HSE_PRESCALER() )
+                    {
+                    case RCC_RTC_HSE_DIV_16:  /* HSE DIV16 has been selected */
+                        {
+                            frequency = HSE_VALUE / 16U;
+                            break;
+                        }
+
+                    case RCC_RTC_HSE_DIV_8:   /* HSE DIV8 has been selected  */
+                        {
+                            frequency = HSE_VALUE / 8U;
+                            break;
+                        }
+
+                    case RCC_RTC_HSE_DIV_4:   /* HSE DIV4 has been selected  */
+                        {
+                            frequency = HSE_VALUE / 4U;
+                            break;
+                        }
+
+                    default:                  /* HSE DIV2 has been selected  */
+                        {
+                            frequency = HSE_VALUE / 2U;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                /* No clock source, frequency default init at 0 */
+            }
+
+            break;
         }
-      }
-      /* Check if LSI is ready if RTC clock selection is LSI */
-      else if (srcclk == RCC_RTCCLKSOURCE_LSI)
-      {
-        if (HAL_IS_BIT_SET(RCC->CSR, RCC_CSR_LSIRDY))
-        {
-          frequency = LSI_VALUE;
-        }
-      }
-      /* Check if HSE is ready and if RTC clock selection is HSE */
-      else if (srcclk == RCC_RTCCLKSOURCE_HSE_DIVX)
-      {
-        if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSERDY))
-        {
-          /* Get the current HSE clock divider */
-          switch (__HAL_RCC_GET_RTC_HSE_PRESCALER())
-          {
-            case RCC_RTC_HSE_DIV_16:  /* HSE DIV16 has been selected */
-            {
-              frequency = HSE_VALUE / 16U;
-              break;
-            }
-            case RCC_RTC_HSE_DIV_8:   /* HSE DIV8 has been selected  */
-            {
-              frequency = HSE_VALUE / 8U;
-              break;
-            }
-            case RCC_RTC_HSE_DIV_4:   /* HSE DIV4 has been selected  */
-            {
-              frequency = HSE_VALUE / 4U;
-              break;
-            }
-            default:                  /* HSE DIV2 has been selected  */
-            {
-              frequency = HSE_VALUE / 2U;
-              break;
-            }
-          }
-        }
-      }
-      else
-      {
-        /* No clock source, frequency default init at 0 */
-      }
-      break;
+
+    default:
+        break;
     }
 
-  default:
-    break;
-  }
-
-  return(frequency);
+    return( frequency );
 }
 
 #if defined(RCC_LSECSS_SUPPORT)
@@ -347,9 +358,9 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
   * @note   LSE CSS available only for high density and medium+ devices
   * @retval None
   */
-void HAL_RCCEx_EnableLSECSS(void)
+void HAL_RCCEx_EnableLSECSS( void )
 {
-  *(__IO uint32_t *) CSR_LSECSSON_BB = (uint32_t)ENABLE;
+    *( __IO uint32_t * ) CSR_LSECSSON_BB = ( uint32_t )ENABLE;
 }
 
 /**
@@ -360,13 +371,13 @@ void HAL_RCCEx_EnableLSECSS(void)
   * @note   LSE CSS available only for high density and medium+ devices
   * @retval None
   */
-void HAL_RCCEx_DisableLSECSS(void)
+void HAL_RCCEx_DisableLSECSS( void )
 {
-  /* Disable LSE CSS */
-  *(__IO uint32_t *) CSR_LSECSSON_BB = (uint32_t)DISABLE;
+    /* Disable LSE CSS */
+    *( __IO uint32_t * ) CSR_LSECSSON_BB = ( uint32_t )DISABLE;
 
-  /* Disable LSE CSS IT */
-  __HAL_RCC_DISABLE_IT(RCC_IT_LSECSS);
+    /* Disable LSE CSS IT */
+    __HAL_RCC_DISABLE_IT( RCC_IT_LSECSS );
 }
 
 /**
@@ -374,45 +385,45 @@ void HAL_RCCEx_DisableLSECSS(void)
   * @note   LSE Clock Security System IT is mapped on RTC EXTI line 19
   * @retval None
   */
-void HAL_RCCEx_EnableLSECSS_IT(void)
+void HAL_RCCEx_EnableLSECSS_IT( void )
 {
-  /* Enable LSE CSS */
-  *(__IO uint32_t *) CSR_LSECSSON_BB = (uint32_t)ENABLE;
+    /* Enable LSE CSS */
+    *( __IO uint32_t * ) CSR_LSECSSON_BB = ( uint32_t )ENABLE;
 
-  /* Enable LSE CSS IT */
-  __HAL_RCC_ENABLE_IT(RCC_IT_LSECSS);
+    /* Enable LSE CSS IT */
+    __HAL_RCC_ENABLE_IT( RCC_IT_LSECSS );
 
-  /* Enable IT on EXTI Line 19 */
-  __HAL_RCC_LSECSS_EXTI_ENABLE_IT();
-  __HAL_RCC_LSECSS_EXTI_ENABLE_RISING_EDGE();
+    /* Enable IT on EXTI Line 19 */
+    __HAL_RCC_LSECSS_EXTI_ENABLE_IT();
+    __HAL_RCC_LSECSS_EXTI_ENABLE_RISING_EDGE();
 }
 
 /**
   * @brief Handle the RCC LSE Clock Security System interrupt request.
   * @retval None
   */
-void HAL_RCCEx_LSECSS_IRQHandler(void)
+void HAL_RCCEx_LSECSS_IRQHandler( void )
 {
-  /* Check RCC LSE CSSF flag  */
-  if(__HAL_RCC_GET_IT(RCC_IT_LSECSS))
-  {
-    /* RCC LSE Clock Security System interrupt user callback */
-    HAL_RCCEx_LSECSS_Callback();
+    /* Check RCC LSE CSSF flag  */
+    if( __HAL_RCC_GET_IT( RCC_IT_LSECSS ) )
+    {
+        /* RCC LSE Clock Security System interrupt user callback */
+        HAL_RCCEx_LSECSS_Callback();
 
-    /* Clear RCC LSE CSS pending bit */
-    __HAL_RCC_CLEAR_IT(RCC_IT_LSECSS);
-  }
+        /* Clear RCC LSE CSS pending bit */
+        __HAL_RCC_CLEAR_IT( RCC_IT_LSECSS );
+    }
 }
 
 /**
   * @brief  RCCEx LSE Clock Security System interrupt callback.
   * @retval none
   */
-__weak void HAL_RCCEx_LSECSS_Callback(void)
+__weak void HAL_RCCEx_LSECSS_Callback( void )
 {
-  /* NOTE : This function should not be modified, when the callback is needed,
-            the @ref HAL_RCCEx_LSECSS_Callback should be implemented in the user file
-   */
+    /* NOTE : This function should not be modified, when the callback is needed,
+              the @ref HAL_RCCEx_LSECSS_Callback should be implemented in the user file
+     */
 }
 #endif /* RCC_LSECSS_SUPPORT */
 

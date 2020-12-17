@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright © 2017 STMicroelectronics International N.V. 
+  * <h2><center>&copy; Copyright © 2017 STMicroelectronics International N.V.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license SLA0044,
@@ -26,7 +26,7 @@
 #include "usbd_dfu.h"
 
 /* Exported types ------------------------------------------------------------*/
-/* Exported constants --------------------------------------------------------*/ 
+/* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 
 extern USBD_DFU_MediaTypeDef  USBD_DFU_Flash_fops;

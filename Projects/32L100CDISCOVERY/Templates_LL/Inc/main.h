@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    Templates_LL/Inc/main.h 
+  * @file    Templates_LL/Inc/main.h
   * @author  MCD Application Team
   * @brief   Header for main.c module
   ******************************************************************************
@@ -47,7 +47,7 @@
 #include "stm32l1xx_ll_wwdg.h"
 
 #if defined(USE_FULL_ASSERT)
-#include "stm32_assert.h"
+    #include "stm32_assert.h"
 #endif /* USE_FULL_ASSERT */
 
 /* Exported types ------------------------------------------------------------*/
@@ -59,14 +59,14 @@
   */
 #define LED3_PIN                           LL_GPIO_PIN_9
 #define LED3_GPIO_PORT                     GPIOC
-#define LED3_GPIO_CLK_ENABLE()             LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC)  
+#define LED3_GPIO_CLK_ENABLE()             LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC)
 
 /**
   * @brief LED4
   */
 #define LED4_PIN                           LL_GPIO_PIN_8
 #define LED4_GPIO_PORT                     GPIOC
-#define LED4_GPIO_CLK_ENABLE()             LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC)  
+#define LED4_GPIO_CLK_ENABLE()             LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC)
 
 /**
   * @brief Key push-button
@@ -76,8 +76,8 @@
 #define USER_BUTTON_GPIO_CLK_ENABLE()           LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA)
 #define USER_BUTTON_EXTI_LINE                   LL_EXTI_LINE_0
 #define USER_BUTTON_EXTI_IRQn                   EXTI0_IRQn
-#define USER_BUTTON_EXTI_LINE_ENABLE()          LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_0)   
-#define USER_BUTTON_EXTI_FALLING_TRIG_ENABLE()  LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_0)   
+#define USER_BUTTON_EXTI_LINE_ENABLE()          LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_0)
+#define USER_BUTTON_EXTI_FALLING_TRIG_ENABLE()  LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_0)
 #define USER_BUTTON_SYSCFG_SET_EXTI()           do {                                                                     \
                                                   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);                  \
                                                   LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE0);   \

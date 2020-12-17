@@ -37,7 +37,7 @@
 
 /* Definition for COMPx Channel Pin */
 #define COMPx_PIN                      GPIO_PIN_5
-#define COMPx_GPIO_PORT                GPIOB 
+#define COMPx_GPIO_PORT                GPIOB
 
 /* Definition for COMPx's NVIC */
 #define COMPx_IRQn                     COMP_IRQn

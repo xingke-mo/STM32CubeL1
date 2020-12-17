@@ -45,11 +45,11 @@
 #define USBD_DFU_APP_END_ADD                   0x08020000 /*ADDR_FLASH_PAGE_64*/
 /* Exported macro ------------------------------------------------------------*/
 /* Memory management macros */
-/* For footprint reasons and since only one allocation is handled in the DFU class 
+/* For footprint reasons and since only one allocation is handled in the DFU class
    driver, the malloc/free is changed into a static allocation method */
 
-void *USBD_static_malloc(uint32_t size);
-void USBD_static_free(void *p);
+void *USBD_static_malloc( uint32_t size );
+void USBD_static_free( void *p );
 
 #define MAX_STATIC_ALLOC_SIZE     263 /*DFU Class Driver Structure size*/
 

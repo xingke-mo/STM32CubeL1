@@ -104,7 +104,7 @@
 
 #define OPAMPx_FORCE_RESET()                  __HAL_RCC_DAC_FORCE_RESET()
 #define OPAMPx_RELEASE_RESET()                __HAL_RCC_DAC_RELEASE_RESET()
-   
+
 /* Definition of OPAMPx channels pins */
 #define OPAMP2_NON_INVERTING_INPUT_PIN        GPIO_PIN_6
 #define OPAMP2_NON_INVERTING_INPUT_GPIO_PORT  GPIOA

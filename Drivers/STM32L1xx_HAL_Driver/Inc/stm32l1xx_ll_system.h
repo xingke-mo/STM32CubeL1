@@ -232,7 +232,7 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_INPUTCAPTUREROUTING RI Input Capture Routing
   * @{
   */
-                                                         /* TIMx_IC1 TIMx_IC2  TIMx_IC3  TIMx_IC4   */
+/* TIMx_IC1 TIMx_IC2  TIMx_IC3  TIMx_IC4   */
 #define LL_RI_INPUTCAPTUREROUTING_0        (0x00000000U) /*!< PA0       PA1      PA2       PA3      */
 #define LL_RI_INPUTCAPTUREROUTING_1        (0x00000001U) /*!< PA4       PA5      PA6       PA7      */
 #define LL_RI_INPUTCAPTUREROUTING_2        (0x00000002U) /*!< PA8       PA9      PA10      PA11     */
@@ -431,9 +431,9 @@ extern "C" {
   *         (*) value not defined in all devices
   * @retval None
   */
-__STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory)
+__STATIC_INLINE void LL_SYSCFG_SetRemapMemory( uint32_t Memory )
 {
-  MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE, Memory);
+    MODIFY_REG( SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE, Memory );
 }
 
 /**
@@ -447,9 +447,9 @@ __STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory)
   *
   *         (*) value not defined in all devices.
   */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void)
+__STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory( void )
 {
-  return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE));
+    return ( uint32_t )( READ_BIT( SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE ) );
 }
 
 /**
@@ -463,9 +463,9 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void)
   *
   *         (*) value not defined in all devices.
   */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetBootMode(void)
+__STATIC_INLINE uint32_t LL_SYSCFG_GetBootMode( void )
 {
-  return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_BOOT_MODE));
+    return ( uint32_t )( READ_BIT( SYSCFG->MEMRMP, SYSCFG_MEMRMP_BOOT_MODE ) );
 }
 
 /**
@@ -473,9 +473,9 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetBootMode(void)
   * @rmtoll SYSCFG_PMC   USB_PU        LL_SYSCFG_EnableUSBPullUp
   * @retval None
   */
-__STATIC_INLINE void LL_SYSCFG_EnableUSBPullUp(void)
+__STATIC_INLINE void LL_SYSCFG_EnableUSBPullUp( void )
 {
-  SET_BIT(SYSCFG->PMC, SYSCFG_PMC_USB_PU);
+    SET_BIT( SYSCFG->PMC, SYSCFG_PMC_USB_PU );
 }
 
 /**
@@ -483,9 +483,9 @@ __STATIC_INLINE void LL_SYSCFG_EnableUSBPullUp(void)
   * @rmtoll SYSCFG_PMC   USB_PU        LL_SYSCFG_DisableUSBPullUp
   * @retval None
   */
-__STATIC_INLINE void LL_SYSCFG_DisableUSBPullUp(void)
+__STATIC_INLINE void LL_SYSCFG_DisableUSBPullUp( void )
 {
-  CLEAR_BIT(SYSCFG->PMC, SYSCFG_PMC_USB_PU);
+    CLEAR_BIT( SYSCFG->PMC, SYSCFG_PMC_USB_PU );
 }
 
 #if defined(LCD)
@@ -500,9 +500,9 @@ __STATIC_INLINE void LL_SYSCFG_DisableUSBPullUp(void)
   *         @arg @ref LL_SYSCFG_LCDCAPA_PE12
   * @retval None
   */
-__STATIC_INLINE void LL_SYSCFG_EnableLCDCapacitanceConnection(uint32_t Pin)
+__STATIC_INLINE void LL_SYSCFG_EnableLCDCapacitanceConnection( uint32_t Pin )
 {
-  SET_BIT(SYSCFG->PMC, Pin);
+    SET_BIT( SYSCFG->PMC, Pin );
 }
 
 /**
@@ -516,9 +516,9 @@ __STATIC_INLINE void LL_SYSCFG_EnableLCDCapacitanceConnection(uint32_t Pin)
   *         @arg @ref LL_SYSCFG_LCDCAPA_PE12
   * @retval None
   */
-__STATIC_INLINE void LL_SYSCFG_DisableLCDCapacitanceConnection(uint32_t Pin)
+__STATIC_INLINE void LL_SYSCFG_DisableLCDCapacitanceConnection( uint32_t Pin )
 {
-  CLEAR_BIT(SYSCFG->PMC, Pin);
+    CLEAR_BIT( SYSCFG->PMC, Pin );
 }
 #endif /* LCD */
 
@@ -618,9 +618,9 @@ __STATIC_INLINE void LL_SYSCFG_DisableLCDCapacitanceConnection(uint32_t Pin)
   *         @arg @ref LL_SYSCFG_EXTI_LINE15
   * @retval None
   */
-__STATIC_INLINE void LL_SYSCFG_SetEXTISource(uint32_t Port, uint32_t Line)
+__STATIC_INLINE void LL_SYSCFG_SetEXTISource( uint32_t Port, uint32_t Line )
 {
-  MODIFY_REG(SYSCFG->EXTICR[Line & 0x3U], (Line >> 16), Port << POSITION_VAL((Line >> 16)));
+    MODIFY_REG( SYSCFG->EXTICR[Line & 0x3U], ( Line >> 16 ), Port << POSITION_VAL( ( Line >> 16 ) ) );
 }
 
 /**
@@ -718,9 +718,9 @@ __STATIC_INLINE void LL_SYSCFG_SetEXTISource(uint32_t Port, uint32_t Line)
   *
   *         (*) value not defined in all devices.
   */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetEXTISource(uint32_t Line)
+__STATIC_INLINE uint32_t LL_SYSCFG_GetEXTISource( uint32_t Line )
 {
-  return (uint32_t)(READ_BIT(SYSCFG->EXTICR[Line & 0x3U], (Line >> 16)) >> POSITION_VAL(Line >> 16));
+    return ( uint32_t )( READ_BIT( SYSCFG->EXTICR[Line & 0x3U], ( Line >> 16 ) ) >> POSITION_VAL( Line >> 16 ) );
 }
 
 /**
@@ -744,9 +744,9 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetEXTISource(uint32_t Line)
   * @rmtoll DBGMCU_IDCODE DEV_ID        LL_DBGMCU_GetDeviceID
   * @retval Values between Min_Data=0x00 and Max_Data=0xFFF
   */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void)
+__STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID( void )
 {
-  return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_DEV_ID));
+    return ( uint32_t )( READ_BIT( DBGMCU->IDCODE, DBGMCU_IDCODE_DEV_ID ) );
 }
 
 /**
@@ -756,9 +756,9 @@ __STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void)
   * @rmtoll DBGMCU_IDCODE REV_ID        LL_DBGMCU_GetRevisionID
   * @retval Values between Min_Data=0x00 and Max_Data=0xFFFF
   */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID(void)
+__STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID( void )
 {
-  return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_REV_ID) >> DBGMCU_IDCODE_REV_ID_Pos);
+    return ( uint32_t )( READ_BIT( DBGMCU->IDCODE, DBGMCU_IDCODE_REV_ID ) >> DBGMCU_IDCODE_REV_ID_Pos );
 }
 
 /**
@@ -766,9 +766,9 @@ __STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID(void)
   * @rmtoll DBGMCU_CR    DBG_SLEEP     LL_DBGMCU_EnableDBGSleepMode
   * @retval None
   */
-__STATIC_INLINE void LL_DBGMCU_EnableDBGSleepMode(void)
+__STATIC_INLINE void LL_DBGMCU_EnableDBGSleepMode( void )
 {
-  SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
+    SET_BIT( DBGMCU->CR, DBGMCU_CR_DBG_SLEEP );
 }
 
 /**
@@ -776,9 +776,9 @@ __STATIC_INLINE void LL_DBGMCU_EnableDBGSleepMode(void)
   * @rmtoll DBGMCU_CR    DBG_SLEEP     LL_DBGMCU_DisableDBGSleepMode
   * @retval None
   */
-__STATIC_INLINE void LL_DBGMCU_DisableDBGSleepMode(void)
+__STATIC_INLINE void LL_DBGMCU_DisableDBGSleepMode( void )
 {
-  CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
+    CLEAR_BIT( DBGMCU->CR, DBGMCU_CR_DBG_SLEEP );
 }
 
 /**
@@ -786,9 +786,9 @@ __STATIC_INLINE void LL_DBGMCU_DisableDBGSleepMode(void)
   * @rmtoll DBGMCU_CR    DBG_STOP      LL_DBGMCU_EnableDBGStopMode
   * @retval None
   */
-__STATIC_INLINE void LL_DBGMCU_EnableDBGStopMode(void)
+__STATIC_INLINE void LL_DBGMCU_EnableDBGStopMode( void )
 {
-  SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+    SET_BIT( DBGMCU->CR, DBGMCU_CR_DBG_STOP );
 }
 
 /**
@@ -796,9 +796,9 @@ __STATIC_INLINE void LL_DBGMCU_EnableDBGStopMode(void)
   * @rmtoll DBGMCU_CR    DBG_STOP      LL_DBGMCU_DisableDBGStopMode
   * @retval None
   */
-__STATIC_INLINE void LL_DBGMCU_DisableDBGStopMode(void)
+__STATIC_INLINE void LL_DBGMCU_DisableDBGStopMode( void )
 {
-  CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
+    CLEAR_BIT( DBGMCU->CR, DBGMCU_CR_DBG_STOP );
 }
 
 /**
@@ -806,9 +806,9 @@ __STATIC_INLINE void LL_DBGMCU_DisableDBGStopMode(void)
   * @rmtoll DBGMCU_CR    DBG_STANDBY   LL_DBGMCU_EnableDBGStandbyMode
   * @retval None
   */
-__STATIC_INLINE void LL_DBGMCU_EnableDBGStandbyMode(void)
+__STATIC_INLINE void LL_DBGMCU_EnableDBGStandbyMode( void )
 {
-  SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+    SET_BIT( DBGMCU->CR, DBGMCU_CR_DBG_STANDBY );
 }
 
 /**
@@ -816,9 +816,9 @@ __STATIC_INLINE void LL_DBGMCU_EnableDBGStandbyMode(void)
   * @rmtoll DBGMCU_CR    DBG_STANDBY   LL_DBGMCU_DisableDBGStandbyMode
   * @retval None
   */
-__STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode(void)
+__STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode( void )
 {
-  CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
+    CLEAR_BIT( DBGMCU->CR, DBGMCU_CR_DBG_STANDBY );
 }
 
 /**
@@ -833,9 +833,9 @@ __STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode(void)
   *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE4
   * @retval None
   */
-__STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment(uint32_t PinAssignment)
+__STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment( uint32_t PinAssignment )
 {
-  MODIFY_REG(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE, PinAssignment);
+    MODIFY_REG( DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE, PinAssignment );
 }
 
 /**
@@ -849,9 +849,9 @@ __STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment(uint32_t PinAssignment)
   *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE2
   *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE4
   */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetTracePinAssignment(void)
+__STATIC_INLINE uint32_t LL_DBGMCU_GetTracePinAssignment( void )
 {
-  return (uint32_t)(READ_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE));
+    return ( uint32_t )( READ_BIT( DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE ) );
 }
 
 /**
@@ -882,9 +882,9 @@ __STATIC_INLINE uint32_t LL_DBGMCU_GetTracePinAssignment(void)
   *         (*) value not defined in all devices.
   * @retval None
   */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs)
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph( uint32_t Periphs )
 {
-  SET_BIT(DBGMCU->APB1FZ, Periphs);
+    SET_BIT( DBGMCU->APB1FZ, Periphs );
 }
 
 /**
@@ -915,9 +915,9 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP1_FreezePeriph(uint32_t Periphs)
   *         (*) value not defined in all devices.
   * @retval None
   */
-__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs)
+__STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph( uint32_t Periphs )
 {
-  CLEAR_BIT(DBGMCU->APB1FZ, Periphs);
+    CLEAR_BIT( DBGMCU->APB1FZ, Periphs );
 }
 
 /**
@@ -931,9 +931,9 @@ __STATIC_INLINE void LL_DBGMCU_APB1_GRP1_UnFreezePeriph(uint32_t Periphs)
   *         @arg @ref LL_DBGMCU_APB2_GRP1_TIM11_STOP
   * @retval None
   */
-__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs)
+__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph( uint32_t Periphs )
 {
-  SET_BIT(DBGMCU->APB2FZ, Periphs);
+    SET_BIT( DBGMCU->APB2FZ, Periphs );
 }
 
 /**
@@ -947,9 +947,9 @@ __STATIC_INLINE void LL_DBGMCU_APB2_GRP1_FreezePeriph(uint32_t Periphs)
   *         @arg @ref LL_DBGMCU_APB2_GRP1_TIM11_STOP
   * @retval None
   */
-__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs)
+__STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph( uint32_t Periphs )
 {
-  CLEAR_BIT(DBGMCU->APB2FZ, Periphs);
+    CLEAR_BIT( DBGMCU->APB2FZ, Periphs );
 }
 
 /**
@@ -978,9 +978,9 @@ __STATIC_INLINE void LL_DBGMCU_APB2_GRP1_UnFreezePeriph(uint32_t Periphs)
   * @rmtoll COMP_CSR     VREFOUTEN     LL_VREFOUT_Enable
   * @retval None
   */
-__STATIC_INLINE void LL_VREFOUT_Enable(void)
+__STATIC_INLINE void LL_VREFOUT_Enable( void )
 {
-  SET_BIT(COMP->CSR, COMP_CSR_VREFOUTEN);
+    SET_BIT( COMP->CSR, COMP_CSR_VREFOUTEN );
 }
 
 /**
@@ -988,9 +988,9 @@ __STATIC_INLINE void LL_VREFOUT_Enable(void)
   * @rmtoll COMP_CSR     VREFOUTEN     LL_VREFOUT_Disable
   * @retval None
   */
-__STATIC_INLINE void LL_VREFOUT_Disable(void)
+__STATIC_INLINE void LL_VREFOUT_Disable( void )
 {
-  CLEAR_BIT(COMP->CSR, COMP_CSR_VREFOUTEN);
+    CLEAR_BIT( COMP->CSR, COMP_CSR_VREFOUTEN );
 }
 
 /**
@@ -998,9 +998,9 @@ __STATIC_INLINE void LL_VREFOUT_Disable(void)
   * @rmtoll COMP_CSR     VREFOUTEN     LL_VREFOUT_IsEnabled
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_VREFOUT_IsEnabled(void)
+__STATIC_INLINE uint32_t LL_VREFOUT_IsEnabled( void )
 {
-  return ((READ_BIT(COMP->CSR, COMP_CSR_VREFOUTEN) == COMP_CSR_VREFOUTEN) ? 1UL : 0UL);
+    return ( ( READ_BIT( COMP->CSR, COMP_CSR_VREFOUTEN ) == COMP_CSR_VREFOUTEN ) ? 1UL : 0UL );
 }
 
 /**
@@ -1054,11 +1054,11 @@ __STATIC_INLINE uint32_t LL_VREFOUT_IsEnabled(void)
   *         (*) value not defined in all devices.
   * @retval None
   */
-__STATIC_INLINE void LL_RI_SetRemapInputCapture_TIM(uint32_t TIM_Select, uint32_t InputCaptureChannel, uint32_t Input)
+__STATIC_INLINE void LL_RI_SetRemapInputCapture_TIM( uint32_t TIM_Select, uint32_t InputCaptureChannel, uint32_t Input )
 {
-  MODIFY_REG(RI->ICR,
-             RI_ICR_TIM | (InputCaptureChannel & (RI_ICR_IC4 | RI_ICR_IC3 | RI_ICR_IC2 | RI_ICR_IC1)) | (InputCaptureChannel & (RI_ICR_IC4OS | RI_ICR_IC3OS | RI_ICR_IC2OS | RI_ICR_IC1OS)),
-             TIM_Select | (InputCaptureChannel & (RI_ICR_IC4 | RI_ICR_IC3 | RI_ICR_IC2 | RI_ICR_IC1)) | (Input << POSITION_VAL(InputCaptureChannel)));
+    MODIFY_REG( RI->ICR,
+                RI_ICR_TIM | ( InputCaptureChannel & ( RI_ICR_IC4 | RI_ICR_IC3 | RI_ICR_IC2 | RI_ICR_IC1 ) ) | ( InputCaptureChannel & ( RI_ICR_IC4OS | RI_ICR_IC3OS | RI_ICR_IC2OS | RI_ICR_IC1OS ) ),
+                TIM_Select | ( InputCaptureChannel & ( RI_ICR_IC4 | RI_ICR_IC3 | RI_ICR_IC2 | RI_ICR_IC1 ) ) | ( Input << POSITION_VAL( InputCaptureChannel ) ) );
 }
 
 /**
@@ -1074,9 +1074,9 @@ __STATIC_INLINE void LL_RI_SetRemapInputCapture_TIM(uint32_t TIM_Select, uint32_
   *         @arg @ref LL_RI_INPUTCAPTURE_4
   * @retval None
   */
-__STATIC_INLINE void LL_RI_DisableRemapInputCapture_TIM(uint32_t InputCaptureChannel)
+__STATIC_INLINE void LL_RI_DisableRemapInputCapture_TIM( uint32_t InputCaptureChannel )
 {
-  CLEAR_BIT(RI->ICR, (InputCaptureChannel & (RI_ICR_IC4 | RI_ICR_IC3 | RI_ICR_IC2 | RI_ICR_IC1)));
+    CLEAR_BIT( RI->ICR, ( InputCaptureChannel & ( RI_ICR_IC4 | RI_ICR_IC3 | RI_ICR_IC2 | RI_ICR_IC1 ) ) );
 }
 
 /**
@@ -1118,9 +1118,9 @@ __STATIC_INLINE void LL_RI_DisableRemapInputCapture_TIM(uint32_t InputCaptureCha
   *         (*) value not defined in all devices.
   * @retval None
   */
-__STATIC_INLINE void LL_RI_CloseIOSwitchLinkedToADC(uint32_t IOSwitch)
+__STATIC_INLINE void LL_RI_CloseIOSwitchLinkedToADC( uint32_t IOSwitch )
 {
-  SET_BIT(RI->ASCR1, IOSwitch);
+    SET_BIT( RI->ASCR1, IOSwitch );
 }
 
 /**
@@ -1162,9 +1162,9 @@ __STATIC_INLINE void LL_RI_CloseIOSwitchLinkedToADC(uint32_t IOSwitch)
   *         (*) value not defined in all devices.
   * @retval None
   */
-__STATIC_INLINE void LL_RI_OpenIOSwitchLinkedToADC(uint32_t IOSwitch)
+__STATIC_INLINE void LL_RI_OpenIOSwitchLinkedToADC( uint32_t IOSwitch )
 {
-  CLEAR_BIT(RI->ASCR1, IOSwitch);
+    CLEAR_BIT( RI->ASCR1, IOSwitch );
 }
 
 /**
@@ -1172,9 +1172,9 @@ __STATIC_INLINE void LL_RI_OpenIOSwitchLinkedToADC(uint32_t IOSwitch)
   * @rmtoll RI_ASCR1     SCM           LL_RI_EnableSwitchControlMode
   * @retval None
   */
-__STATIC_INLINE void LL_RI_EnableSwitchControlMode(void)
+__STATIC_INLINE void LL_RI_EnableSwitchControlMode( void )
 {
-  SET_BIT(RI->ASCR1, RI_ASCR1_SCM);
+    SET_BIT( RI->ASCR1, RI_ASCR1_SCM );
 }
 
 /**
@@ -1182,9 +1182,9 @@ __STATIC_INLINE void LL_RI_EnableSwitchControlMode(void)
   * @rmtoll RI_ASCR1     SCM           LL_RI_DisableSwitchControlMode
   * @retval None
   */
-__STATIC_INLINE void LL_RI_DisableSwitchControlMode(void)
+__STATIC_INLINE void LL_RI_DisableSwitchControlMode( void )
 {
-  CLEAR_BIT(RI->ASCR1, RI_ASCR1_SCM);
+    CLEAR_BIT( RI->ASCR1, RI_ASCR1_SCM );
 }
 
 /**
@@ -1245,9 +1245,9 @@ __STATIC_INLINE void LL_RI_DisableSwitchControlMode(void)
   *         (*) value not defined in all devices.
   * @retval None
   */
-__STATIC_INLINE void LL_RI_CloseIOSwitchNotLinkedToADC(uint32_t IOSwitch)
+__STATIC_INLINE void LL_RI_CloseIOSwitchNotLinkedToADC( uint32_t IOSwitch )
 {
-  SET_BIT(RI->ASCR2, IOSwitch);
+    SET_BIT( RI->ASCR2, IOSwitch );
 }
 
 /**
@@ -1308,9 +1308,9 @@ __STATIC_INLINE void LL_RI_CloseIOSwitchNotLinkedToADC(uint32_t IOSwitch)
   *         (*) value not defined in all devices.
   * @retval None
   */
-__STATIC_INLINE void LL_RI_OpenIOSwitchNotLinkedToADC(uint32_t IOSwitch)
+__STATIC_INLINE void LL_RI_OpenIOSwitchNotLinkedToADC( uint32_t IOSwitch )
 {
-  CLEAR_BIT(RI->ASCR2, IOSwitch);
+    CLEAR_BIT( RI->ASCR2, IOSwitch );
 }
 
 /**
@@ -1373,10 +1373,10 @@ __STATIC_INLINE void LL_RI_OpenIOSwitchNotLinkedToADC(uint32_t IOSwitch)
   *         @arg @ref LL_RI_PIN_ALL
   * @retval None
   */
-__STATIC_INLINE void LL_RI_EnableHysteresis(uint32_t Port, uint32_t Pin)
+__STATIC_INLINE void LL_RI_EnableHysteresis( uint32_t Port, uint32_t Pin )
 {
-  __IO uint32_t *reg = (__IO uint32_t *)(uint32_t)((uint32_t)(&RI->HYSCR1) + (Port >> 1U));
-  CLEAR_BIT(*reg, Pin << (16U * (Port & 1U)));
+    __IO uint32_t *reg = ( __IO uint32_t * )( uint32_t )( ( uint32_t )( &RI->HYSCR1 ) + ( Port >> 1U ) );
+    CLEAR_BIT( *reg, Pin << ( 16U * ( Port & 1U ) ) );
 }
 
 /**
@@ -1439,10 +1439,10 @@ __STATIC_INLINE void LL_RI_EnableHysteresis(uint32_t Port, uint32_t Pin)
   *         @arg @ref LL_RI_PIN_ALL
   * @retval None
   */
-__STATIC_INLINE void LL_RI_DisableHysteresis(uint32_t Port, uint32_t Pin)
+__STATIC_INLINE void LL_RI_DisableHysteresis( uint32_t Port, uint32_t Pin )
 {
-  __IO uint32_t *reg = (__IO uint32_t *)(uint32_t)((uint32_t)(&RI->HYSCR1) + ((Port >> 1U) << 2U));
-  SET_BIT(*reg, Pin << (16U * (Port & 1U)));
+    __IO uint32_t *reg = ( __IO uint32_t * )( uint32_t )( ( uint32_t )( &RI->HYSCR1 ) + ( ( Port >> 1U ) << 2U ) );
+    SET_BIT( *reg, Pin << ( 16U * ( Port & 1U ) ) );
 }
 
 #if defined(RI_ASMR1_PA)
@@ -1501,10 +1501,10 @@ __STATIC_INLINE void LL_RI_DisableHysteresis(uint32_t Port, uint32_t Pin)
   *         @arg @ref LL_RI_PIN_ALL
   * @retval None
   */
-__STATIC_INLINE void LL_RI_ControlSwitchByADC(uint32_t Port, uint32_t Pin)
+__STATIC_INLINE void LL_RI_ControlSwitchByADC( uint32_t Port, uint32_t Pin )
 {
-  __IO uint32_t *reg = (__IO uint32_t *)(uint32_t)((uint32_t)(&RI->ASMR1) + ((Port * 3U) << 2));
-  CLEAR_BIT(*reg, Pin);
+    __IO uint32_t *reg = ( __IO uint32_t * )( uint32_t )( ( uint32_t )( &RI->ASMR1 ) + ( ( Port * 3U ) << 2 ) );
+    CLEAR_BIT( *reg, Pin );
 }
 #endif /* RI_ASMR1_PA */
 
@@ -1564,10 +1564,10 @@ __STATIC_INLINE void LL_RI_ControlSwitchByADC(uint32_t Port, uint32_t Pin)
   *         @arg @ref LL_RI_PIN_ALL
   * @retval None
   */
-__STATIC_INLINE void LL_RI_ControlSwitchByTIM(uint32_t Port, uint32_t Pin)
+__STATIC_INLINE void LL_RI_ControlSwitchByTIM( uint32_t Port, uint32_t Pin )
 {
-  __IO uint32_t *reg = (__IO uint32_t *)(uint32_t)((uint32_t)(&RI->ASMR1) + ((Port * 3U) << 2));
-  SET_BIT(*reg, Pin);
+    __IO uint32_t *reg = ( __IO uint32_t * )( uint32_t )( ( uint32_t )( &RI->ASMR1 ) + ( ( Port * 3U ) << 2 ) );
+    SET_BIT( *reg, Pin );
 }
 #endif /* RI_ASMR1_PA */
 
@@ -1627,10 +1627,10 @@ __STATIC_INLINE void LL_RI_ControlSwitchByTIM(uint32_t Port, uint32_t Pin)
   *         @arg @ref LL_RI_PIN_ALL
   * @retval None
   */
-__STATIC_INLINE void LL_RI_MaskChannelDuringAcquisition(uint32_t Port, uint32_t Pin)
+__STATIC_INLINE void LL_RI_MaskChannelDuringAcquisition( uint32_t Port, uint32_t Pin )
 {
-  __IO uint32_t *reg = (__IO uint32_t *)(uint32_t)((uint32_t)(&RI->CMR1) + ((Port * 3U) << 2));
-  CLEAR_BIT(*reg, Pin);
+    __IO uint32_t *reg = ( __IO uint32_t * )( uint32_t )( ( uint32_t )( &RI->CMR1 ) + ( ( Port * 3U ) << 2 ) );
+    CLEAR_BIT( *reg, Pin );
 }
 #endif /* RI_CMR1_PA */
 
@@ -1690,10 +1690,10 @@ __STATIC_INLINE void LL_RI_MaskChannelDuringAcquisition(uint32_t Port, uint32_t 
   *         @arg @ref LL_RI_PIN_ALL
   * @retval None
   */
-__STATIC_INLINE void LL_RI_UnmaskChannelDuringAcquisition(uint32_t Port, uint32_t Pin)
+__STATIC_INLINE void LL_RI_UnmaskChannelDuringAcquisition( uint32_t Port, uint32_t Pin )
 {
-  __IO uint32_t *reg = (__IO uint32_t *)(uint32_t)((uint32_t)(&RI->CMR1) + ((Port * 3U) << 2));
-  SET_BIT(*reg, Pin);
+    __IO uint32_t *reg = ( __IO uint32_t * )( uint32_t )( ( uint32_t )( &RI->CMR1 ) + ( ( Port * 3U ) << 2 ) );
+    SET_BIT( *reg, Pin );
 }
 #endif /* RI_CMR1_PA */
 
@@ -1753,10 +1753,10 @@ __STATIC_INLINE void LL_RI_UnmaskChannelDuringAcquisition(uint32_t Port, uint32_
   *         @arg @ref LL_RI_PIN_ALL
   * @retval None
   */
-__STATIC_INLINE void LL_RI_IdentifyChannelIO(uint32_t Port, uint32_t Pin)
+__STATIC_INLINE void LL_RI_IdentifyChannelIO( uint32_t Port, uint32_t Pin )
 {
-  __IO uint32_t *reg = (__IO uint32_t *)(uint32_t)((uint32_t)(&RI->CICR1) + ((Port * 3U) << 2));
-  CLEAR_BIT(*reg, Pin);
+    __IO uint32_t *reg = ( __IO uint32_t * )( uint32_t )( ( uint32_t )( &RI->CICR1 ) + ( ( Port * 3U ) << 2 ) );
+    CLEAR_BIT( *reg, Pin );
 }
 #endif /* RI_CICR1_PA */
 
@@ -1816,10 +1816,10 @@ __STATIC_INLINE void LL_RI_IdentifyChannelIO(uint32_t Port, uint32_t Pin)
   *         @arg @ref LL_RI_PIN_ALL
   * @retval None
   */
-__STATIC_INLINE void LL_RI_IdentifySamplingCapacitorIO(uint32_t Port, uint32_t Pin)
+__STATIC_INLINE void LL_RI_IdentifySamplingCapacitorIO( uint32_t Port, uint32_t Pin )
 {
-  __IO uint32_t *reg = (__IO uint32_t *)(uint32_t)((uint32_t)(&RI->CICR1) + ((Port * 3U) << 2));
-  SET_BIT(*reg, Pin);
+    __IO uint32_t *reg = ( __IO uint32_t * )( uint32_t )( ( uint32_t )( &RI->CICR1 ) + ( ( Port * 3U ) << 2 ) );
+    SET_BIT( *reg, Pin );
 }
 #endif /* RI_CICR1_PA */
 
@@ -1840,9 +1840,9 @@ __STATIC_INLINE void LL_RI_IdentifySamplingCapacitorIO(uint32_t Port, uint32_t P
   *         @arg @ref LL_FLASH_LATENCY_1
   * @retval None
   */
-__STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency)
+__STATIC_INLINE void LL_FLASH_SetLatency( uint32_t Latency )
 {
-  MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, Latency);
+    MODIFY_REG( FLASH->ACR, FLASH_ACR_LATENCY, Latency );
 }
 
 /**
@@ -1852,9 +1852,9 @@ __STATIC_INLINE void LL_FLASH_SetLatency(uint32_t Latency)
   *         @arg @ref LL_FLASH_LATENCY_0
   *         @arg @ref LL_FLASH_LATENCY_1
   */
-__STATIC_INLINE uint32_t LL_FLASH_GetLatency(void)
+__STATIC_INLINE uint32_t LL_FLASH_GetLatency( void )
 {
-  return (uint32_t)(READ_BIT(FLASH->ACR, FLASH_ACR_LATENCY));
+    return ( uint32_t )( READ_BIT( FLASH->ACR, FLASH_ACR_LATENCY ) );
 }
 
 /**
@@ -1863,9 +1863,9 @@ __STATIC_INLINE uint32_t LL_FLASH_GetLatency(void)
   * @rmtoll FLASH_ACR    PRFTEN        LL_FLASH_EnablePrefetch
   * @retval None
   */
-__STATIC_INLINE void LL_FLASH_EnablePrefetch(void)
+__STATIC_INLINE void LL_FLASH_EnablePrefetch( void )
 {
-  SET_BIT(FLASH->ACR, FLASH_ACR_PRFTEN);
+    SET_BIT( FLASH->ACR, FLASH_ACR_PRFTEN );
 }
 
 /**
@@ -1874,9 +1874,9 @@ __STATIC_INLINE void LL_FLASH_EnablePrefetch(void)
   * @rmtoll FLASH_ACR    PRFTEN        LL_FLASH_DisablePrefetch
   * @retval None
   */
-__STATIC_INLINE void LL_FLASH_DisablePrefetch(void)
+__STATIC_INLINE void LL_FLASH_DisablePrefetch( void )
 {
-  CLEAR_BIT(FLASH->ACR, FLASH_ACR_PRFTEN);
+    CLEAR_BIT( FLASH->ACR, FLASH_ACR_PRFTEN );
 }
 
 /**
@@ -1884,9 +1884,9 @@ __STATIC_INLINE void LL_FLASH_DisablePrefetch(void)
   * @rmtoll FLASH_ACR    PRFTEN        LL_FLASH_IsPrefetchEnabled
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_FLASH_IsPrefetchEnabled(void)
+__STATIC_INLINE uint32_t LL_FLASH_IsPrefetchEnabled( void )
 {
-  return ((READ_BIT(FLASH->ACR, FLASH_ACR_PRFTEN) == FLASH_ACR_PRFTEN) ? 1UL : 0UL);
+    return ( ( READ_BIT( FLASH->ACR, FLASH_ACR_PRFTEN ) == FLASH_ACR_PRFTEN ) ? 1UL : 0UL );
 }
 
 /**
@@ -1894,9 +1894,9 @@ __STATIC_INLINE uint32_t LL_FLASH_IsPrefetchEnabled(void)
   * @rmtoll FLASH_ACR    ACC64         LL_FLASH_Enable64bitAccess
   * @retval None
   */
-__STATIC_INLINE void LL_FLASH_Enable64bitAccess(void)
+__STATIC_INLINE void LL_FLASH_Enable64bitAccess( void )
 {
-  SET_BIT(FLASH->ACR, FLASH_ACR_ACC64);
+    SET_BIT( FLASH->ACR, FLASH_ACR_ACC64 );
 }
 
 /**
@@ -1904,9 +1904,9 @@ __STATIC_INLINE void LL_FLASH_Enable64bitAccess(void)
   * @rmtoll FLASH_ACR    ACC64         LL_FLASH_Disable64bitAccess
   * @retval None
   */
-__STATIC_INLINE void LL_FLASH_Disable64bitAccess(void)
+__STATIC_INLINE void LL_FLASH_Disable64bitAccess( void )
 {
-  CLEAR_BIT(FLASH->ACR, FLASH_ACR_ACC64);
+    CLEAR_BIT( FLASH->ACR, FLASH_ACR_ACC64 );
 }
 
 /**
@@ -1914,9 +1914,9 @@ __STATIC_INLINE void LL_FLASH_Disable64bitAccess(void)
   * @rmtoll FLASH_ACR    ACC64         LL_FLASH_Is64bitAccessEnabled
   * @retval State of bit (1 or 0).
   */
-__STATIC_INLINE uint32_t LL_FLASH_Is64bitAccessEnabled(void)
+__STATIC_INLINE uint32_t LL_FLASH_Is64bitAccessEnabled( void )
 {
-  return ((READ_BIT(FLASH->ACR, FLASH_ACR_ACC64) == FLASH_ACR_ACC64) ? 1UL : 0UL);
+    return ( ( READ_BIT( FLASH->ACR, FLASH_ACR_ACC64 ) == FLASH_ACR_ACC64 ) ? 1UL : 0UL );
 }
 
 
@@ -1932,13 +1932,13 @@ __STATIC_INLINE uint32_t LL_FLASH_Is64bitAccessEnabled(void)
   *         FLASH_PDKEYR PDKEY2        LL_FLASH_EnableRunPowerDown
   * @retval None
   */
-__STATIC_INLINE void LL_FLASH_EnableRunPowerDown(void)
+__STATIC_INLINE void LL_FLASH_EnableRunPowerDown( void )
 {
-  /* Following values must be written consecutively to unlock the RUN_PD bit in
-     FLASH_ACR */
-  WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY1);
-  WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY2);
-  SET_BIT(FLASH->ACR, FLASH_ACR_RUN_PD);
+    /* Following values must be written consecutively to unlock the RUN_PD bit in
+       FLASH_ACR */
+    WRITE_REG( FLASH->PDKEYR, FLASH_PDKEY1 );
+    WRITE_REG( FLASH->PDKEYR, FLASH_PDKEY2 );
+    SET_BIT( FLASH->ACR, FLASH_ACR_RUN_PD );
 }
 
 /**
@@ -1948,13 +1948,13 @@ __STATIC_INLINE void LL_FLASH_EnableRunPowerDown(void)
   *         FLASH_PDKEYR PDKEY2        LL_FLASH_DisableRunPowerDown
   * @retval None
   */
-__STATIC_INLINE void LL_FLASH_DisableRunPowerDown(void)
+__STATIC_INLINE void LL_FLASH_DisableRunPowerDown( void )
 {
-  /* Following values must be written consecutively to unlock the RUN_PD bit in
-     FLASH_ACR */
-  WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY1);
-  WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY2);
-  CLEAR_BIT(FLASH->ACR, FLASH_ACR_RUN_PD);
+    /* Following values must be written consecutively to unlock the RUN_PD bit in
+       FLASH_ACR */
+    WRITE_REG( FLASH->PDKEYR, FLASH_PDKEY1 );
+    WRITE_REG( FLASH->PDKEYR, FLASH_PDKEY2 );
+    CLEAR_BIT( FLASH->ACR, FLASH_ACR_RUN_PD );
 }
 
 /**
@@ -1964,9 +1964,9 @@ __STATIC_INLINE void LL_FLASH_DisableRunPowerDown(void)
   * @rmtoll FLASH_ACR    SLEEP_PD      LL_FLASH_EnableSleepPowerDown
   * @retval None
   */
-__STATIC_INLINE void LL_FLASH_EnableSleepPowerDown(void)
+__STATIC_INLINE void LL_FLASH_EnableSleepPowerDown( void )
 {
-  SET_BIT(FLASH->ACR, FLASH_ACR_SLEEP_PD);
+    SET_BIT( FLASH->ACR, FLASH_ACR_SLEEP_PD );
 }
 
 /**
@@ -1974,9 +1974,9 @@ __STATIC_INLINE void LL_FLASH_EnableSleepPowerDown(void)
   * @rmtoll FLASH_ACR    SLEEP_PD      LL_FLASH_DisableSleepPowerDown
   * @retval None
   */
-__STATIC_INLINE void LL_FLASH_DisableSleepPowerDown(void)
+__STATIC_INLINE void LL_FLASH_DisableSleepPowerDown( void )
 {
-  CLEAR_BIT(FLASH->ACR, FLASH_ACR_SLEEP_PD);
+    CLEAR_BIT( FLASH->ACR, FLASH_ACR_SLEEP_PD );
 }
 
 /**

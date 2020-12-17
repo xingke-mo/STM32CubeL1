@@ -1,4 +1,4 @@
-/** 
+/**
   ******************************************************************************
   * @file    Examples_LL/I2C/I2C_OneBoard_AdvCommunication_DMAAndIT/Src/stm32l1xx_it.c
   * @author  MCD Application Team
@@ -51,7 +51,7 @@ extern __IO uint8_t  ubSlaveNbDataToTransmit;
   * @param  None
   * @retval None
   */
-void NMI_Handler(void)
+void NMI_Handler( void )
 {
 }
 
@@ -60,12 +60,12 @@ void NMI_Handler(void)
   * @param  None
   * @retval None
   */
-void HardFault_Handler(void)
+void HardFault_Handler( void )
 {
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Hard Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -73,12 +73,12 @@ void HardFault_Handler(void)
   * @param  None
   * @retval None
   */
-void MemManage_Handler(void)
+void MemManage_Handler( void )
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Memory Manage exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -86,12 +86,12 @@ void MemManage_Handler(void)
   * @param  None
   * @retval None
   */
-void BusFault_Handler(void)
+void BusFault_Handler( void )
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Bus Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -99,12 +99,12 @@ void BusFault_Handler(void)
   * @param  None
   * @retval None
   */
-void UsageFault_Handler(void)
+void UsageFault_Handler( void )
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Usage Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -112,7 +112,7 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
-void SVC_Handler(void)
+void SVC_Handler( void )
 {
 }
 
@@ -121,7 +121,7 @@ void SVC_Handler(void)
   * @param  None
   * @retval None
   */
-void DebugMon_Handler(void)
+void DebugMon_Handler( void )
 {
 }
 
@@ -130,7 +130,7 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-void PendSV_Handler(void)
+void PendSV_Handler( void )
 {
 }
 
@@ -139,7 +139,7 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
+void SysTick_Handler( void )
 {
 }
 
@@ -155,16 +155,16 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
-void USER_BUTTON_IRQHANDLER(void)
+void USER_BUTTON_IRQHANDLER( void )
 {
-  /* Manage Flags */
-  if(LL_EXTI_IsActiveFlag_0_31(USER_BUTTON_EXTI_LINE) != RESET)
-  {
-    LL_EXTI_ClearFlag_0_31(USER_BUTTON_EXTI_LINE);
+    /* Manage Flags */
+    if( LL_EXTI_IsActiveFlag_0_31( USER_BUTTON_EXTI_LINE ) != RESET )
+    {
+        LL_EXTI_ClearFlag_0_31( USER_BUTTON_EXTI_LINE );
 
-    /* Manage code in main.c.*/
-    UserButton_Callback(); 
-  }
+        /* Manage code in main.c.*/
+        UserButton_Callback();
+    }
 }
 
 /**
@@ -172,65 +172,65 @@ void USER_BUTTON_IRQHANDLER(void)
   * Param   None
   * Retval  None
   */
-void I2C1_EV_IRQHandler(void)
+void I2C1_EV_IRQHandler( void )
 {
-  /* Check ADDR flag value in ISR register */
-  if(LL_I2C_IsActiveFlag_ADDR(I2C1))
-  {
-    /* Verify the slave transfer direction, a read direction, Slave enters receiver mode */
-    if(LL_I2C_GetTransferDirection(I2C1) == LL_I2C_DIRECTION_READ)
+    /* Check ADDR flag value in ISR register */
+    if( LL_I2C_IsActiveFlag_ADDR( I2C1 ) )
     {
-      /* Enable Buffer Interrupts */
-      LL_I2C_EnableIT_BUF(I2C1);
+        /* Verify the slave transfer direction, a read direction, Slave enters receiver mode */
+        if( LL_I2C_GetTransferDirection( I2C1 ) == LL_I2C_DIRECTION_READ )
+        {
+            /* Enable Buffer Interrupts */
+            LL_I2C_EnableIT_BUF( I2C1 );
 
-      /* Clear ADDR flag value in ISR register */
-      LL_I2C_ClearFlag_ADDR(I2C1);
-    }
-    else if(LL_I2C_GetTransferDirection(I2C1) == LL_I2C_DIRECTION_WRITE)
-    {
-      /* Enable Buffer Interrupts */
-      LL_I2C_EnableIT_BUF(I2C1);
+            /* Clear ADDR flag value in ISR register */
+            LL_I2C_ClearFlag_ADDR( I2C1 );
+        }
+        else if( LL_I2C_GetTransferDirection( I2C1 ) == LL_I2C_DIRECTION_WRITE )
+        {
+            /* Enable Buffer Interrupts */
+            LL_I2C_EnableIT_BUF( I2C1 );
 
-      /* Clear ADDR flag value in ISR register */
-      LL_I2C_ClearFlag_ADDR(I2C1);
+            /* Clear ADDR flag value in ISR register */
+            LL_I2C_ClearFlag_ADDR( I2C1 );
+        }
     }
-  }
-  /* Check RXNE flag value in ISR register */
-  else if(LL_I2C_IsActiveFlag_RXNE(I2C1))
-  {
-    /* Call function Slave Reception Callback */
-    Slave_Reception_Callback();
-  }
-  /* Check TXE flag value in ISR register */
-  else if(LL_I2C_IsActiveFlag_TXE(I2C1))
-  {
-    /* Call function Slave Ready to Transmit Callback */
-    Slave_Ready_To_Transmit_Callback();
-  }
-  /* Check BTF flag value in ISR register */
-  else if(LL_I2C_IsActiveFlag_BTF(I2C1))
-  {
-    if(LL_I2C_GetTransferDirection(I2C1) == LL_I2C_DIRECTION_WRITE)
+    /* Check RXNE flag value in ISR register */
+    else if( LL_I2C_IsActiveFlag_RXNE( I2C1 ) )
     {
-      /* Send the next byte */
-      /* Call function Slave Ready to Transmit Callback */
-      Slave_Ready_To_Transmit_Callback();
+        /* Call function Slave Reception Callback */
+        Slave_Reception_Callback();
     }
-    else
+    /* Check TXE flag value in ISR register */
+    else if( LL_I2C_IsActiveFlag_TXE( I2C1 ) )
     {
-      /* Call function Slave Reception Callback */
-      Slave_Reception_Callback();
+        /* Call function Slave Ready to Transmit Callback */
+        Slave_Ready_To_Transmit_Callback();
     }
-  }
-  /* Check STOP flag value in ISR register */
-  else if(LL_I2C_IsActiveFlag_STOP(I2C1))
-  {
-    /* Clear STOP flag value in ISR register */
-    LL_I2C_ClearFlag_STOP(I2C1);
-    
-    /* Call function Slave Complete Callback */
-    Slave_Complete_Callback();
-  }
+    /* Check BTF flag value in ISR register */
+    else if( LL_I2C_IsActiveFlag_BTF( I2C1 ) )
+    {
+        if( LL_I2C_GetTransferDirection( I2C1 ) == LL_I2C_DIRECTION_WRITE )
+        {
+            /* Send the next byte */
+            /* Call function Slave Ready to Transmit Callback */
+            Slave_Ready_To_Transmit_Callback();
+        }
+        else
+        {
+            /* Call function Slave Reception Callback */
+            Slave_Reception_Callback();
+        }
+    }
+    /* Check STOP flag value in ISR register */
+    else if( LL_I2C_IsActiveFlag_STOP( I2C1 ) )
+    {
+        /* Clear STOP flag value in ISR register */
+        LL_I2C_ClearFlag_STOP( I2C1 );
+
+        /* Call function Slave Complete Callback */
+        Slave_Complete_Callback();
+    }
 }
 
 /**
@@ -238,25 +238,25 @@ void I2C1_EV_IRQHandler(void)
   * Param   None
   * Retval  None
   */
-void I2C1_ER_IRQHandler(void)
+void I2C1_ER_IRQHandler( void )
 {
-  /* Normal use case, if all bytes are sent and Acknowledge failure appears */
-  /* This correspond to the end of communication */
-  if((ubSlaveNbDataToTransmit == 0) && \
-     (LL_I2C_IsActiveFlag_AF(I2C1)) && \
-     (LL_I2C_GetTransferDirection(I2C1) == LL_I2C_DIRECTION_WRITE))
-  {
-    /* Clear AF flag value in ISR register */
-    LL_I2C_ClearFlag_AF(I2C1);
+    /* Normal use case, if all bytes are sent and Acknowledge failure appears */
+    /* This correspond to the end of communication */
+    if( ( ubSlaveNbDataToTransmit == 0 ) && \
+            ( LL_I2C_IsActiveFlag_AF( I2C1 ) ) && \
+            ( LL_I2C_GetTransferDirection( I2C1 ) == LL_I2C_DIRECTION_WRITE ) )
+    {
+        /* Clear AF flag value in ISR register */
+        LL_I2C_ClearFlag_AF( I2C1 );
 
-    /* Call function Slave Complete Callback */
-    Slave_Complete_Callback();
-  }
-  else
-  {
-    /* Call Error function */
-    Error_Callback();
-  }
+        /* Call function Slave Complete Callback */
+        Slave_Complete_Callback();
+    }
+    else
+    {
+        /* Call Error function */
+        Error_Callback();
+    }
 }
 
 /**
@@ -264,58 +264,58 @@ void I2C1_ER_IRQHandler(void)
   * Param   None
   * Retval  None
   */
-void I2C2_EV_IRQHandler(void)
+void I2C2_EV_IRQHandler( void )
 {
-  /* Check SB flag value in ISR register */
-  if(LL_I2C_IsActiveFlag_SB(I2C2))
-  {
-    /* Send Slave address with a 7-Bit SLAVE_OWN_ADDRESS for a ubMasterRequestDirection request */
-    LL_I2C_TransmitData8(I2C2, SLAVE_OWN_ADDRESS | ubMasterRequestDirection);
-  }
-  /* Check ADDR flag value in ISR register */
-  else if(LL_I2C_IsActiveFlag_ADDR(I2C2))
-  {
-    /* Verify the transfer direction */
-    if(LL_I2C_GetTransferDirection(I2C2) == LL_I2C_DIRECTION_READ)
+    /* Check SB flag value in ISR register */
+    if( LL_I2C_IsActiveFlag_SB( I2C2 ) )
     {
-      ubMasterXferDirection = LL_I2C_DIRECTION_READ;
-
-      if(ubMasterNbDataToReceive == 1)
-      {
-        /* Prepare the generation of a Non ACKnowledge condition after next received byte */
-        LL_I2C_AcknowledgeNextData(I2C2, LL_I2C_NACK);
-
-        /* Enable DMA transmission requests */
-        LL_I2C_EnableDMAReq_RX(I2C2);
-      }
-      else if(ubMasterNbDataToReceive == 2)
-      {
-        /* Prepare the generation of a Non ACKnowledge condition after next received byte */
-        LL_I2C_AcknowledgeNextData(I2C2, LL_I2C_NACK);
-
-        /* Enable Pos */
-        LL_I2C_EnableBitPOS(I2C2);
-      }
-      else
-      {
-        /* Enable Last DMA bit */
-        LL_I2C_EnableLastDMA(I2C2);
-
-        /* Enable DMA transmission requests */
-        LL_I2C_EnableDMAReq_RX(I2C2);
-      }
+        /* Send Slave address with a 7-Bit SLAVE_OWN_ADDRESS for a ubMasterRequestDirection request */
+        LL_I2C_TransmitData8( I2C2, SLAVE_OWN_ADDRESS | ubMasterRequestDirection );
     }
-    else
+    /* Check ADDR flag value in ISR register */
+    else if( LL_I2C_IsActiveFlag_ADDR( I2C2 ) )
     {
-      ubMasterXferDirection = LL_I2C_DIRECTION_WRITE;
+        /* Verify the transfer direction */
+        if( LL_I2C_GetTransferDirection( I2C2 ) == LL_I2C_DIRECTION_READ )
+        {
+            ubMasterXferDirection = LL_I2C_DIRECTION_READ;
 
-      /* Enable DMA transmission requests */
-      LL_I2C_EnableDMAReq_TX(I2C2);
+            if( ubMasterNbDataToReceive == 1 )
+            {
+                /* Prepare the generation of a Non ACKnowledge condition after next received byte */
+                LL_I2C_AcknowledgeNextData( I2C2, LL_I2C_NACK );
+
+                /* Enable DMA transmission requests */
+                LL_I2C_EnableDMAReq_RX( I2C2 );
+            }
+            else if( ubMasterNbDataToReceive == 2 )
+            {
+                /* Prepare the generation of a Non ACKnowledge condition after next received byte */
+                LL_I2C_AcknowledgeNextData( I2C2, LL_I2C_NACK );
+
+                /* Enable Pos */
+                LL_I2C_EnableBitPOS( I2C2 );
+            }
+            else
+            {
+                /* Enable Last DMA bit */
+                LL_I2C_EnableLastDMA( I2C2 );
+
+                /* Enable DMA transmission requests */
+                LL_I2C_EnableDMAReq_RX( I2C2 );
+            }
+        }
+        else
+        {
+            ubMasterXferDirection = LL_I2C_DIRECTION_WRITE;
+
+            /* Enable DMA transmission requests */
+            LL_I2C_EnableDMAReq_TX( I2C2 );
+        }
+
+        /* Clear ADDR flag value in ISR register */
+        LL_I2C_ClearFlag_ADDR( I2C2 );
     }
-
-    /* Clear ADDR flag value in ISR register */
-    LL_I2C_ClearFlag_ADDR(I2C2);
-  }
 }
 
 /**
@@ -323,10 +323,10 @@ void I2C2_EV_IRQHandler(void)
   * Param   None
   * Retval  None
   */
-void I2C2_ER_IRQHandler(void)
+void I2C2_ER_IRQHandler( void )
 {
-  /* Call Error function */
-  Error_Callback();
+    /* Call Error function */
+    Error_Callback();
 }
 
 /**
@@ -334,17 +334,17 @@ void I2C2_ER_IRQHandler(void)
   * @param  None
   * @retval None
   */
-void DMA1_Channel4_IRQHandler(void)
+void DMA1_Channel4_IRQHandler( void )
 {
-  if(LL_DMA_IsActiveFlag_TC4(DMA1))
-  {
-    LL_DMA_ClearFlag_GI4(DMA1);
-    Transfer_Complete_Callback();
-  }
-  else if(LL_DMA_IsActiveFlag_TE4(DMA1))
-  {
-    Transfer_Error_Callback();
-  }
+    if( LL_DMA_IsActiveFlag_TC4( DMA1 ) )
+    {
+        LL_DMA_ClearFlag_GI4( DMA1 );
+        Transfer_Complete_Callback();
+    }
+    else if( LL_DMA_IsActiveFlag_TE4( DMA1 ) )
+    {
+        Transfer_Error_Callback();
+    }
 }
 
 /**
@@ -352,17 +352,17 @@ void DMA1_Channel4_IRQHandler(void)
   * @param  None
   * @retval None
   */
-void DMA1_Channel5_IRQHandler(void)
+void DMA1_Channel5_IRQHandler( void )
 {
-  if(LL_DMA_IsActiveFlag_TC5(DMA1))
-  {
-    LL_DMA_ClearFlag_GI5(DMA1);
-    Transfer_Complete_Callback();
-  }
-  else if(LL_DMA_IsActiveFlag_TE5(DMA1))
-  {
-    Transfer_Error_Callback();
-  }
+    if( LL_DMA_IsActiveFlag_TC5( DMA1 ) )
+    {
+        LL_DMA_ClearFlag_GI5( DMA1 );
+        Transfer_Complete_Callback();
+    }
+    else if( LL_DMA_IsActiveFlag_TE5( DMA1 ) )
+    {
+        Transfer_Error_Callback();
+    }
 }
 /**
   * @}

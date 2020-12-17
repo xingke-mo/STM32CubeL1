@@ -46,26 +46,26 @@ extern "C" {
   */
 typedef struct
 {
-  uint32_t Tamper;                      /*!< Specifies the Tamper Pin.
+    uint32_t Tamper;                      /*!< Specifies the Tamper Pin.
                                              This parameter can be a value of @ref  RTCEx_Tamper_Pins_Definitions */
 
-  uint32_t Trigger;                     /*!< Specifies the Tamper Trigger.
+    uint32_t Trigger;                     /*!< Specifies the Tamper Trigger.
                                              This parameter can be a value of @ref  RTCEx_Tamper_Trigger_Definitions */
 
 #if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)
-  uint32_t Filter;                      /*!< Specifies the RTC Filter Tamper.
+    uint32_t Filter;                      /*!< Specifies the RTC Filter Tamper.
                                              This parameter can be a value of @ref RTCEx_Tamper_Filter_Definitions */
 
-  uint32_t SamplingFrequency;           /*!< Specifies the sampling frequency.
+    uint32_t SamplingFrequency;           /*!< Specifies the sampling frequency.
                                              This parameter can be a value of @ref RTCEx_Tamper_Sampling_Frequencies_Definitions */
 
-  uint32_t PrechargeDuration;           /*!< Specifies the Precharge Duration .
+    uint32_t PrechargeDuration;           /*!< Specifies the Precharge Duration .
                                              This parameter can be a value of @ref RTCEx_Tamper_Pin_Precharge_Duration_Definitions */
 
-  uint32_t TamperPullUp;                /*!< Specifies the Tamper PullUp .
+    uint32_t TamperPullUp;                /*!< Specifies the Tamper PullUp .
                                              This parameter can be a value of @ref RTCEx_Tamper_Pull_Up_Definitions */
 
-  uint32_t TimeStampOnTamperDetection;  /*!< Specifies the TimeStampOnTamperDetection.
+    uint32_t TimeStampOnTamperDetection;  /*!< Specifies the TimeStampOnTamperDetection.
                                              This parameter can be a value of @ref RTCEx_Tamper_TimeStampOnTamperDetection_Definitions */
 #endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 } RTC_TamperTypeDef;
@@ -1096,26 +1096,26 @@ typedef struct
 /** @defgroup RTCEx_Exported_Functions_Group1 Extended RTC TimeStamp and Tamper functions
   * @{
   */
-HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge);
-HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge);
-HAL_StatusTypeDef HAL_RTCEx_DeactivateTimeStamp(RTC_HandleTypeDef *hrtc);
-HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp, RTC_DateTypeDef *sTimeStampDate, uint32_t Format);
-HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper);
-HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper);
-HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t Tamper);
-void              HAL_RTCEx_TamperTimeStampIRQHandler(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp( RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge );
+HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT( RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge );
+HAL_StatusTypeDef HAL_RTCEx_DeactivateTimeStamp( RTC_HandleTypeDef *hrtc );
+HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp( RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp, RTC_DateTypeDef *sTimeStampDate, uint32_t Format );
+HAL_StatusTypeDef HAL_RTCEx_SetTamper( RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper );
+HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT( RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper );
+HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper( RTC_HandleTypeDef *hrtc, uint32_t Tamper );
+void              HAL_RTCEx_TamperTimeStampIRQHandler( RTC_HandleTypeDef *hrtc );
 
-void              HAL_RTCEx_Tamper1EventCallback(RTC_HandleTypeDef *hrtc);
+void              HAL_RTCEx_Tamper1EventCallback( RTC_HandleTypeDef *hrtc );
 #if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)
-void              HAL_RTCEx_Tamper2EventCallback(RTC_HandleTypeDef *hrtc);
-void              HAL_RTCEx_Tamper3EventCallback(RTC_HandleTypeDef *hrtc);
+void              HAL_RTCEx_Tamper2EventCallback( RTC_HandleTypeDef *hrtc );
+void              HAL_RTCEx_Tamper3EventCallback( RTC_HandleTypeDef *hrtc );
 #endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
-void              HAL_RTCEx_TimeStampEventCallback(RTC_HandleTypeDef *hrtc);
-HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-HAL_StatusTypeDef HAL_RTCEx_PollForTamper1Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+void              HAL_RTCEx_TimeStampEventCallback( RTC_HandleTypeDef *hrtc );
+HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent( RTC_HandleTypeDef *hrtc, uint32_t Timeout );
+HAL_StatusTypeDef HAL_RTCEx_PollForTamper1Event( RTC_HandleTypeDef *hrtc, uint32_t Timeout );
 #if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)
-HAL_StatusTypeDef HAL_RTCEx_PollForTamper2Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-HAL_StatusTypeDef HAL_RTCEx_PollForTamper3Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+HAL_StatusTypeDef HAL_RTCEx_PollForTamper2Event( RTC_HandleTypeDef *hrtc, uint32_t Timeout );
+HAL_StatusTypeDef HAL_RTCEx_PollForTamper3Event( RTC_HandleTypeDef *hrtc, uint32_t Timeout );
 #endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
 /**
   * @}
@@ -1125,13 +1125,13 @@ HAL_StatusTypeDef HAL_RTCEx_PollForTamper3Event(RTC_HandleTypeDef *hrtc, uint32_
 /** @defgroup RTCEx_Exported_Functions_Group2 Extended RTC Wake-up functions
   * @{
   */
-HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock);
-HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock);
-HAL_StatusTypeDef HAL_RTCEx_DeactivateWakeUpTimer(RTC_HandleTypeDef *hrtc);
-uint32_t          HAL_RTCEx_GetWakeUpTimer(RTC_HandleTypeDef *hrtc);
-void              HAL_RTCEx_WakeUpTimerIRQHandler(RTC_HandleTypeDef *hrtc);
-void              HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc);
-HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer( RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock );
+HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT( RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock );
+HAL_StatusTypeDef HAL_RTCEx_DeactivateWakeUpTimer( RTC_HandleTypeDef *hrtc );
+uint32_t          HAL_RTCEx_GetWakeUpTimer( RTC_HandleTypeDef *hrtc );
+void              HAL_RTCEx_WakeUpTimerIRQHandler( RTC_HandleTypeDef *hrtc );
+void              HAL_RTCEx_WakeUpTimerEventCallback( RTC_HandleTypeDef *hrtc );
+HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent( RTC_HandleTypeDef *hrtc, uint32_t Timeout );
 /**
   * @}
   */
@@ -1140,23 +1140,23 @@ HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uin
 /** @defgroup RTCEx_Exported_Functions_Group3 Extended Peripheral Control functions
   * @{
   */
-void              HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint32_t Data);
-uint32_t          HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister);
+void              HAL_RTCEx_BKUPWrite( RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint32_t Data );
+uint32_t          HAL_RTCEx_BKUPRead( RTC_HandleTypeDef *hrtc, uint32_t BackupRegister );
 
-HAL_StatusTypeDef HAL_RTCEx_SetCoarseCalib(RTC_HandleTypeDef *hrtc, uint32_t CalibSign, uint32_t Value);
-HAL_StatusTypeDef HAL_RTCEx_DeactivateCoarseCalib(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_SetCoarseCalib( RTC_HandleTypeDef *hrtc, uint32_t CalibSign, uint32_t Value );
+HAL_StatusTypeDef HAL_RTCEx_DeactivateCoarseCalib( RTC_HandleTypeDef *hrtc );
 #if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) || defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) || defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) || defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) || defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) || defined (STM32L162xDX)
-HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod, uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue);
-HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc, uint32_t ShiftAdd1S, uint32_t ShiftSubFS);
-HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut(RTC_HandleTypeDef *hrtc, uint32_t CalibOutput);
+HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib( RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod, uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue );
+HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift( RTC_HandleTypeDef *hrtc, uint32_t ShiftAdd1S, uint32_t ShiftSubFS );
+HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut( RTC_HandleTypeDef *hrtc, uint32_t CalibOutput );
 #else
-HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut( RTC_HandleTypeDef *hrtc );
 #endif /* STM32L100xBA || STM32L151xBA || STM32L152xBA || STM32L100xC || STM32L151xC || STM32L152xC || STM32L162xC || STM32L151xCA || STM32L151xD || STM32L152xCA || STM32L152xD || STM32L162xCA || STM32L162xD || STM32L151xE || STM32L151xDX || STM32L152xE || STM32L152xDX || STM32L162xE || STM32L162xDX */
-HAL_StatusTypeDef HAL_RTCEx_DeactivateCalibrationOutPut(RTC_HandleTypeDef *hrtc);
-HAL_StatusTypeDef HAL_RTCEx_SetRefClock(RTC_HandleTypeDef *hrtc);
-HAL_StatusTypeDef HAL_RTCEx_DeactivateRefClock(RTC_HandleTypeDef *hrtc);
-HAL_StatusTypeDef HAL_RTCEx_EnableBypassShadow(RTC_HandleTypeDef *hrtc);
-HAL_StatusTypeDef HAL_RTCEx_DisableBypassShadow(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateCalibrationOutPut( RTC_HandleTypeDef *hrtc );
+HAL_StatusTypeDef HAL_RTCEx_SetRefClock( RTC_HandleTypeDef *hrtc );
+HAL_StatusTypeDef HAL_RTCEx_DeactivateRefClock( RTC_HandleTypeDef *hrtc );
+HAL_StatusTypeDef HAL_RTCEx_EnableBypassShadow( RTC_HandleTypeDef *hrtc );
+HAL_StatusTypeDef HAL_RTCEx_DisableBypassShadow( RTC_HandleTypeDef *hrtc );
 /**
   * @}
   */
@@ -1165,8 +1165,8 @@ HAL_StatusTypeDef HAL_RTCEx_DisableBypassShadow(RTC_HandleTypeDef *hrtc);
 /** @defgroup RTCEx_Exported_Functions_Group4 Extended features functions
   * @{
   */
-void              HAL_RTCEx_AlarmBEventCallback(RTC_HandleTypeDef *hrtc);
-HAL_StatusTypeDef HAL_RTCEx_PollForAlarmBEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+void              HAL_RTCEx_AlarmBEventCallback( RTC_HandleTypeDef *hrtc );
+HAL_StatusTypeDef HAL_RTCEx_PollForAlarmBEvent( RTC_HandleTypeDef *hrtc, uint32_t Timeout );
 /**
   * @}
   */
@@ -1208,7 +1208,7 @@ HAL_StatusTypeDef HAL_RTCEx_PollForAlarmBEvent(RTC_HandleTypeDef *hrtc, uint32_t
 /**
   * @}
   */
-  
+
 #ifdef __cplusplus
 }
 #endif

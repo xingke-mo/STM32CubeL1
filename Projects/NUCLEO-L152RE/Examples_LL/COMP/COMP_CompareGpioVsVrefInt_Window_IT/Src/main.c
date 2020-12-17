@@ -44,30 +44,30 @@
 #define CONSTANT_VOLTAGE_GENERATION
 
 #if defined(CONSTANT_VOLTAGE_GENERATION)
-/* Definitions of environment analog values */
-  /* Value of analog reference voltage (Vref+), connected to analog voltage   */
-  /* supply Vdda (unit: mV).                                                  */
-  #define VDDA_APPLI                       ((uint32_t)3300)
-  
-  /* Value of comparator thresholds based on VrefInt */
-  /* (VrefInt voltage is approximatively 1.22V, refer to device datasheet     */
-  /* for min/typ/max values).                                                 */
-  /* (unit: mV).                                                              */
-  #define VREFINT                          ((uint32_t)1220)
-  #define COMP_WINDOW_THRESHOLD_HIGH       (VREFINT)        /* COMP2 input plus is selected to VrefInt in this exemple */
-  #define COMP_WINDOW_THRESHOLD_LOW        (VREFINT /2)     /* COMP1 input plus is selected to 1/2 VrefInt in this exemple */
-  
-/* Definitions of data related to this example */
-  /* Full-scale digital value with a resolution of 12 bits (voltage range     */
-  /* determined by analog voltage references Vref+ and Vref-,                 */
-  /* refer to reference manual).                                              */
-  #define DIGITAL_SCALE_12BITS             (__LL_DAC_DIGITAL_SCALE(LL_DAC_RESOLUTION_12B))
+    /* Definitions of environment analog values */
+    /* Value of analog reference voltage (Vref+), connected to analog voltage   */
+    /* supply Vdda (unit: mV).                                                  */
+    #define VDDA_APPLI                       ((uint32_t)3300)
 
-/* Definitions of constant voltage generation values */
-  /* Waveform generation: parameters of constant voltage */
-  /* Constant voltage amplitude                                               */
-  /* (unit: mV)                                                               */
-  #define CONSTANT_VOLTAGE_AMPLITUDE       ((COMP_WINDOW_THRESHOLD_HIGH + COMP_WINDOW_THRESHOLD_LOW) / 2)
+    /* Value of comparator thresholds based on VrefInt */
+    /* (VrefInt voltage is approximatively 1.22V, refer to device datasheet     */
+    /* for min/typ/max values).                                                 */
+    /* (unit: mV).                                                              */
+    #define VREFINT                          ((uint32_t)1220)
+    #define COMP_WINDOW_THRESHOLD_HIGH       (VREFINT)        /* COMP2 input plus is selected to VrefInt in this exemple */
+    #define COMP_WINDOW_THRESHOLD_LOW        (VREFINT /2)     /* COMP1 input plus is selected to 1/2 VrefInt in this exemple */
+
+    /* Definitions of data related to this example */
+    /* Full-scale digital value with a resolution of 12 bits (voltage range     */
+    /* determined by analog voltage references Vref+ and Vref-,                 */
+    /* refer to reference manual).                                              */
+    #define DIGITAL_SCALE_12BITS             (__LL_DAC_DIGITAL_SCALE(LL_DAC_RESOLUTION_12B))
+
+    /* Definitions of constant voltage generation values */
+    /* Waveform generation: parameters of constant voltage */
+    /* Constant voltage amplitude                                               */
+    /* (unit: mV)                                                               */
+    #define CONSTANT_VOLTAGE_AMPLITUDE       ((COMP_WINDOW_THRESHOLD_HIGH + COMP_WINDOW_THRESHOLD_LOW) / 2)
 
 #endif /* CONSTANT_VOLTAGE_GENERATION */
 
@@ -75,15 +75,15 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* Private function prototypes -----------------------------------------------*/
-void     SystemClock_Config(void);
-void     Configure_COMP_master(void);
-void     Configure_COMP_slave(void);
-void     Activate_COMP_master_slave(void);
-void     LED_Init(void);
-void     LED_On(void);
-void     LED_Off(void);
+void     SystemClock_Config( void );
+void     Configure_COMP_master( void );
+void     Configure_COMP_slave( void );
+void     Activate_COMP_master_slave( void );
+void     LED_Init( void );
+void     LED_On( void );
+void     LED_Off( void );
 #if defined(CONSTANT_VOLTAGE_GENERATION)
-void     Generate_constant_voltage(void);
+    void     Generate_constant_voltage( void );
 #endif /* CONSTANT_VOLTAGE_GENERATION */
 
 /* Private functions ---------------------------------------------------------*/
@@ -93,42 +93,42 @@ void     Generate_constant_voltage(void);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  /* Configure the system clock to 32 MHz */
-  SystemClock_Config();
-  
-  /* Initialize LED2 */
-  LED_Init();
-  
+    /* Configure the system clock to 32 MHz */
+    SystemClock_Config();
+
+    /* Initialize LED2 */
+    LED_Init();
+
 #if defined(CONSTANT_VOLTAGE_GENERATION)
-  /* Generate constant voltage to provide to user an intermediate voltage     */
-  /* level to check comparator window thresholds.                             */
-  Generate_constant_voltage();
+    /* Generate constant voltage to provide to user an intermediate voltage     */
+    /* level to check comparator window thresholds.                             */
+    Generate_constant_voltage();
 #endif /* CONSTANT_VOLTAGE_GENERATION */
-  
-  /* Configure pair of comparators for window mode */
-  /* Configure comparator "master": comparator which input plus is used.      */
-  Configure_COMP_master();
-  
-  /* Configure comparator "slave": comparator which input plus is not used    */
-  /* (connected internally to the comparator master input plus).              */
-  Configure_COMP_slave();
-  
-  /* Activate pair of comparators */
-  Activate_COMP_master_slave();
-  
-  /* Infinite loop */
-  while (1)
-  {
-    /* Note: LED state depending on COMP status is set into COMP IRQ handler, */
-    /*        refer to function "ComparatorTrigger_Callback()".               */
-    
-  }
+
+    /* Configure pair of comparators for window mode */
+    /* Configure comparator "master": comparator which input plus is used.      */
+    Configure_COMP_master();
+
+    /* Configure comparator "slave": comparator which input plus is not used    */
+    /* (connected internally to the comparator master input plus).              */
+    Configure_COMP_slave();
+
+    /* Activate pair of comparators */
+    Activate_COMP_master_slave();
+
+    /* Infinite loop */
+    while( 1 )
+    {
+        /* Note: LED state depending on COMP status is set into COMP IRQ handler, */
+        /*        refer to function "ComparatorTrigger_Callback()".               */
+
+    }
 }
 
 /**
-  * @brief  Configure comparator "master" for window mode: comparator 
+  * @brief  Configure comparator "master" for window mode: comparator
   *         which input plus is used (COMP instance: COMP2),
   *         GPIO and EXTI line used by comparator.
   * @note   This function configures the comparator but does not enable it,
@@ -140,65 +140,65 @@ int main(void)
   * @param  None
   * @retval None
   */
-void Configure_COMP_master(void)
+void Configure_COMP_master( void )
 {
-  /*## Configuration of GPIO used by comparator ##############################*/
-  
-  /* Configure GPIO connected to the selected comparator input plus */
-  /* Enable GPIO clock */
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
-  
-  /* Configure GPIO in analog mode to be used as COMP input */
-  LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_4, LL_GPIO_MODE_ANALOG);
-  
-  /*## Configuration of NVIC #################################################*/
-  /* Configure NVIC to enable COMP2 interruptions */
-  NVIC_SetPriority(COMP_IRQn, 0);
-  NVIC_EnableIRQ(COMP_IRQn);
-  
-  /*## Configuration of comparator ###########################################*/
-  
-  /* Enable COMP clock */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_COMP);
-  
-  /* Enable SYSCFG clock to control the routing interface (RI) */
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
-  
-  /*## Configuration of comparator common instance ###########################*/
-  
-  /* Set comparator common instance window mode */
-  /* Note: Window mode is common to 2 COMP instances, and therefore must      */
-  /*       with a COMP common instance (COMP12_COMMON, ...)                   */
-  LL_COMP_SetCommonWindowMode(__LL_COMP_COMMON_INSTANCE(COMP2), LL_COMP_WINDOWMODE_COMP2_INPUT_PLUS_COMMON);
-  
-  /*## Configuration of comparator instance ##################################*/
-  
-  /* Set comparator instance operating mode to adjust power and speed */
-  LL_COMP_SetPowerMode(COMP2, LL_COMP_POWERMODE_ULTRALOWPOWER);
-  
-  /* Set comparator inputs */
-  LL_COMP_SetInputPlus(COMP2, LL_COMP_INPUT_PLUS_IO1);
-  LL_COMP_SetInputMinus(COMP2, LL_COMP_INPUT_MINUS_1_2VREFINT);
-  
-  /* Note: Call of the functions below are commented because they are         */
-  /*       useless in this example:                                           */
-  /*       settings corresponding to default configuration from reset state.  */
-  
-  /* Set comparator instance output selection */
-  //LL_COMP_SetOutputSelection(COMP2, LL_COMP_OUTPUT_NONE);
-  
-  /*## Configuration of EXTI line used by comparator #########################*/
-  /* Set EXTI line trigger edge */
-  LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_22);
-  LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_22);
-  
-  /* Set EXTI line interruption */
-  LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_22);
-  
+    /*## Configuration of GPIO used by comparator ##############################*/
+
+    /* Configure GPIO connected to the selected comparator input plus */
+    /* Enable GPIO clock */
+    LL_AHB1_GRP1_EnableClock( LL_AHB1_GRP1_PERIPH_GPIOB );
+
+    /* Configure GPIO in analog mode to be used as COMP input */
+    LL_GPIO_SetPinMode( GPIOB, LL_GPIO_PIN_4, LL_GPIO_MODE_ANALOG );
+
+    /*## Configuration of NVIC #################################################*/
+    /* Configure NVIC to enable COMP2 interruptions */
+    NVIC_SetPriority( COMP_IRQn, 0 );
+    NVIC_EnableIRQ( COMP_IRQn );
+
+    /*## Configuration of comparator ###########################################*/
+
+    /* Enable COMP clock */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_COMP );
+
+    /* Enable SYSCFG clock to control the routing interface (RI) */
+    LL_APB2_GRP1_EnableClock( LL_APB2_GRP1_PERIPH_SYSCFG );
+
+    /*## Configuration of comparator common instance ###########################*/
+
+    /* Set comparator common instance window mode */
+    /* Note: Window mode is common to 2 COMP instances, and therefore must      */
+    /*       with a COMP common instance (COMP12_COMMON, ...)                   */
+    LL_COMP_SetCommonWindowMode( __LL_COMP_COMMON_INSTANCE( COMP2 ), LL_COMP_WINDOWMODE_COMP2_INPUT_PLUS_COMMON );
+
+    /*## Configuration of comparator instance ##################################*/
+
+    /* Set comparator instance operating mode to adjust power and speed */
+    LL_COMP_SetPowerMode( COMP2, LL_COMP_POWERMODE_ULTRALOWPOWER );
+
+    /* Set comparator inputs */
+    LL_COMP_SetInputPlus( COMP2, LL_COMP_INPUT_PLUS_IO1 );
+    LL_COMP_SetInputMinus( COMP2, LL_COMP_INPUT_MINUS_1_2VREFINT );
+
+    /* Note: Call of the functions below are commented because they are         */
+    /*       useless in this example:                                           */
+    /*       settings corresponding to default configuration from reset state.  */
+
+    /* Set comparator instance output selection */
+    //LL_COMP_SetOutputSelection(COMP2, LL_COMP_OUTPUT_NONE);
+
+    /*## Configuration of EXTI line used by comparator #########################*/
+    /* Set EXTI line trigger edge */
+    LL_EXTI_EnableRisingTrig_0_31( LL_EXTI_LINE_22 );
+    LL_EXTI_EnableFallingTrig_0_31( LL_EXTI_LINE_22 );
+
+    /* Set EXTI line interruption */
+    LL_EXTI_EnableIT_0_31( LL_EXTI_LINE_22 );
+
 }
 
 /**
-  * @brief  Configure comparator "slave" for window mode: comparator 
+  * @brief  Configure comparator "slave" for window mode: comparator
   *         which input plus is used (connected internally to the
   *         comparator master input plus) (COMP instance: COMP2),
   *         GPIO and EXTI line used by comparator.
@@ -211,57 +211,57 @@ void Configure_COMP_master(void)
   * @param  None
   * @retval None
   */
-void Configure_COMP_slave(void)
+void Configure_COMP_slave( void )
 {
-  /*## Configuration of GPIO used by comparator ##############################*/
-  
-  /* Configure GPIO connected to the selected comparator input plus */
-  /* Note: Comparator instance slave input plus is not used (connected        */
-  /*       internally to comparator instance master input plus).              */
-  /*       Input minus s connected to 1/2 VrefInt, therefore these is no GPIO */
-  /*       to configure for comparator instance slave.                        */
-  
-  /*## Configuration of NVIC #################################################*/
-  /* Note: Comparator instance slave is using the same IRQn as comparator     */
-  /*       instance master.                                                   */
-  
-  /*## Configuration of comparator ###########################################*/
-  
-  /* Enable COMP clock */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_COMP);
-  
-  /* Enable SYSCFG clock to control the routing interface (RI) */
-  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
-  
-  /*## Configuration of comparator common instance ###########################*/
-  /* Note: Setting of comparator common instance is already done during       */
-  /*       configuration of the comparator instance master.                   */
-  
-  /*## Configuration of comparator instance ##################################*/
-  
-  /* Set comparator instance operating mode to adjust power and speed */
-  LL_COMP_SetPowerMode(COMP1, LL_COMP_POWERMODE_ULTRALOWPOWER);
-  
-  /* Set comparator input minus */
-  /* Note: Comparator instance slave input plus is not used (connected        */
-  /*       internally to comparator instance master input plus).              */
-  LL_COMP_SetInputMinus(COMP1, LL_COMP_INPUT_MINUS_VREFINT);
-  
-  /* Note: Call of the functions below are commented because they are         */
-  /*       useless in this example:                                           */
-  /*       settings corresponding to default configuration from reset state.  */
-  
-  /* Set comparator instance output selection */
-  //LL_COMP_SetOutputSelection(COMP1, LL_COMP_OUTPUT_NONE);
-  
-  /*## Configuration of EXTI line used by comparator #########################*/
-  /* Set EXTI line trigger edge */
-  LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_21);
-  LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_21);
-  
-  /* Set EXTI line interruption */
-  LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_21);
-  
+    /*## Configuration of GPIO used by comparator ##############################*/
+
+    /* Configure GPIO connected to the selected comparator input plus */
+    /* Note: Comparator instance slave input plus is not used (connected        */
+    /*       internally to comparator instance master input plus).              */
+    /*       Input minus s connected to 1/2 VrefInt, therefore these is no GPIO */
+    /*       to configure for comparator instance slave.                        */
+
+    /*## Configuration of NVIC #################################################*/
+    /* Note: Comparator instance slave is using the same IRQn as comparator     */
+    /*       instance master.                                                   */
+
+    /*## Configuration of comparator ###########################################*/
+
+    /* Enable COMP clock */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_COMP );
+
+    /* Enable SYSCFG clock to control the routing interface (RI) */
+    LL_APB2_GRP1_EnableClock( LL_APB2_GRP1_PERIPH_SYSCFG );
+
+    /*## Configuration of comparator common instance ###########################*/
+    /* Note: Setting of comparator common instance is already done during       */
+    /*       configuration of the comparator instance master.                   */
+
+    /*## Configuration of comparator instance ##################################*/
+
+    /* Set comparator instance operating mode to adjust power and speed */
+    LL_COMP_SetPowerMode( COMP1, LL_COMP_POWERMODE_ULTRALOWPOWER );
+
+    /* Set comparator input minus */
+    /* Note: Comparator instance slave input plus is not used (connected        */
+    /*       internally to comparator instance master input plus).              */
+    LL_COMP_SetInputMinus( COMP1, LL_COMP_INPUT_MINUS_VREFINT );
+
+    /* Note: Call of the functions below are commented because they are         */
+    /*       useless in this example:                                           */
+    /*       settings corresponding to default configuration from reset state.  */
+
+    /* Set comparator instance output selection */
+    //LL_COMP_SetOutputSelection(COMP1, LL_COMP_OUTPUT_NONE);
+
+    /*## Configuration of EXTI line used by comparator #########################*/
+    /* Set EXTI line trigger edge */
+    LL_EXTI_EnableRisingTrig_0_31( LL_EXTI_LINE_21 );
+    LL_EXTI_EnableFallingTrig_0_31( LL_EXTI_LINE_21 );
+
+    /* Set EXTI line interruption */
+    LL_EXTI_EnableIT_0_31( LL_EXTI_LINE_21 );
+
 }
 
 /**
@@ -275,28 +275,29 @@ void Configure_COMP_slave(void)
   * @param  None
   * @retval None
   */
-void Activate_COMP_master_slave(void)
+void Activate_COMP_master_slave( void )
 {
-  __IO uint32_t wait_loop_index = 0;
-  
-  /* Enable comparator instance master */
-  LL_COMP_Enable(COMP2);
-  
-  /* Enable comparator instance slave */
-  LL_COMP_Enable(COMP1);
-  
-  /* Delay for comparator startup time.                                       */
-  /* Compute number of CPU cycles to wait for, from delay in us.              */
-  /* Note: Variable divided by 2 to compensate partially                      */
-  /*       CPU processing cycles (depends on compilation optimization).       */
-  /* Note: If system core clock frequency is below 200kHz, wait time          */
-  /*       is only a few CPU processing cycles.                               */
-  wait_loop_index = ((LL_COMP_DELAY_STARTUP_US * (SystemCoreClock / (100000 * 2))) / 10);
-  while(wait_loop_index != 0)
-  {
-    wait_loop_index--;
-  }
-  
+    __IO uint32_t wait_loop_index = 0;
+
+    /* Enable comparator instance master */
+    LL_COMP_Enable( COMP2 );
+
+    /* Enable comparator instance slave */
+    LL_COMP_Enable( COMP1 );
+
+    /* Delay for comparator startup time.                                       */
+    /* Compute number of CPU cycles to wait for, from delay in us.              */
+    /* Note: Variable divided by 2 to compensate partially                      */
+    /*       CPU processing cycles (depends on compilation optimization).       */
+    /* Note: If system core clock frequency is below 200kHz, wait time          */
+    /*       is only a few CPU processing cycles.                               */
+    wait_loop_index = ( ( LL_COMP_DELAY_STARTUP_US * ( SystemCoreClock / ( 100000 * 2 ) ) ) / 10 );
+
+    while( wait_loop_index != 0 )
+    {
+        wait_loop_index--;
+    }
+
 }
 
 #if defined(CONSTANT_VOLTAGE_GENERATION)
@@ -309,67 +310,68 @@ void Activate_COMP_master_slave(void)
   * @param  None
   * @retval None
   */
-void Generate_constant_voltage(void)
+void Generate_constant_voltage( void )
 {
-  __IO uint32_t wait_loop_index = 0;
-  
-  /*## Configuration of GPIO used by DAC channels ############################*/
-  
-  /* Enable GPIO Clock */
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA); 
-  
-  /* Configure GPIO in analog mode to be used as DAC output */
-  LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_4, LL_GPIO_MODE_ANALOG);
-  
-  /*## Configuration of NVIC #################################################*/ 
-  /* Note: In this example, DAC interruptions are not activated.              */
-  /*       If needed to be activated, refer to DAC examples.                  */
-  
-  /*## Configuration of DAC ##################################################*/
-  
-  /* Enable DAC clock (core clock) */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_DAC1);
-  
-  /* Select trigger source */
-  LL_DAC_SetTriggerSource(DAC1, LL_DAC_CHANNEL_1, LL_DAC_TRIG_SOFTWARE);
-  
-  /* Set the output for the selected DAC channel */
-  //LL_DAC_SetOutputBuffer(DAC1, LL_DAC_CHANNEL_1, LL_DAC_OUTPUT_BUFFER_ENABLE);
-  
-  /* Disable DAC channel DMA request */
-  // LL_DAC_DisableDMAReq(DAC1, LL_DAC_CHANNEL_1);
-  
-  /* Set the data to be loaded in the data holding register */
-  //LL_DAC_ConvertData12RightAligned(DAC1, LL_DAC_CHANNEL_1, 0x000);
-  
-  /*## Activation of DAC #####################################################*/
-  
-  /* Enable DAC channel */
-  LL_DAC_Enable(DAC1, LL_DAC_CHANNEL_1);
-  
-  /* Delay for DAC channel voltage settling time from DAC channel startup.    */
-  /* Compute number of CPU cycles to wait for, from delay in us.              */
-  /* Note: Variable divided by 2 to compensate partially                      */
-  /*       CPU processing cycles (depends on compilation optimization).       */
-  /* Note: If system core clock frequency is below 200kHz, wait time          */
-  /*       is only a few CPU processing cycles.                               */
-  wait_loop_index = ((LL_DAC_DELAY_STARTUP_VOLTAGE_SETTLING_US * (SystemCoreClock / (100000 * 2))) / 10);
-  while(wait_loop_index != 0)
-  {
-    wait_loop_index--;
-  }
-  
-  /* Enable DAC channel trigger */
-  LL_DAC_EnableTrigger(DAC1, LL_DAC_CHANNEL_1);
-  
-  /*## Set DAC output voltage ################################################*/
-  
-  /* Set the data to be loaded in the data holding register */
-  LL_DAC_ConvertData12RightAligned(DAC1, LL_DAC_CHANNEL_1, CONSTANT_VOLTAGE_AMPLITUDE);
-  
-  /* Trig DAC conversion by software */
-  LL_DAC_TrigSWConversion(DAC1, LL_DAC_CHANNEL_1);
-  
+    __IO uint32_t wait_loop_index = 0;
+
+    /*## Configuration of GPIO used by DAC channels ############################*/
+
+    /* Enable GPIO Clock */
+    LL_AHB1_GRP1_EnableClock( LL_AHB1_GRP1_PERIPH_GPIOA );
+
+    /* Configure GPIO in analog mode to be used as DAC output */
+    LL_GPIO_SetPinMode( GPIOA, LL_GPIO_PIN_4, LL_GPIO_MODE_ANALOG );
+
+    /*## Configuration of NVIC #################################################*/
+    /* Note: In this example, DAC interruptions are not activated.              */
+    /*       If needed to be activated, refer to DAC examples.                  */
+
+    /*## Configuration of DAC ##################################################*/
+
+    /* Enable DAC clock (core clock) */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_DAC1 );
+
+    /* Select trigger source */
+    LL_DAC_SetTriggerSource( DAC1, LL_DAC_CHANNEL_1, LL_DAC_TRIG_SOFTWARE );
+
+    /* Set the output for the selected DAC channel */
+    //LL_DAC_SetOutputBuffer(DAC1, LL_DAC_CHANNEL_1, LL_DAC_OUTPUT_BUFFER_ENABLE);
+
+    /* Disable DAC channel DMA request */
+    // LL_DAC_DisableDMAReq(DAC1, LL_DAC_CHANNEL_1);
+
+    /* Set the data to be loaded in the data holding register */
+    //LL_DAC_ConvertData12RightAligned(DAC1, LL_DAC_CHANNEL_1, 0x000);
+
+    /*## Activation of DAC #####################################################*/
+
+    /* Enable DAC channel */
+    LL_DAC_Enable( DAC1, LL_DAC_CHANNEL_1 );
+
+    /* Delay for DAC channel voltage settling time from DAC channel startup.    */
+    /* Compute number of CPU cycles to wait for, from delay in us.              */
+    /* Note: Variable divided by 2 to compensate partially                      */
+    /*       CPU processing cycles (depends on compilation optimization).       */
+    /* Note: If system core clock frequency is below 200kHz, wait time          */
+    /*       is only a few CPU processing cycles.                               */
+    wait_loop_index = ( ( LL_DAC_DELAY_STARTUP_VOLTAGE_SETTLING_US * ( SystemCoreClock / ( 100000 * 2 ) ) ) / 10 );
+
+    while( wait_loop_index != 0 )
+    {
+        wait_loop_index--;
+    }
+
+    /* Enable DAC channel trigger */
+    LL_DAC_EnableTrigger( DAC1, LL_DAC_CHANNEL_1 );
+
+    /*## Set DAC output voltage ################################################*/
+
+    /* Set the data to be loaded in the data holding register */
+    LL_DAC_ConvertData12RightAligned( DAC1, LL_DAC_CHANNEL_1, CONSTANT_VOLTAGE_AMPLITUDE );
+
+    /* Trig DAC conversion by software */
+    LL_DAC_TrigSWConversion( DAC1, LL_DAC_CHANNEL_1 );
+
 }
 #endif /* CONSTANT_VOLTAGE_GENERATION */
 
@@ -378,19 +380,19 @@ void Generate_constant_voltage(void)
   * @param  None
   * @retval None
   */
-void LED_Init(void)
+void LED_Init( void )
 {
-  /* Enable the LED2 Clock */
-  LED2_GPIO_CLK_ENABLE();
+    /* Enable the LED2 Clock */
+    LED2_GPIO_CLK_ENABLE();
 
-  /* Configure IO in output push-pull mode to drive external LED2 */
-  LL_GPIO_SetPinMode(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT);
-  /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
-  //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
-  /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
-  //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
-  /* Reset value is LL_GPIO_PULL_NO */
-  //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
+    /* Configure IO in output push-pull mode to drive external LED2 */
+    LL_GPIO_SetPinMode( LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT );
+    /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
+    //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
+    /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
+    //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
+    /* Reset value is LL_GPIO_PULL_NO */
+    //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
 }
 
 /**
@@ -398,10 +400,10 @@ void LED_Init(void)
   * @param  None
   * @retval None
   */
-void LED_On(void)
+void LED_On( void )
 {
-  /* Turn LED2 on */
-  LL_GPIO_SetOutputPin(LED2_GPIO_PORT, LED2_PIN);
+    /* Turn LED2 on */
+    LL_GPIO_SetOutputPin( LED2_GPIO_PORT, LED2_PIN );
 }
 
 /**
@@ -409,10 +411,10 @@ void LED_On(void)
   * @param  None
   * @retval None
   */
-void LED_Off(void)
+void LED_Off( void )
 {
-  /* Turn LED2 off */
-  LL_GPIO_ResetOutputPin(LED2_GPIO_PORT, LED2_PIN);
+    /* Turn LED2 off */
+    LL_GPIO_ResetOutputPin( LED2_GPIO_PORT, LED2_PIN );
 }
 
 /**
@@ -430,57 +432,62 @@ void LED_Off(void)
   *            Flash Latency(WS)              = 1
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
-  /* Enable ACC64 access and set FLASH latency */ 
-  LL_FLASH_Enable64bitAccess();; 
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
+    /* Enable ACC64 access and set FLASH latency */
+    LL_FLASH_Enable64bitAccess();;
+    LL_FLASH_SetLatency( LL_FLASH_LATENCY_1 );
 
-  /* Set Voltage scale1 as MCU will run at 32MHz */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-  LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
-  
-  /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
-  while (LL_PWR_IsActiveFlag_VOSF() != 0)
-  {
-  };
-  
-  /* Enable HSI if not already activated*/
-  if (LL_RCC_HSI_IsReady() == 0)
-  {
-    /* HSI configuration and activation */
-    LL_RCC_HSI_Enable();
-    while(LL_RCC_HSI_IsReady() != 1)
+    /* Set Voltage scale1 as MCU will run at 32MHz */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_PWR );
+    LL_PWR_SetRegulVoltageScaling( LL_PWR_REGU_VOLTAGE_SCALE1 );
+
+    /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+    while( LL_PWR_IsActiveFlag_VOSF() != 0 )
     {
     };
-  }
-  
-  /* Main PLL configuration and activation */
-  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3);
 
-  LL_RCC_PLL_Enable();
-  while(LL_RCC_PLL_IsReady() != 1)
-  {
-  };
-  
-  /* Sysclk activation on the main PLL */
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
-  {
-  };
-  
-  /* Set APB1 & APB2 prescaler*/
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
+    /* Enable HSI if not already activated*/
+    if( LL_RCC_HSI_IsReady() == 0 )
+    {
+        /* HSI configuration and activation */
+        LL_RCC_HSI_Enable();
 
-  /* Set systick to 1ms in using frequency set to 32MHz                             */
-  /* This frequency can be calculated through LL RCC macro                          */
-  /* ex: __LL_RCC_CALC_PLLCLK_FREQ (HSI_VALUE, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3); */
-  LL_Init1msTick(32000000);
-  
-  /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
-  LL_SetSystemCoreClock(32000000);
+        while( LL_RCC_HSI_IsReady() != 1 )
+        {
+        };
+    }
+
+    /* Main PLL configuration and activation */
+    LL_RCC_PLL_ConfigDomain_SYS( LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3 );
+
+    LL_RCC_PLL_Enable();
+
+    while( LL_RCC_PLL_IsReady() != 1 )
+    {
+    };
+
+    /* Sysclk activation on the main PLL */
+    LL_RCC_SetAHBPrescaler( LL_RCC_SYSCLK_DIV_1 );
+
+    LL_RCC_SetSysClkSource( LL_RCC_SYS_CLKSOURCE_PLL );
+
+    while( LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL )
+    {
+    };
+
+    /* Set APB1 & APB2 prescaler*/
+    LL_RCC_SetAPB1Prescaler( LL_RCC_APB1_DIV_1 );
+
+    LL_RCC_SetAPB2Prescaler( LL_RCC_APB2_DIV_1 );
+
+    /* Set systick to 1ms in using frequency set to 32MHz                             */
+    /* This frequency can be calculated through LL RCC macro                          */
+    /* ex: __LL_RCC_CALC_PLLCLK_FREQ (HSI_VALUE, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3); */
+    LL_Init1msTick( 32000000 );
+
+    /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
+    LL_SetSystemCoreClock( 32000000 );
 }
 
 /******************************************************************************/
@@ -495,29 +502,29 @@ void SystemClock_Config(void)
   */
 void ComparatorTrigger_Callback()
 {
-  __IO uint32_t COMP2OutputLevel = LL_COMP_ReadOutputLevel(COMP2);
-  __IO uint32_t COMP1OutputLevel = LL_COMP_ReadOutputLevel(COMP1);
-  
-  /* Set LED state in function of comparator output level */
-  /* Case of voltage above comparators thresholds window */
-  if (   (COMP2OutputLevel == LL_COMP_OUTPUT_LEVEL_LOW)
-      && (COMP1OutputLevel == LL_COMP_OUTPUT_LEVEL_LOW)
-     )
-  {
-    LED_Off();
-  }
-  /* Case of voltage below comparators thresholds window */
-  else if (   (COMP2OutputLevel == LL_COMP_OUTPUT_LEVEL_HIGH)
-           && (COMP1OutputLevel == LL_COMP_OUTPUT_LEVEL_HIGH)
-     )
-  {
-    LED_Off();
-  }
-  /* Case of voltage inside comparators thresholds window */
-  else /* COMP2 output high, COMP1 output low */
-  {
-    LED_On();
-  }
+    __IO uint32_t COMP2OutputLevel = LL_COMP_ReadOutputLevel( COMP2 );
+    __IO uint32_t COMP1OutputLevel = LL_COMP_ReadOutputLevel( COMP1 );
+
+    /* Set LED state in function of comparator output level */
+    /* Case of voltage above comparators thresholds window */
+    if( ( COMP2OutputLevel == LL_COMP_OUTPUT_LEVEL_LOW )
+            && ( COMP1OutputLevel == LL_COMP_OUTPUT_LEVEL_LOW )
+      )
+    {
+        LED_Off();
+    }
+    /* Case of voltage below comparators thresholds window */
+    else if( ( COMP2OutputLevel == LL_COMP_OUTPUT_LEVEL_HIGH )
+             && ( COMP1OutputLevel == LL_COMP_OUTPUT_LEVEL_HIGH )
+           )
+    {
+        LED_Off();
+    }
+    /* Case of voltage inside comparators thresholds window */
+    else /* COMP2 output high, COMP1 output low */
+    {
+        LED_On();
+    }
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -529,15 +536,15 @@ void ComparatorTrigger_Callback()
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d", file, line) */
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 

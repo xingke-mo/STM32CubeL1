@@ -1,4 +1,4 @@
-/** 
+/**
   ******************************************************************************
   * @file    Examples_LL/ADC/ADC_GroupsRegularInjected/Src/stm32l1xx_it.c
   * @author  MCD Application Team
@@ -47,7 +47,7 @@
   * @param  None
   * @retval None
   */
-void NMI_Handler(void)
+void NMI_Handler( void )
 {
 }
 
@@ -56,12 +56,12 @@ void NMI_Handler(void)
   * @param  None
   * @retval None
   */
-void HardFault_Handler(void)
+void HardFault_Handler( void )
 {
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Hard Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -69,12 +69,12 @@ void HardFault_Handler(void)
   * @param  None
   * @retval None
   */
-void MemManage_Handler(void)
+void MemManage_Handler( void )
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Memory Manage exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -82,12 +82,12 @@ void MemManage_Handler(void)
   * @param  None
   * @retval None
   */
-void BusFault_Handler(void)
+void BusFault_Handler( void )
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Bus Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -95,12 +95,12 @@ void BusFault_Handler(void)
   * @param  None
   * @retval None
   */
-void UsageFault_Handler(void)
+void UsageFault_Handler( void )
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Usage Fault exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -108,7 +108,7 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
-void SVC_Handler(void)
+void SVC_Handler( void )
 {
 }
 
@@ -117,7 +117,7 @@ void SVC_Handler(void)
   * @param  None
   * @retval None
   */
-void DebugMon_Handler(void)
+void DebugMon_Handler( void )
 {
 }
 
@@ -126,7 +126,7 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-void PendSV_Handler(void)
+void PendSV_Handler( void )
 {
 }
 
@@ -135,7 +135,7 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
+void SysTick_Handler( void )
 {
 }
 
@@ -151,19 +151,19 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
-void USER_BUTTON_IRQHANDLER(void)
+void USER_BUTTON_IRQHANDLER( void )
 {
-  /* Manage Flags */
-  if(LL_EXTI_IsActiveFlag_0_31(USER_BUTTON_EXTI_LINE) != RESET)
-  {
-    /* Call interruption treatment function */
-    UserButton_Callback();
-    
-    /* Clear EXTI line flag */
-    /* Note: Clear flag after callback function to minimize user button       */
-    /*       switch debounce parasitics.                                      */
-    LL_EXTI_ClearFlag_0_31(USER_BUTTON_EXTI_LINE);
-  }
+    /* Manage Flags */
+    if( LL_EXTI_IsActiveFlag_0_31( USER_BUTTON_EXTI_LINE ) != RESET )
+    {
+        /* Call interruption treatment function */
+        UserButton_Callback();
+
+        /* Clear EXTI line flag */
+        /* Note: Clear flag after callback function to minimize user button       */
+        /*       switch debounce parasitics.                                      */
+        LL_EXTI_ClearFlag_0_31( USER_BUTTON_EXTI_LINE );
+    }
 }
 
 /**
@@ -171,32 +171,32 @@ void USER_BUTTON_IRQHANDLER(void)
   * @param  None
   * @retval None
   */
-void ADC1_IRQHandler(void)
+void ADC1_IRQHandler( void )
 {
-  /* Check whether ADC group injected end of unitary conversion caused        */
-  /* the ADC interruption.                                                    */
-  /* Note: On this STM32 serie, there is no flag of group injected            */
-  /*       end of unitary conversion. Therefore, flag of group injected       */
-  /*       end of sequence conversions is used (equivalent when there is      */
-  /*       only 1 rank in group injected sequencer).                          */
-  if(LL_ADC_IsActiveFlag_JEOS(ADC1) != 0)
-  {
-    /* Clear flag ADC group injected end of sequence conversions */
-    LL_ADC_ClearFlag_JEOS(ADC1);
-    
-    /* Call interruption treatment function */
-    AdcGrpInjectedUnitaryConvComplete_Callback();
-  }
-  
-  /* Check whether ADC group regular overrun caused the ADC interruption */
-  if(LL_ADC_IsActiveFlag_OVR(ADC1) != 0)
-  {
-    /* Clear flag ADC group regular overrun */
-    LL_ADC_ClearFlag_OVR(ADC1);
-    
-    /* Call interruption treatment function */
-    AdcGrpRegularOverrunError_Callback();
-  }
+    /* Check whether ADC group injected end of unitary conversion caused        */
+    /* the ADC interruption.                                                    */
+    /* Note: On this STM32 serie, there is no flag of group injected            */
+    /*       end of unitary conversion. Therefore, flag of group injected       */
+    /*       end of sequence conversions is used (equivalent when there is      */
+    /*       only 1 rank in group injected sequencer).                          */
+    if( LL_ADC_IsActiveFlag_JEOS( ADC1 ) != 0 )
+    {
+        /* Clear flag ADC group injected end of sequence conversions */
+        LL_ADC_ClearFlag_JEOS( ADC1 );
+
+        /* Call interruption treatment function */
+        AdcGrpInjectedUnitaryConvComplete_Callback();
+    }
+
+    /* Check whether ADC group regular overrun caused the ADC interruption */
+    if( LL_ADC_IsActiveFlag_OVR( ADC1 ) != 0 )
+    {
+        /* Clear flag ADC group regular overrun */
+        LL_ADC_ClearFlag_OVR( ADC1 );
+
+        /* Call interruption treatment function */
+        AdcGrpRegularOverrunError_Callback();
+    }
 }
 
 /**
@@ -204,37 +204,37 @@ void ADC1_IRQHandler(void)
   * @param  None
   * @retval None
   */
-void DMA1_Channel1_IRQHandler(void)
+void DMA1_Channel1_IRQHandler( void )
 {
-  /* Check whether DMA transfer complete caused the DMA interruption */
-  if(LL_DMA_IsActiveFlag_TC1(DMA1) == 1)
-  {
-    /* Clear flag DMA transfer complete */
-    LL_DMA_ClearFlag_TC1(DMA1);
-    
-    /* Call interruption treatment function */
-    AdcDmaTransferComplete_Callback();
-  }
-  
-  /* Check whether DMA half transfer caused the DMA interruption */
-  if(LL_DMA_IsActiveFlag_HT1(DMA1) == 1)
-  {
-    /* Clear flag DMA half transfer */
-    LL_DMA_ClearFlag_HT1(DMA1);
-    
-    /* Call interruption treatment function */
-    AdcDmaTransferHalf_Callback();
-  }
-  
-  /* Check whether DMA transfer error caused the DMA interruption */
-  if(LL_DMA_IsActiveFlag_TE1(DMA1) == 1)
-  {
-    /* Clear flag DMA transfer error */
-    LL_DMA_ClearFlag_TE1(DMA1);
-    
-    /* Call interruption treatment function */
-    AdcDmaTransferError_Callback();
-  }
+    /* Check whether DMA transfer complete caused the DMA interruption */
+    if( LL_DMA_IsActiveFlag_TC1( DMA1 ) == 1 )
+    {
+        /* Clear flag DMA transfer complete */
+        LL_DMA_ClearFlag_TC1( DMA1 );
+
+        /* Call interruption treatment function */
+        AdcDmaTransferComplete_Callback();
+    }
+
+    /* Check whether DMA half transfer caused the DMA interruption */
+    if( LL_DMA_IsActiveFlag_HT1( DMA1 ) == 1 )
+    {
+        /* Clear flag DMA half transfer */
+        LL_DMA_ClearFlag_HT1( DMA1 );
+
+        /* Call interruption treatment function */
+        AdcDmaTransferHalf_Callback();
+    }
+
+    /* Check whether DMA transfer error caused the DMA interruption */
+    if( LL_DMA_IsActiveFlag_TE1( DMA1 ) == 1 )
+    {
+        /* Clear flag DMA transfer error */
+        LL_DMA_ClearFlag_TE1( DMA1 );
+
+        /* Call interruption treatment function */
+        AdcDmaTransferError_Callback();
+    }
 }
 
 

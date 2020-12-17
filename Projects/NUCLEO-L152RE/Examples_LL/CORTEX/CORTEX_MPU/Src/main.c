@@ -52,24 +52,24 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 #if defined ( __CC_ARM   )
-uint8_t PrivilegedReadOnlyArray[32] __attribute__((at(0x20002000)));
+    uint8_t PrivilegedReadOnlyArray[32] __attribute__( ( at( 0x20002000 ) ) );
 
 #elif defined ( __ICCARM__ )
-#pragma location=0x20002000
-__no_init uint8_t PrivilegedReadOnlyArray[32];
+    #pragma location=0x20002000
+    __no_init uint8_t PrivilegedReadOnlyArray[32];
 
 #elif defined   (  __GNUC__  )
-uint8_t PrivilegedReadOnlyArray[32] __attribute__((section(".ROarraySection")));
+    uint8_t PrivilegedReadOnlyArray[32] __attribute__( ( section( ".ROarraySection" ) ) );
 
 #endif
 
 /* Private function prototypes -----------------------------------------------*/
-void     SystemClock_Config(void);
-void     Configure_MPU(void);
-void     MPU_AccessPermConfig(void);
-void     LED_Init(void);
-void     LED_Blinking(uint32_t Period);
-void     UserButton_Init(void);
+void     SystemClock_Config( void );
+void     Configure_MPU( void );
+void     MPU_AccessPermConfig( void );
+void     LED_Init( void );
+void     LED_Blinking( uint32_t Period );
+void     UserButton_Init( void );
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -78,28 +78,28 @@ void     UserButton_Init(void);
   * @param  None
   * @retval None
   */
-int main(void)
+int main( void )
 {
-  /* Configure the system clock to 32 MHz */
-  SystemClock_Config();
+    /* Configure the system clock to 32 MHz */
+    SystemClock_Config();
 
-  /* Initialize LED2 */
-  LED_Init();
+    /* Initialize LED2 */
+    LED_Init();
 
-  /* Initialize button in EXTI mode */
-  UserButton_Init();
-  
-  /* Set MPU regions */
-  Configure_MPU();
-  MPU_AccessPermConfig();
-  
-  /* Toggle quickly the LED in waiting for User-button press */
-  LED_Blinking(LED_BLINK_FAST);
+    /* Initialize button in EXTI mode */
+    UserButton_Init();
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Set MPU regions */
+    Configure_MPU();
+    MPU_AccessPermConfig();
+
+    /* Toggle quickly the LED in waiting for User-button press */
+    LED_Blinking( LED_BLINK_FAST );
+
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 
 /**
@@ -107,32 +107,32 @@ int main(void)
   * @param  None
   * @retval None
   */
-void Configure_MPU(void)
+void Configure_MPU( void )
 {
-  /* Disable MPU */
-  LL_MPU_Disable();
+    /* Disable MPU */
+    LL_MPU_Disable();
 
-  /* Configure RAM region as Region N°0, 64KB of size and R/W region */
-  LL_MPU_ConfigRegion(EXAMPLE_RAM_REGION_NUMBER, 0x00, EXAMPLE_RAM_ADDRESS_START, 
-         EXAMPLE_RAM_SIZE | portMPU_REGION_READ_WRITE | LL_MPU_ACCESS_NOT_BUFFERABLE |
-         LL_MPU_ACCESS_NOT_CACHEABLE | LL_MPU_ACCESS_NOT_SHAREABLE | LL_MPU_TEX_LEVEL0 |
-         LL_MPU_INSTRUCTION_ACCESS_ENABLE);
+    /* Configure RAM region as Region N°0, 64KB of size and R/W region */
+    LL_MPU_ConfigRegion( EXAMPLE_RAM_REGION_NUMBER, 0x00, EXAMPLE_RAM_ADDRESS_START,
+                         EXAMPLE_RAM_SIZE | portMPU_REGION_READ_WRITE | LL_MPU_ACCESS_NOT_BUFFERABLE |
+                         LL_MPU_ACCESS_NOT_CACHEABLE | LL_MPU_ACCESS_NOT_SHAREABLE | LL_MPU_TEX_LEVEL0 |
+                         LL_MPU_INSTRUCTION_ACCESS_ENABLE );
 
-  /* Configure FLASH region as REGION N°1, 512KB of size and R/W region */
-  LL_MPU_ConfigRegion(EXAMPLE_FLASH_REGION_NUMBER, 0x00, EXAMPLE_FLASH_ADDRESS_START, 
-         EXAMPLE_FLASH_SIZE | portMPU_REGION_READ_WRITE | LL_MPU_ACCESS_NOT_BUFFERABLE |
-         LL_MPU_ACCESS_NOT_CACHEABLE | LL_MPU_ACCESS_NOT_SHAREABLE | LL_MPU_TEX_LEVEL0 |
-         LL_MPU_INSTRUCTION_ACCESS_ENABLE);
+    /* Configure FLASH region as REGION N°1, 512KB of size and R/W region */
+    LL_MPU_ConfigRegion( EXAMPLE_FLASH_REGION_NUMBER, 0x00, EXAMPLE_FLASH_ADDRESS_START,
+                         EXAMPLE_FLASH_SIZE | portMPU_REGION_READ_WRITE | LL_MPU_ACCESS_NOT_BUFFERABLE |
+                         LL_MPU_ACCESS_NOT_CACHEABLE | LL_MPU_ACCESS_NOT_SHAREABLE | LL_MPU_TEX_LEVEL0 |
+                         LL_MPU_INSTRUCTION_ACCESS_ENABLE );
 
-  /* Configure Peripheral region as REGION N°2, 512MB of size, R/W and Execute
-  Never region */
-  LL_MPU_ConfigRegion(EXAMPLE_PERIPH_REGION_NUMBER, 0x00, EXAMPLE_PERIPH_ADDRESS_START, 
-         EXAMPLE_PERIPH_SIZE | portMPU_REGION_READ_WRITE | LL_MPU_ACCESS_NOT_BUFFERABLE |
-         LL_MPU_ACCESS_NOT_CACHEABLE | LL_MPU_ACCESS_NOT_SHAREABLE | LL_MPU_TEX_LEVEL0 |
-         LL_MPU_INSTRUCTION_ACCESS_DISABLE);
+    /* Configure Peripheral region as REGION N°2, 512MB of size, R/W and Execute
+    Never region */
+    LL_MPU_ConfigRegion( EXAMPLE_PERIPH_REGION_NUMBER, 0x00, EXAMPLE_PERIPH_ADDRESS_START,
+                         EXAMPLE_PERIPH_SIZE | portMPU_REGION_READ_WRITE | LL_MPU_ACCESS_NOT_BUFFERABLE |
+                         LL_MPU_ACCESS_NOT_CACHEABLE | LL_MPU_ACCESS_NOT_SHAREABLE | LL_MPU_TEX_LEVEL0 |
+                         LL_MPU_INSTRUCTION_ACCESS_DISABLE );
 
-  /* Enable MPU (any access not covered by any enabled region will cause a fault) */
-  LL_MPU_Enable(LL_MPU_CTRL_PRIVILEGED_DEFAULT);
+    /* Enable MPU (any access not covered by any enabled region will cause a fault) */
+    LL_MPU_Enable( LL_MPU_CTRL_PRIVILEGED_DEFAULT );
 }
 
 /**
@@ -140,24 +140,24 @@ void Configure_MPU(void)
   * @param  None
   * @retval None
   */
-void MPU_AccessPermConfig(void)
+void MPU_AccessPermConfig( void )
 {
-  /* Configure region for PrivilegedReadOnlyArray as REGION N°3, 32byte and R
-     only in privileged mode */
-  /* Disable MPU */
-  LL_MPU_Disable();
+    /* Configure region for PrivilegedReadOnlyArray as REGION N°3, 32byte and R
+       only in privileged mode */
+    /* Disable MPU */
+    LL_MPU_Disable();
 
-  LL_MPU_ConfigRegion(ARRAY_REGION_NUMBER, 0x00, ARRAY_ADDRESS_START, 
-         ARRAY_SIZE | portMPU_REGION_PRIVILEGED_READ_ONLY | LL_MPU_ACCESS_NOT_BUFFERABLE |
-         LL_MPU_ACCESS_NOT_CACHEABLE | LL_MPU_ACCESS_NOT_SHAREABLE | LL_MPU_TEX_LEVEL0 |
-         LL_MPU_INSTRUCTION_ACCESS_ENABLE);
-  
-  /* Enable MPU (any access not covered by any enabled region will cause a fault) */
-  LL_MPU_Enable(LL_MPU_CTRL_PRIVILEGED_DEFAULT);
-  LL_HANDLER_EnableFault(LL_HANDLER_FAULT_MEM);
+    LL_MPU_ConfigRegion( ARRAY_REGION_NUMBER, 0x00, ARRAY_ADDRESS_START,
+                         ARRAY_SIZE | portMPU_REGION_PRIVILEGED_READ_ONLY | LL_MPU_ACCESS_NOT_BUFFERABLE |
+                         LL_MPU_ACCESS_NOT_CACHEABLE | LL_MPU_ACCESS_NOT_SHAREABLE | LL_MPU_TEX_LEVEL0 |
+                         LL_MPU_INSTRUCTION_ACCESS_ENABLE );
 
-  /* Read from PrivilegedReadOnlyArray. This will not generate error */
-  (void)PrivilegedReadOnlyArray[0];
+    /* Enable MPU (any access not covered by any enabled region will cause a fault) */
+    LL_MPU_Enable( LL_MPU_CTRL_PRIVILEGED_DEFAULT );
+    LL_HANDLER_EnableFault( LL_HANDLER_FAULT_MEM );
+
+    /* Read from PrivilegedReadOnlyArray. This will not generate error */
+    ( void )PrivilegedReadOnlyArray[0];
 }
 
 /**
@@ -168,19 +168,19 @@ void MPU_AccessPermConfig(void)
   *         commented examples - setting is default configuration from reset.
   * @retval None
   */
-void LED_Init(void)
+void LED_Init( void )
 {
-  /* Enable the LED2 Clock */
-  LED2_GPIO_CLK_ENABLE();
+    /* Enable the LED2 Clock */
+    LED2_GPIO_CLK_ENABLE();
 
-  /* Configure IO in output push-pull mode to drive external LED2 */
-  LL_GPIO_SetPinMode(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT);
-  /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
-  //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
-  /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
-  //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
-  /* Reset value is LL_GPIO_PULL_NO */
-  //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
+    /* Configure IO in output push-pull mode to drive external LED2 */
+    LL_GPIO_SetPinMode( LED2_GPIO_PORT, LED2_PIN, LL_GPIO_MODE_OUTPUT );
+    /* Reset value is LL_GPIO_OUTPUT_PUSHPULL */
+    //LL_GPIO_SetPinOutputType(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_OUTPUT_PUSHPULL);
+    /* Reset value is LL_GPIO_SPEED_FREQ_LOW */
+    //LL_GPIO_SetPinSpeed(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_SPEED_FREQ_LOW);
+    /* Reset value is LL_GPIO_PULL_NO */
+    //LL_GPIO_SetPinPull(LED2_GPIO_PORT, LED2_PIN, LL_GPIO_PULL_NO);
 }
 
 /**
@@ -192,39 +192,39 @@ void LED_Init(void)
   *     @arg LED_BLINK_ERROR : Error specific Blinking
   * @retval None
   */
-void LED_Blinking(uint32_t Period)
+void LED_Blinking( uint32_t Period )
 {
-  /* Toggle IO in an infinite loop */
-  while (1)
-  {
-    LL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);  
-    LL_mDelay(Period);
-  }
+    /* Toggle IO in an infinite loop */
+    while( 1 )
+    {
+        LL_GPIO_TogglePin( LED2_GPIO_PORT, LED2_PIN );
+        LL_mDelay( Period );
+    }
 }
 
 /**
   * @brief  Configures User push-button in EXTI Line Mode.
   * @retval None
   */
-void UserButton_Init(void)
+void UserButton_Init( void )
 {
-  /* Enable the BUTTON Clock */
-  USER_BUTTON_GPIO_CLK_ENABLE();
-  
-  /* Configure GPIO for BUTTON */
-  LL_GPIO_SetPinMode(USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_MODE_INPUT);
-  LL_GPIO_SetPinPull(USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_PULL_NO);
-  
-  /* Configure NVIC for USER_BUTTON_EXTI_IRQn */
-  NVIC_EnableIRQ(USER_BUTTON_EXTI_IRQn); 
-  NVIC_SetPriority(USER_BUTTON_EXTI_IRQn,0x03);  
-  
-  /* Connect External Line to the GPIO*/
-  USER_BUTTON_SYSCFG_SET_EXTI();
-  
-  /* Enable a rising trigger EXTI line 13 Interrupt */
-  USER_BUTTON_EXTI_LINE_ENABLE();
-  USER_BUTTON_EXTI_FALLING_TRIG_ENABLE();
+    /* Enable the BUTTON Clock */
+    USER_BUTTON_GPIO_CLK_ENABLE();
+
+    /* Configure GPIO for BUTTON */
+    LL_GPIO_SetPinMode( USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_MODE_INPUT );
+    LL_GPIO_SetPinPull( USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN, LL_GPIO_PULL_NO );
+
+    /* Configure NVIC for USER_BUTTON_EXTI_IRQn */
+    NVIC_EnableIRQ( USER_BUTTON_EXTI_IRQn );
+    NVIC_SetPriority( USER_BUTTON_EXTI_IRQn, 0x03 );
+
+    /* Connect External Line to the GPIO*/
+    USER_BUTTON_SYSCFG_SET_EXTI();
+
+    /* Enable a rising trigger EXTI line 13 Interrupt */
+    USER_BUTTON_EXTI_LINE_ENABLE();
+    USER_BUTTON_EXTI_FALLING_TRIG_ENABLE();
 }
 
 /**
@@ -242,57 +242,62 @@ void UserButton_Init(void)
   *            Flash Latency(WS)              = 1
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config( void )
 {
-  /* Enable ACC64 access and set FLASH latency */ 
-  LL_FLASH_Enable64bitAccess();; 
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
+    /* Enable ACC64 access and set FLASH latency */
+    LL_FLASH_Enable64bitAccess();;
+    LL_FLASH_SetLatency( LL_FLASH_LATENCY_1 );
 
-  /* Set Voltage scale1 as MCU will run at 32MHz */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-  LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
-  
-  /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
-  while (LL_PWR_IsActiveFlag_VOSF() != 0)
-  {
-  };
-  
-  /* Enable HSI if not already activated*/
-  if (LL_RCC_HSI_IsReady() == 0)
-  {
-    /* HSI configuration and activation */
-    LL_RCC_HSI_Enable();
-    while(LL_RCC_HSI_IsReady() != 1)
+    /* Set Voltage scale1 as MCU will run at 32MHz */
+    LL_APB1_GRP1_EnableClock( LL_APB1_GRP1_PERIPH_PWR );
+    LL_PWR_SetRegulVoltageScaling( LL_PWR_REGU_VOLTAGE_SCALE1 );
+
+    /* Poll VOSF bit of in PWR_CSR. Wait until it is reset to 0 */
+    while( LL_PWR_IsActiveFlag_VOSF() != 0 )
     {
     };
-  }
-  
-  /* Main PLL configuration and activation */
-  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3);
 
-  LL_RCC_PLL_Enable();
-  while(LL_RCC_PLL_IsReady() != 1)
-  {
-  };
-  
-  /* Sysclk activation on the main PLL */
-  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
-  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
-  {
-  };
-  
-  /* Set APB1 & APB2 prescaler*/
-  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
+    /* Enable HSI if not already activated*/
+    if( LL_RCC_HSI_IsReady() == 0 )
+    {
+        /* HSI configuration and activation */
+        LL_RCC_HSI_Enable();
 
-  /* Set systick to 1ms in using frequency set to 32MHz                             */
-  /* This frequency can be calculated through LL RCC macro                          */
-  /* ex: __LL_RCC_CALC_PLLCLK_FREQ (HSI_VALUE, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3); */
-  LL_Init1msTick(32000000);
-  
-  /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
-  LL_SetSystemCoreClock(32000000);
+        while( LL_RCC_HSI_IsReady() != 1 )
+        {
+        };
+    }
+
+    /* Main PLL configuration and activation */
+    LL_RCC_PLL_ConfigDomain_SYS( LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3 );
+
+    LL_RCC_PLL_Enable();
+
+    while( LL_RCC_PLL_IsReady() != 1 )
+    {
+    };
+
+    /* Sysclk activation on the main PLL */
+    LL_RCC_SetAHBPrescaler( LL_RCC_SYSCLK_DIV_1 );
+
+    LL_RCC_SetSysClkSource( LL_RCC_SYS_CLKSOURCE_PLL );
+
+    while( LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL )
+    {
+    };
+
+    /* Set APB1 & APB2 prescaler*/
+    LL_RCC_SetAPB1Prescaler( LL_RCC_APB1_DIV_1 );
+
+    LL_RCC_SetAPB2Prescaler( LL_RCC_APB2_DIV_1 );
+
+    /* Set systick to 1ms in using frequency set to 32MHz                             */
+    /* This frequency can be calculated through LL RCC macro                          */
+    /* ex: __LL_RCC_CALC_PLLCLK_FREQ (HSI_VALUE, LL_RCC_PLL_MUL_6, LL_RCC_PLL_DIV_3); */
+    LL_Init1msTick( 32000000 );
+
+    /* Update CMSIS variable (which can be updated also through SystemCoreClockUpdate function) */
+    LL_SetSystemCoreClock( 32000000 );
 }
 
 /******************************************************************************/
@@ -303,10 +308,10 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-void UserButton_Callback(void)
+void UserButton_Callback( void )
 {
-  /* This will generate error */
-  PrivilegedReadOnlyArray[0] = 'e';
+    /* This will generate error */
+    PrivilegedReadOnlyArray[0] = 'e';
 }
 
 /**
@@ -314,15 +319,15 @@ void UserButton_Callback(void)
   * @param  None
   * @retval None
   */
-void MemManage_Callback(void) 
+void MemManage_Callback( void )
 {
-  /* Turn on LED2 */
-  LL_GPIO_SetOutputPin(LED2_GPIO_PORT, LED2_PIN);
+    /* Turn on LED2 */
+    LL_GPIO_SetOutputPin( LED2_GPIO_PORT, LED2_PIN );
 
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+    /* Go to infinite loop when Memory Manage exception occurs */
+    while( 1 )
+    {
+    }
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -334,15 +339,15 @@ void MemManage_Callback(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed( uint8_t *file, uint32_t line )
 {
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d", file, line) */
+    /* User can add his own implementation to report the file name and line number,
+       ex: printf("Wrong parameters value: file %s on line %d", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while( 1 )
+    {
+    }
 }
 #endif
 
